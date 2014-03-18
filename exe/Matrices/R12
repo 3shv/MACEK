@@ -1,0 +1,11 @@
+#
+# the matroid R_12 by Seymour, in a regular representation
+@comment "the regular matroid R_12"
+
+	1	1	1	0	0	0
+	1	1	0	1	0	0
+	1	0	0	0	1	0
+	0	1	0	0	0	1
+	0	0	1	0	-1	-1
+	0	0	0	1	-1	-1
+

@@ -1,0 +1,9 @@
+#
+# the matroid non-Fano F_7-
+@comment "the matroid F_7- non-Fano"
+
+	1	1	1	0
+	1	1	0	1
+	1	0	1	1
+
+@require 1+1 1

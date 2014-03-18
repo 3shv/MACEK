@@ -1,0 +1,8 @@
+# 
+# the unique bin extension of M(K_3,3)
+@comment "K5~ uniq binary ext of M(K33)"
+
+	1	1	0	1	0	1
+	1	0	1	1	0	0
+	0	0	1	1	1	1
+	0	1	0	1	1	0

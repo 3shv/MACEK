@@ -1,0 +1,9 @@
+#
+# the matroid W_4, wheel of 4 spokes
+@comment "the matroid W_4, wheel of 4 spokes"
+
+	1	0	0	-1
+	-1	1	0	0
+	0	-1	1	0
+	0	0	-1	1
+

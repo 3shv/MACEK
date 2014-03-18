@@ -1,0 +1,12 @@
+#
+# the matroid U_2,5 generic
+@comment "the matroid U_2,5 uniform"
+
+	1	1	1
+	1	X	Y
+
+@require (X)       1
+@require ((X)-1)   1
+@require (Y)       1
+@require ((Y)-1)   1
+@require ((X)-(Y)) 1

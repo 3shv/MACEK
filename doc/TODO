@@ -1,0 +1,122 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2011  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+
+
+
+3.12.2010:  This file is obsolete (for many years already) since all
+development of MACEK has stopped...
+
+
+                               TODO list for MACEK
+                              ~~~~~~~~~~~~~~~~~~~~~
+(last updated 9.6. 2006)
+
+
+
+comments like //**** in the source usually mean some unfinished business
+	(working fine, but can be done better, faster, etc)
+
+
+actual:
+	- 
+	- static library version (quiet?), with a copied interface...
+	- "quiet" compile version - only the plain output printed,
+		additional to stderr (if other stream) !!!!!!!
+	- 
+	- what implements ESCONNECT without requirements??? (new -1 value???)
+	- when generating with ctrl, remove the word 'non-equiv' from OUTPUT!!!
+	- add a note on ext-forbid in the OUTPUT...
+	- !extendsize with <=r <=c bounds...
+	- 
+	- check input sequence connectivity in gener_extframe_ext()...
+	- input sequence connectivity should check also simple/cosimple!!!
+	- completly separate "frame" code from working functions!!!
+	- 
+	- emflexsup.c: include_stack_ptr non-static (needed for debug),
+	- not use ulong in frcoms.c, (typedef unsigned long ulong;) better NOT
+	- 
+	- update all program documentation about 3-connectivity !!! (and also 3conn...)
+	- change sequence connectivity messages, like `Remark: The extension
+		generating process requires one to start from a sufficiently
+	  "3-connected" matroid, and it cannot work for an arbitrary matroid by its nature.'
+	- 
+	- 
+	- new debug self-tests!!!!!!!!
+
+
+program interface :
+	- setting some command-line options of Macek also from the environment,
+	- a command moving (not copying) a whole frame subtree?
+	- matrices P8','', others from Oxley???, more graphs??
+	- 
+
+
+program code :
+	- correct '!append' of two more matrix lines (number of columns?)
+	- handling ^C signal - save the frame tree before termination,
+	- make !minorusi code more efficient - directly inside minor testing,
+	- the new (1.1.x) structural code - isomorphism, representability,
+	   need another audit and profiling to efficiency,
+	- faster special implementation of grepr_isrepresented() - i.e. only testing...
+	- in (disconn) extension generation - handle matrices with very many
+	   self-maps (identical entries in the matrix)...., how?
+	- 
+
+
+program functions :
+	- command for printing separations up to k ???
+	- update matroid hash value - use flatlines, cycles, etc...
+		version 2.0 !!!  make smaller values??
+	- 
+
+
+memory allocations :
+	- should be OK now, no visible leaks...
+	- remove hard allocation bounds on demand? - change defines in Makefile...
+	- why lists are "broken" (error message) when memory is exhausted?
+		- repaired in alist_setend() !?!?
+	- 
+
+
+debug (self-)tests :
+	- add a recursive self-test for ez!=NULL in gener_matextens_ext()...
+	- start-up checks for !minorusi ... (after coded in the structural functions)
+	- other new commands??
+	- self-tests for disconnected generation...
+	- 
+
+
+documentation
+	- more examples at the end, proving correctness of computation...
+	- update papers in the manual (plus aacc)
+	- refer to a new "algebraic" enumeration with Martin...
+	- 
+	- comment the available file-naming schemes when writing more than
+	  one file at once
+	- 
+
+
+
+
+
+

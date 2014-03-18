@@ -1,0 +1,10 @@
+#
+# the matroid P_7 from Oxley's book
+@comment "the matroid P_7 from Oxley's book"
+
+	1	0	1	1
+	1	1	0	1
+	X	1	((X)-1)	0
+
+@require  X       1
+@require  ((X)-1) 1

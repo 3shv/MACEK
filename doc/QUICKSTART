@@ -1,0 +1,39 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2011  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+ The program requires GNU C compiler, GNU make, Flex, and a Bash-style shell.
+ (Get them all from http://www.gnu.org .)
+ And, of course, the program needs a user with good knowledge of matroids...
+ 
+ Unpack with tar/gzip into a separate subdirectory.
+ (Call them like "gtar xzf Macek_....tar.gz".)
+ Read "make help", or "make info" for more help.
+ Go to "src" and "make all", or/and "make xall".
+ Switch to "exe", run "./macek" or"./macek.nodebug".
+ Follow the manual intro in "doc/" or the file "Examples".
+ Enjoy!
+
+ Read the documentation files and the pdf manual in "doc/".
+ If you want to know more, then read the sources.
+ Again - you really need GNU make (or gmake) and GNU cc (or gcc),
+ not the old-fashioned-unix versions!
+

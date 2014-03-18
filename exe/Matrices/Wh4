@@ -1,0 +1,8 @@
+#
+# the matroid W^4 whirl of 4 spokes, in odd characteristic or GF(4)
+
+@replace    X -1
+@repl-GF(4) X w
+@repl-near-reg X a
+@repl-gmean X a
+<Wh4-gen

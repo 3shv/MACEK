@@ -1,0 +1,6 @@
+
+This directory contains sources for various "structural"
+operations over represented matroids...
+
+(Read also ../include/struct.h .)
+

@@ -1,0 +1,11 @@
+#!/bin/sh
+# change the doc headers in all files of Macek....
+# (use as 'find . -type f -exec ./changeheader {} \;')
+
+ndir='../1.2.12'
+mkdir -p $ndir/`dirname $1`
+sed -e '/2001--2011/s//2001--2011/' $1 >$ndir/$1
+touch -r $1 $ndir/$1
+if [ -x "$1" ]; then
+  chmod a+x $ndir/$1
+fi

@@ -1,0 +1,10 @@
+#
+# the matroid S_8 from Oxley's book (coextension of F_7)
+@comment "the matroid S_8 from Oxley's book"
+
+	1	1	1	0
+	1	1	0	1
+	1	0	1	1
+	1	1	1	1
+
+@require 1+1 0

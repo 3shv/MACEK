@@ -1,0 +1,11 @@
+#
+# a splitter for the class of binary matroids with no K33- or K33*-minors, /e
+@comment "T12/e (T12 splitter for bin no K33-,K33*-minors)"
+
+	1	1	0	0	0	1
+	1	0	0	0	1	1
+	0	0	0	1	1	1
+	0	0	1	1	1	0
+	0	1	1	1	0	0
+
+@require 1+1 0

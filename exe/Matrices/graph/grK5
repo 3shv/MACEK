@@ -1,0 +1,8 @@
+#
+# the matroid of the complete graph K_5, in a regular representation
+@comment "the matroid of K_5 the complete graph"
+
+	1	1	0	0	0	1
+	1	1	0	1	1	1
+	1	0	1	1	1	1
+	1	0	1	0	1	0

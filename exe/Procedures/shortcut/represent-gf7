@@ -1,0 +1,16 @@
+# a shortcut for computing representations of the given matroids over GF(5)...
+!quiet
+!iflist 0 = (S)
+!skip 11
+!print (S)
+!pfield GF7
+!verbose 2
+!represgen (S) all
+!quiet -2
+!iflist 0 = ((S))
+!skip 3
+!verbose
+!print ((S))
+!quiet
+!exit
+!prtext "Usage: ./macek -pGFq represent-gf5 matroid1 [matroid2 ... ]"

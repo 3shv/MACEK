@@ -1,0 +1,13 @@
+#
+# the matroid U_2,5 in >=4 elements
+
+@replace	X 2
+@replace	Y -1
+@repl-GF(4)	X w
+@repl-GF(4)	Y (w+1)
+@repl-GF(8)	X w
+@repl-GF(8)	Y (w+1)
+@repl-GF(9)	Y w
+@repl-gmean	X a
+@repl-gmean	Y (a+1)
+<U25-gen

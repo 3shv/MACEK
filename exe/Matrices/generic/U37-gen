@@ -1,0 +1,24 @@
+#
+# the matroid U_3,7 generic
+@comment "the matroid U_3,7 uniform"
+
+	1	1	1	1
+	1	X	Y	T
+	1	Y	Z	U
+
+@require (X)       1
+@require (Y)       1
+@require (Z)       1
+@require (T)       1
+@require (U)       1
+@require ((X)-1)   1
+@require ((Y)-1)   1
+@require ((Z)-1)   1
+@require ((T)-1)   1
+@require ((U)-1)   1
+@require ((X)*(Z)-(Y)*(Y))   1
+@require ((X)*(U)-(Y)*(T))   1
+@require ((Y)*(U)-(Z)*(T))   1
+
+#@require ((X)*(Z)+(Y)-(X)+(Y)-(Z)-(Y)^2)   1
+# missing 3x3 subdeterminats to check...

@@ -1,0 +1,39 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2011  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+The list of "officially" supported platforms for the Macek project:
+
+Linux 2.6, gcc 4.5, glibc 2.11, ix86
+Linux 2.6, gcc 4.3, glibc 2.7, amd64
+MacOSX 10.6, gcc 4.2, ??, x86-64
+Linux 2.6, gcc 4.1, glibc 2.3.x, amd64
+Linux 2.6, gcc 3.3, glibc 2.3.x, ix86
+Linux 2.4, gcc 3.2, glibc 2.3.x, ix86
+Linux 2.4, gcc 2.96, glibc 2.2.x, ix86
+	(- you may set architecture and optimization to Intel/AMD/etc in src/Make.local)
+
+Reported to work also under Cygwin, but that is "unofficial"...
+
+(The next tested for versions <=1.0.x only...)
+NetBSD 1.5ZA, gcc 2.95, ix86
+OSF1 4.0, gcc 2.8.1, alpha
+

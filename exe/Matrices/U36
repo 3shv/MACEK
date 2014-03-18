@@ -1,0 +1,18 @@
+#
+# the matroid U_3,6 in >=4 elements
+
+@replace	X 2
+@replace	Y 3
+@replace	Z -1
+@repl-GF(9)	Y w
+@repl-GF(9)	Z (w+1)
+@repl-GF(8)	X Z
+@repl-GF(8)	Y (w+1)
+@repl-GF(8)	Z w
+@repl-GF(4)	X Z
+@repl-GF(4)	Y (w+1)
+@repl-GF(4)	Z w
+@repl-gmean	X (a+1)
+@repl-gmean	Y a
+@repl-gmean	Z (a-1)
+<U36-gen

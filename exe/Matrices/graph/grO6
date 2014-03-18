@@ -1,0 +1,10 @@
+#
+# the matroid of the graph of octahedron O_6, in a regular representation
+@comment "the matroid of the octahedron graph O_6"
+
+	1	1	1	0	0	0	0
+	0	1	1	1	1	1	0
+	1	1	1	1	1	0	0
+	0	0	1	1	1	1	1
+	0	0	0	0	1	1	1
+

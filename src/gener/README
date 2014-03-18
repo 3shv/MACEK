@@ -1,0 +1,11 @@
+
+This directory contains source files relevant to generating
+non-equivalent matrix extensions (i.e. elimination sequences).
+(Read more in ../include/gener.h, gen.h .)
+Additional tests for the elimination sequence should be written into gener-more.inc .
+
+Moreover, the extension code is now used also for generating representations over
+another pfields. (Simple, but not much efficient implementation.)
+
+
+

@@ -1,0 +1,10 @@
+# a shortcut for computing minors in the given matroids (all against the last one)...
+!quiet
+!iflist 2 > (S)
+!skip 5
+!print (S)
+!verbose 2
+!minor ((-1T)) ((-1)(T))
+!quiet -4
+!exit
+!prtext "Usage: ./macek -pGFq minor matroid1 matroid2 [... ]"

@@ -1,0 +1,11 @@
+#
+# binary non-reg extension of M(K_3,3)
+@comment "bin non-reg extension of M(K33)"
+
+	0	1	1	1	1
+	1	1	1	0	0
+	1	1	0	0	1
+	1	0	0	1	1
+	1	0	1	1	0
+
+@require 1+1 0

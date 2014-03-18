@@ -1,0 +1,15 @@
+#
+# the matroid U_2,7 in >=6 elements
+
+@replace	X 2
+@replace	Y 3
+@replace	Z 4
+@replace	T -1
+@repl-GF(9)	Y w
+@repl-GF(9)	Z (w+1)
+@repl-GF(9)	T (w+2)
+@repl-GF(8)	X w
+@repl-GF(8)	Y (w+1)
+@repl-GF(8)	Z (w^2)
+@repl-GF(8)	T (w^2+1)
+<U27-gen

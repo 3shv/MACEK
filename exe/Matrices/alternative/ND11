@@ -1,0 +1,10 @@
+#
+# the matroid ND11 - excluded for bw. 3 in binary
+@comment "the matroid ND11 - excluded for bw. 3 in binary"
+
+	1	0	0	1	1	1
+	0	1	0	1	1	0
+	0	0	1	1	0	1
+	1	1	1	1	0	0
+
+@require 1+1 0

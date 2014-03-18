@@ -1,0 +1,11 @@
+#
+# the matroid W_6, wheel of 6 spokes
+@comment "the matroid W_6, wheel of 6 spokes"
+
+	1	0	0	0	0	-1
+	-1	1	0	0	0	0
+	0	-1	1	0	0	0
+	0	0	-1	1	0	0
+	0	0	0	-1	1	0
+	0	0	0	0	-1	1
+

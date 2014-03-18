@@ -1,0 +1,34 @@
+
+				 M A C E K
+				~~~~~~~~~~~
+		   ( "MAtroids Computed Efficiently" Kit )
+
+A set of tools and routines for reasonably efficient combinatorial computations with
+representable matroids, especially for matroid constructions and for structural tests.
+(If you do not know what a matroid is, then this package is likely not for you.)
+The package provides a standalone command-line oriented executable, suitable
+also for batch jobs, an online graphic trial interface from the web page,
+and newly some static libraries for wrapping into other packages.
+Brought to you by Petr Hlineny, VSB - TU Ostrava / FI MU Brno, Czech republic.
+
+Read more in the "doc" subdirectory (QUICKSTART), or type "make info".
+
+Copyright (C) 2001--2011  Petr Hlineny.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Hlineny!nosp@m!member.ams.org or Hlineny!nosp@m!fi.muni.cz ,
+project web pages  http://www.mcs.vuw.ac.nz/research/macek/ and
+http://www.cs.vsb.cz/hlineny/MACEK/ .

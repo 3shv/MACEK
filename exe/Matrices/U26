@@ -1,0 +1,12 @@
+#
+# the matroid U_2,6 in >=5 elements
+
+@replace	X 2
+@replace	Y 3
+@replace	Z -1
+@repl-GF(9)	Y w
+@repl-GF(9)	Z (w+1)
+@repl-GF(8)	X w
+@repl-GF(8)	Y (w+1)
+@repl-GF(8)	Z (w^2)
+<U26-gen

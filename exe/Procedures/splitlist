@@ -1,0 +1,17 @@
+#
+# This procedure splits the given list into regular pieces.
+#  - use in Macek as  '{ list };&splitlist [length] [depth(]' in a subnode(!)
+# (The list has to be stored in a deeper node than the node containing &splitlist !)
+# 
+# An example:  ./macek '!prtree' '{ bw3-bin-exc };&splitlist 4'
+# 
+
+@subd-param1	10
+@subd-param2	"(("
+
+!iflist ${param1} >= ${param2}S|
+!skip 3
+!move ${param2}(${param1}t)| >${param2})(s)|
+!append (T) "&splitlist $param1 $param2"
+!skip 1
+!move ${param2}(0t)| >${param2})(s)|

@@ -1,0 +1,6 @@
+
+How the Texinfo documentation is prepared and processed......
+
+(Do not be scared by lots of errors reported by texi2pdf,
+they are very obscure, and they seem to have no resulting effect.)
+

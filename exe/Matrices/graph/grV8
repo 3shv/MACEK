@@ -1,0 +1,12 @@
+#
+# the matroid of the graph V_8 (mobius ladder on 8 vert.), in a regular representation
+@comment "the matroid of the V_8 graph (mobius ladder on 8 vert.)"
+
+	1	0	0	0	1
+	1	1	0	0	1
+	1	1	1	0	1
+	1	1	1	1	1
+	0	1	1	1	1
+	0	0	1	1	1
+	0	0	0	1	1
+

@@ -1,0 +1,122 @@
+# 
+# This script is used to compute all (small) excluded minors for branch-width 3
+# over a given field.
+# Call the procedure as	   ./macek '&bw3excg gfX filebase suffix [b]' .
+# (The correct pfield -pgfX is set automatically.)
+# 
+# Before starting the procedure, create the files "bw3-gfX-" with the starting
+# list of matroids to generate from, and "bw3-gfX+exc" containing (possible)
+# extra excluded minors for bwidth3 (over other fields, with '@inputpf gfZ' for each one).
+# Then run a sequence of commands like these:
+# 	./macek '&bw3excg gfX bw3 '
+# 	./macek '&bw3excg gfX bw3 b'
+# 	./macek '&bw3excg gfX bw3 bb'
+# 		...
+# 	./macek '&bw3excg gfX bw3 bbb...'
+# These will generate the excluded minors step-by-step (each step adding one
+# element to the matroids), storing the excluded minors to "bw3-gfX-b..b-exc.mck".
+# 
+# A table of computed results:
+# 	GF2:	6 on 10, 4 on 12  (7 out of them known regular,
+#					 only 3 binary ones are actually generated!),
+# 	GF3:	plus	18 on 9, 31 on 10, and no more!
+# 	GF4:	plus	5 on 8, 90 on 9, 32 on 10, ...	(nonisomorphic!)
+# 	GF5:	plus	38 on 8, 444 on 9, 29 on 10	(nonisomorphic!)
+# 	GF7:	plus	2 on 7, 119 on 8, 344 on 9	(nonisomorphic!)
+# 	GF8:	plus	0 on 7, 5 on 8
+# 	GF9:	plus	0 on 7, 0 on 8
+# 
+
+@subd-param1 	"gf3"
+@subd-param2 	"bw3"
+@subd-param3 	""
+@subd-param4 	"b"
+
+!pfield $param1
+#!verbose
+
+# the file names to use: usefilen the base, usefilenb the starting list,
+# and the excluded and generated lists...
+@sub-usefilen 	${param2}-${param1}
+@sub-usefilenb	${usefilen}-${param3}
+@sub-excextra 	${usefilen}+exc
+@sub-treeall 	${usefilenb}-all
+@sub-listin 	${usefilenb}
+@sub-list3out 	${usefilenb}${param4}
+@sub-list4out 	${usefilenb}${param4}-4
+@sub-list4outn 	${list4out}n
+@sub-exclist 	${listin}-exc
+@sub-exclistout ${list3out}-exc
+
+@sub-excluded 	 "((((S)(S)|"
+@sub-excludedin  "((((1)("
+@sub-excludedout "((((2)("
+{
+@name "bw3excg-w"
+@comment "bw3excg (over $param1) working subframe:"
+{
+@name "exc-known"
+@comment "known bw3 excl minors - extra, smaller, and new (generated)"
+{ 
+@name $excextra
+!quiet
+!iffile "$excextra"
+!skip 1
+!skip 4
+!read $excextra
+!filx-isompair ((s))
+!pfield $param1
+!represgen "((s))" allq >((0t))
+}{ 
+!quiet
+!pfield $param1
+!iffile "$exclist"
+!mread $exclist >((0t))
+}{ }
+}{
+@name extens1
+@comment "all new ${param4}-extensions of input [${listin}]..."
+}{
+@name e-bwidth4
+@comment "those generated with bwidth 4 get here:"
+}{
+@name e-bwidth4n
+@comment "those new excl-minors with bwidth 4 get here:"
+}{
+@name e-bwidth3
+@comment "those next with bwidth 3 get here:"
+}}
+@sub-input "(()(S))"
+{
+@inputpf $param1
+<$listin
+@comment "this is the starting set of matroids $listin:"
+}
+
+@sub-gener3  "(((4)("
+@sub-generall  "(((1)("
+@sub-gener4bw  "(((2)("
+@sub-gener4n  "(((3)("
+@extinherit ext-forbid
+
+!extend b $input  >$generall(0t)|
+!move ${generall}S|  >${gener3}(0t)|
+!rex-bwidth3 ${gener3}S|
+!move ^1  >${gener4bw}(0t)|
+
+!writetreeto ${list3out} ${gener3}T|
+!iflist 0 "<" ${gener4bw}S| 
+!writetreeto ${list4out} ${gener4bw}T|
+!move ${gener4bw}S|  >$gener4n(0t)|
+!filx-minor ${gener4n}s| $excluded
+!iflist 0 "<" ${gener4n}S| 
+!writetreeto ${list4outn} ${gener4n}T|
+
+!move ${excludedin}S| >$excludedout(0t)|
+!move ${gener4n}S| >$excludedout(0t)|
+!iflist 0 "<" ${excludedout}S| 
+!writetreeto ${exclistout} ${excludedout}T|
+!writetreeto ${treeall} (T)
+!prtree
+
+

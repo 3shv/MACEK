@@ -1,0 +1,9 @@
+#
+# the matroid of the complete bipartite graph K_3,3, in a regular representation
+@comment "the matroid of K_3,3 the complete bipartite graph"
+
+	1	1	0	0
+	1	1	1	0
+	1	1	1	1
+	0	1	1	1
+	0	1	0	1

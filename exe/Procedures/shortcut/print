@@ -1,0 +1,9 @@
+# a shortcut for simple printing given matroids...
+!quiet
+!iflist 0 = (S)
+!skip 4
+!verbose
+!print (S)
+!quiet
+!exit
+!prtext "Usage: ./macek -pGFq print matroid1 [matroid2 ... ]"

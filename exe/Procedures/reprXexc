@@ -1,0 +1,139 @@
+# 
+# This MACEK script generates the small excluded minors for PFXX-representable
+# matroids over any partial field, starting in steps from a user-defined
+# given matroid list ({U25} suggested for bigger field than ternary).
+# All inequivalent representations are produced, so it may be desirable
+# to call the '!isompair' command afterward.
+# Beware of possible inequivalent representations of the starting matroids
+# (even for U25!) - all of them have to be considered.
+# 
+# Use: ./macek -pGFX '&reprXexc filebase PFYY [rcb] [suffix] [verbosity]'
+# 	Example as  ./macek -pGF7 '&reprXexc gf7_gf5excl_5_ GF5 b bb'
+# 
+# Before starting the procedure, create the files "gfX-gfYexcl-" with the starting
+# list of matroids to generate from over GF(X),
+# and "gfX-gfYexcl-eexc" containing (possible) extra excluded minors for
+# representability (over other fields, with correct '@inputpf gfZ' for each one).
+# Then run a sequence of commands like these:
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b '
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b b'
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b bb'
+# 		...
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b bbb..'
+# These will generate the excluded minors step-by-step (each step adding one
+# element to the matroids), storing the excluded minors to "gf4-gf5excl-b..b-exc.mck".
+# 
+# We briefly explain the starting list "gfX-gfYexcl-", for example for GF(X)
+# bigger than GF(3) - then all nonbinary nonternary representable matroids contain
+# a U_2,5 or U_3,5 minor, and hence we start from the file (list):
+# 	{ U25 }
+#	!represgen (s) allq >((0T))
+# This file actually includes the default representation of U_2,5, but it also
+# generates all nonequivalent representations for it (which exist over, say, GF(9)).
+# (Notice also that we miss all U_k,k+2 matroids in such a way!)
+# 
+# A table of computed results:
+# 	over GF2 for GF5:	known excluded F7, F7#
+# 	over GF3 for GF5:	4 on 8 elem, 1 on 10 elem, 1 on 12 elem, ...
+# 	over GF4 for GF5:	additional 5 on 8 elem, 29 on 9 elem, ...
+# 	over GF7 for GF5:	additional 9+1 on 7 elem, 65? on 8 elem, ...
+# 		...
+# 
+
+@subd-param1 unknown
+@subd-param2 unknown
+@subd-param3 b
+#@subd-param4
+@subd-param5 1
+
+# the file names for the lists of previously generated exclusions, of the starting
+# exclusions (like those over different pfield), and of the new filename-base:
+@sub-prevexcname "${param1}${param4}-exc"
+@sub-basexcname "${param1}eexc"
+@sub-newfname "${param1}${param4}${param3}"
+
+@sub-givenm "((("
+@sub-prevexc "((()("
+@sub-otherexc "(((2)("
+{
+@name reprXexc-l
+@comment "Given lists..."
+{
+<${param1}${param4}
+@comment "starting list of matroids"
+}
+{
+@comment "previous excluded minors"
+}
+{
+@comment "other excluded minors"
+}
+}
+@sub-work "(()("
+{
+@name reprXexc-w
+@comment "Working subframe..."
+{
+@comment "generated extensions"
+}
+{
+@comment "new excluded minors"
+}
+{
+@comment "new matroid list"
+}
+}
+@sub-temp "((2)("
+{
+@name reprXexc-t
+@comment "Temporary subframe..."
+}
+
+
+# conditionally reading the list of previous excluded minors
+!quiet
+!prtext "Reading the previous (smaller) excluded minors for ${param2} representability..."
+!iffile "${prevexcname}"
+!read "${prevexcname}" >${temp}(t)|
+!iflist 0 < ${temp}s)|
+!move ${temp}(s)| >$prevexc(0t)|
+# reading also a possible list of other basic excluded minors, which are represented
+#  in general over diff pfields, and so their current representations are generated here
+!iffile "${basexcname}"
+!read "${basexcname}" >${temp}(t)|
+!iflist 0 < ${temp}s)|
+!represgen ${temp}(s)| allq >$otherexc(0t)|
+!verbose
+
+# generating the "param3"-extensions to the given list (one step!)
+!prtext "Extending the previous list of current- and ${param2}-representable matroids by $param3..."
+!extend $param3 ${givenm}S)| >${work}((0t)|
+!move ${work}(S)| >${work}()((0t)|
+
+# filtering representability over "param2" and testing previous excl minors
+!prtext "Testing ${param2}-representability of the generated extensions..."
+!verbose $param5
+!rem-repres $param2 ${work}()(s)|
+!move ^1 >${work}(2)((0t)|
+!quiet -$param5
+!quiet
+# (skipping excl minor test if empty lists)
+!prtext "Testing possible previous (smaller) excluded minors in the nonrepresentable extensions..."
+!iflist 0 = ${prevexc}S)|+${otherexc}S)|
+!skip 9
+!iflist 0 = ${work}()(s)|
+!skip 6
+!verbose +2
+!verbose $param5
+!filx-minor ${work}()(s)| ${prevexc}S)|
+!filx-minor ${work}()(s)| ${otherexc}S)|
+!quiet -$param5
+!quiet -2
+!move ${prevexc}S)| >${work}()((0t)|
+!verbose
+
+!prtree
+!writetreeto "${newfname}-exc" ${work}()(T)|
+!writetreeto "${newfname}" ${work}(2)(T)|
+!prtext "All done in this step, start next from the list ${newfname} ..."
+

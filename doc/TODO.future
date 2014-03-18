@@ -1,0 +1,94 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2011  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+
+
+
+
+
+                             TODO.future list for MACEK
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(last updated 15.2. 2005)
+
+This list contains general ideas that may get implemented somewhen in
+the future developement of Macek (or may be just forgotten)...
+
+
+
+implement some program speed-ups :
+	- now the program seems to be reasonably fast...
+	- is it possible and good to express the automorphisms using only group generators?
+	- in displayed minors - first look at all unordered submatrices for the total number
+		of zeros and zero 2x2-subdeterminants, then use only those pairs of rows
+		in further computation that appeared in acceptable submatrices ???
+	- convert also the original dispminor code to the new algorithm...
+	- counting minors in large sparse matrices? how?
+	- 
+	- make calls to gcanon_dispseqtest_scal() more efficient in subseq pre-compare?
+	- faster implementation of alist - especially append ?
+	- enhance strmag_flatlines() so that it can consider element labels for better
+	   distinction ...
+	- cache extra information about tested minors (including "success" of this minor
+	   when finding in others), hashed by the address and by the matrix name ?
+	- 
+	- faster computation of the automorphism group orbits in ematexp.c
+	   (used only for printed output now...)
+	- 
+	- rewrite the input scanner without REJECT (but it is not so slow now...)?
+	   better prepare a completly NEW input syntax !!!
+	- 
+
+
+other program functions :
+	- command breaking a matroid into 3-conn components plus wheels,
+	- implement command for YDelta transformations?
+	- implement pfield automorphisms via '!import' command
+	- implement brute-force orientability testing...
+	- implement the Tutte polynomial (through external/internal activities?)
+	- 
+	- matching names (frames, options, etc) be regexps on demand
+
+
+generalize generating process :
+	- even when we start generating from a strong stabilizer, we get inequivalent
+		representations of one matroid - caused by fact that the representations
+		come from different minors isomorphic to the base one with inequiv repr...
+	  how to solve this problem - update the notion of "equivalence" of elim sequences???
+	- 
+
+
+working with abstract matroids :
+	- it would be good to allow limited work with abstract matroids in the program,
+	    these would include conversions from and to matrix representations,
+	    deletions, contractions, relaxations, then representability,
+	    ...
+	    put all of these to a separate directory as a separate subproject!
+	- 
+
+
+porting the program :
+	- symlinks and backslashes for M$ windows??? - not needed with Cygwin...
+	- 
+
+
+
+

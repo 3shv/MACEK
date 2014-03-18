@@ -1,0 +1,13 @@
+#
+# the matroid V_13 from Truemper's almost-regular matroids
+#  - the only almost-regular extension of Seymour's R12
+@comment "the matroid V_13 from Truemper's almost-regular matroids"
+
+	1	0	1	1	0	0	1
+	0	1	1	1	0	0	0
+	1	0	1	0	1	1	1
+	0	1	0	1	1	1	0
+	1	0	1	0	1	0	0
+	0	1	0	1	0	1	0
+
+@require 1+1 0

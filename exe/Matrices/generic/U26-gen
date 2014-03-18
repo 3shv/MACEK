@@ -1,0 +1,8 @@
+#
+# the matroid U_2,6 generic
+@comment "the matroid U_2,6 uniform"
+
+	1	1	1	1
+	1	X	Y	Z
+
+<require-diff3

@@ -1,0 +1,11 @@
+#
+# the excluded minors for regular matroids
+@comment "the excluded minors for regular matroids"
+
+{
+<U24
+}{
+<F7
+}{
+<"F7#"
+}

@@ -1,0 +1,11 @@
+#
+# the matroid of the graph of 3-cube Q^3, in a regular representation
+@comment "the matroid of the 3-cube graph Q^3"
+
+	1	0	1	0	0
+	1	1	1	0	0
+	1	1	1	1	0
+	0	1	1	1	0
+	0	1	1	1	1
+	0	1	0	1	1
+	0	0	0	1	1

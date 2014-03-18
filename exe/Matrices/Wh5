@@ -1,0 +1,9 @@
+#
+# the matroid W^5 whirl of 5 spokes, in odd characteristic or GF(4,8)
+
+@replace    X 1
+@repl-GF(4) X w
+@repl-GF(8) X w
+@repl-near-reg X (a-1)
+@repl-gmean X a
+<Wh5-gen

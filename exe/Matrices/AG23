@@ -1,0 +1,9 @@
+#
+# the matroid AG(2,3) ternary aff plane
+@comment "the matroid AG(2,3) ternary aff plane"
+
+	0	1	1	2	1	1
+	1	1	0	1	2	1
+	1	0	1	1	1	2
+
+@require 1+1+1 0

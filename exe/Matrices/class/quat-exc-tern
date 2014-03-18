@@ -1,0 +1,11 @@
+#
+# the ternary excluded minors for matroids over GF(4)
+@comment "the ternary excluded minors for GF(4) matroids"
+
+{
+<P8
+}{
+<"F7-"
+}{
+<"F7-#"
+}

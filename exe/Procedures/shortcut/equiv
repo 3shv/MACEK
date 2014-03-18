@@ -1,0 +1,16 @@
+# a shortcut for testing matrix equivalence between given matroids...
+!quiet
+!iflist 2 > (S)
+!skip 11
+!print (S)
+!iflist 2 < (S)
+!skip 4
+!verbose 2
+!equiv ((T)) (()(T))
+!quiet -3
+!exit
+!verbose 2
+!eqpair (S)
+!quiet -3
+!exit
+!prtext "Usage: ./macek -pGFq equiv matroid1 matroid2 [... ]"

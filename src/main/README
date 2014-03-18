@@ -1,0 +1,6 @@
+
+This directory contains the main() function for the program,
+and the command-line processing.
+
+Besides that, the file stcheck.c holds the functions for
+start-up self-tests for the program.

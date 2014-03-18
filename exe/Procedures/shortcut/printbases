@@ -1,0 +1,9 @@
+# a shortcut for printing all bases of the given matroids...
+!quiet
+!iflist 0 = (S)
+!skip 4
+!verbose
+!prbases (S)
+!quiet
+!exit
+!prtext "Usage: ./macek -pGFq printbases matroid1 [matroid2 ... ]"

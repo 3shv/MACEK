@@ -1,0 +1,6 @@
+#
+# the matroid U_3,5 in >=4 elements
+
+<U25
+@transpose
+@comment "the matroid U_3,5 uniform"

@@ -1,0 +1,6 @@
+#
+# the dual matroid of K_5
+
+<grK5
+@transpose
+@comment "the dual matroid of K_5"

@@ -1,0 +1,74 @@
+# 
+# 	(This script comes from version 1.0 of Macek, and so it is outdated now...)
+# 
+# A script computing ternary excluded minors for near-regular matroids.
+# (It is known [Geelen] that all such excluded minors have at most 8 elements.)
+# 
+# The script works with three lists - a list of generated Near-reg extensions,
+#  a list of generated GF3 extensions not containing known Nreg excluded minors,
+#  and a list of (so far) known excluded minors for near-reg.
+# One step generates all Nreg and GF3 extensions, and selects those GF3 ext that
+# are not in the Nreg list (by minor).
+# These new selected Nreg excluded minors are then merged with the known ones.
+# 
+# Generating starts from the 3-whirl Wh3 (by an enhancement to the splitter theorem).
+# 
+# Call this script as  macek -pNREG -g-1 '&excnreg nre6.' .
+#
+@subd-param1	"nre6"
+@subd-param2	"b"
+
+@sub-extdesc	$param2
+@sub-nrein	$param1
+@sub-nretin	$nrein-tern
+@sub-nrexcl	$nrein-excl
+
+{
+@comment "For extensions in Near-Reg :"
+{
+@comment "the starting list"
+<$nrein
+}{
+@comment "the extensions"
+}}
+{
+@comment "For extensions in GF(3) :"
+@ext-forbid $nrexcl
+{
+@comment "the starting list"
+# (must be read in ternary later!)
+}{
+@comment "the extensions"
+}}
+{
+@comment "For filtering minors"
+{}{}
+}
+
+!quiet
+!prtree
+!prtext "Now we generate all next-step extensions in Near-reg."
+!extend $extdesc (((S))) >((()((0t)|
+
+!pfield GF3
+!prtext "Now we generate next-step extensions in GF3 not containing already known excl minors."
+!read $nretin >((3)(t))
+!move ((3)(s)) >(()(((0t)|
+!extend $extdesc (()((S))) >(()(()((0t)|
+
+!move ((()(S)| >((2)(((0t)|
+!import nreg-tr ((2)((S)|
+!rex-minor (()(()(S)| ((2)((S)|
+!move ^1 >((2)(()((0t)|
+
+!read "@comment \"For merging excluded minors :\";$nrexcl" >((3)(t)|
+!move ((2)(()(S)| >((3)((0t)|
+!prtree
+
+!writetreeto "$nrein$extdesc-exc" ((2)(()(T)|
+!writetreeto "$nrein$extdesc-excl" ((3)(T)|
+!writetreeto "$nrein$extdesc-tern" (()(()(T)|
+!pfield Nreg
+!writetreeto "$nrein$extdesc" ((()(T)|
+!prtext "One step of &excnreg is finished. Call the next step with one more \"b\"..."
+

@@ -1,0 +1,9 @@
+# a shortcut for extended printing given matroids...
+!quiet
+!iflist 0 = (S)
+!skip 3
+!verbose 3
+!printmore (S)
+!exit
+!prtext "Usage: ./macek -pGFq prints matroid1 [matroid2 ... ]"
+!prtext "(May take long time for large matroids.)"

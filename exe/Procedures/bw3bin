@@ -1,0 +1,60 @@
+# 
+# 	(This script comes from version 1.0 of Macek, and so it is outdated now...)
+# 
+# This script computes all binar (co+)extensions of the given matroid set $param1.
+# Those ones with branch-width 3 are written to ${param1}b for the next step.
+# Those ones with branch-width 4 are written to ${param1}b-4, and those not having
+# minor in the set bw3-bin-exc are written to ${param1}b-4n.
+# 
+# Call this as:  macek -g-1 -pGF2 '&bw3bin f7...'
+#  (That means, in steps, '&bw3bin f7.', '&bw3bin f7.b', '&bw3bin f7.bb', etc.,
+#   up to '&bw3bin f7.bbbbbb'.)
+# 
+@subd-param1 "f7."
+
+@sub-known-excluded "bw3-bin-exc"
+@sub-excluded "(((S)))"
+{
+@name "bw3bin-w"
+@comment "bw3bin working subframe:"
+{
+<${known-excluded}
+}{
+@name extens1
+@comment "new b-extensions of $input [${param1}]..."
+}{
+@name e-bwidth4
+@comment "those generated with bwidth 4 get here:"
+}{
+@name e-bwidth4n
+@comment "those new excl-minors with bwidth 4 get here:"
+}{
+@name e-bwidth3
+@comment "those next with bwidth 3 get here:"
+}}
+@sub-input "(()(S))"
+{
+< $param1
+@comment "this is the starting set of matroids ${param1}:"
+}
+
+@sub-generto  "(((4)("
+@sub-generall  "(((1)("
+@sub-gener4bw  "(((2)("
+@sub-gener4n  "(((3)("
+!quiet
+!prtree (T)
+
+!extend b $input  >$generto(0t)|
+!move ${generto}S|  >$generall(0t)|
+!rex-bwidth3 ${generto}S|
+!move ^1  >$gener4bw(0t)|
+
+!writetreeto ${param1}b-all (T)
+!writetreeto ${param1}b ${generto}T|
+!writetreeto ${param1}b-4 ${gener4bw}T|
+
+!move ${gener4bw}S|  >$gener4n(0t)|
+!filx-minor ${gener4n}s| $excluded
+!writetreeto ${param1}b-4n ${gener4n}T|
+!prtree

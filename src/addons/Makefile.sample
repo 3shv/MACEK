@@ -1,0 +1,16 @@
+#!/usr/bin/make -f 
+
+TOPDIR = ..
+first:	test
+SOURCE_IGNORE = frcoms-more.inc
+
+include $(TOPDIR)/Make.common
+
+CFLAGS = $(CFLAGS_COMMON)
+
+edit:
+	$(EDITOR)+60+20 $(wildcard *.c)
+#	$(EDITOR)+110+40 *.h
+
+test:	test.o
+

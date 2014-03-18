@@ -1,0 +1,26 @@
+#
+# All 7 regular excluded minors for branchwidth 3
+# 	(already closed on duality).
+@comment "all 7 regular branch-width 3 excluded minors"
+
+{
+<grQ3
+}{
+<grO6
+}{
+<grK5
+}{
+<grK5
+@transpose
+@comment "the dual of K_5 the complete graph"
+@name grK5#
+}{
+<grV8
+}{
+<grV8
+@transpose
+@comment "the dual of the V_8 graph (mobius ladder on 8 vert.)"
+@name grV8#
+}{
+<R10
+}

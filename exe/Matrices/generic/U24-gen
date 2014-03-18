@@ -1,0 +1,9 @@
+#
+# the matroid U_2,4 generic
+@comment "the matroid U_2,4 uniform"
+
+	1	1
+	1	(X)
+
+@require (X)   1
+@require (X)-1 1

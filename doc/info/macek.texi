@@ -1,0 +1,5257 @@
+\input texinfo   @c -*-texinfo-*-
+@ignore
+/********************************************************************************
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2007  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+@end ignore
+
+@setfilename    macek.info
+@settitle       Macek manual
+@setchapternewpage odd
+@tex
+\global\tolerance 9999\global\emergencystretch 1em%
+\global\overfullrule=0pt%
+@end tex
+
+@c Macek-dependent settings, to be updated as needed...
+@set NAME       Macek
+@set VER        1.2.+
+@set EXE        ./macek
+@set XEXE       macek.nodebug
+@set FEXT       .mck
+@set TEMP       /tmp/.macek/
+
+@set MANVER     1.2
+@set MANDATE    25 May 2007
+@set COPYYEAR   2007
+
+@c my addresses
+@set MWEB       http://www.mcs.vuw.ac.nz/research/macek/
+@set CURMWEB    http://www.fi.muni.cz/~hlineny/MACEK/
+@set CURMON     http://arran.fi.muni.cz/macek-online/
+@set XMEMAIL    hlineny@@member.ams.org
+@set MEMAIL     hlineny@@fi.muni.cz
+@c my papers related to Macek
+@set VYMOLA     P. Vymola: Computer-assisted enumeration of small matroids (in Czech only), MSc. Thesis, FI MU Brno, @uref{http://is.muni.cz/th/60663/fi_m/thesis-final.pdf}
+@set GENERTP    P. Hlineny: Combinatorial Generation of Matroid Representations: Theory and Practice, Acta Math. Univ. M.Belii 12 (2005), 31-41, @uref{http://actamath.savbb.sk}
+@set MATGENER   P. Hlineny: Equivalence-Free Exhaustive Generation of Matroid Representations, Discrete Appl. Math. 154 (2006), 1210-1222, @uref{http://dx.doi.org/10.1016/j.dam.2005.12.001}
+@set USINGMTH   P. Hlineny: Using Computer in Matroid Theory Research, Acta Math. Univ. M.Belii 11 (2004), 27-44, @uref{http://actamath.savbb.sk}
+@set BWIDTHGEN  P. Hlineny: On the Excluded Minors for Matroids of Branch-Width Three, Electr. J. of Combinatorics 9 (2002), R32, @uref{http://www.combinatorics.org}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@titlepage
+    @title      M A C E K @hskip 2em @value{VER}
+    @subtitle   .
+    @subtitle   @strong{``MAtroids Computed Efficiently'' Kit}
+    @subtitle   {@value{NAME} version @value{VER}, manual @value{MANVER}.}
+    @subtitle   @value{MANDATE}
+    @author     Petr Hlin@v{e}n@'y
+
+@vskip 2ex
+@tex
+{\tt
+@value{MEMAIL}, @value{XMEMAIL}
+
+@value{MWEB}
+
+@value{CURMWEB}
+
+%\font\sml=cmr9\sml
+%    (Developed with help of Geoff Whittle, Victoria University,
+%     and the Marsden Fund of New Zealand.)
+}
+@end tex
+
+@vskip 7ex
+@c @page    
+@hrule height 1pt 
+@vskip 1ex
+     Copyright @copyright{} 2001--@value{COPYYEAR}  Petr Hlin@v{e}n@'y.
+@vskip 1ex
+     
+     This program is free software; you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation; either version 2 of the License, or
+     (at your option) any later version.
+@par@noindent
+    This program is distributed in the hope that it will be useful,
+    but @emph{without any warranty}; without even the implied warranty of
+    @emph{merchantability or fitness for a particular purpose}.
+    See the GNU General Public License for more details.
+@par@noindent
+     You should have received a copy of the GNU General Public License
+     along with this program; if not, write to the Free Software
+     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+
+@vskip 1ex
+@page
+@c this parts continues title on the second page...
+@tex
+@vskip 20ex
+{\font\lbf=cmbx12\lbf Acknowledgement}
+@vskip 1ex
+The author acknowledges generous support from the Victoria University of Wellington,
+and from the Marsden Fund of New Zealand (a grant to Geoff Whittle)
+for development of @value{NAME} up to version 1.0,
+during 2001 and 2002.
+The author also thanks Geoff Whittle for stimulating discussions
+about the nature and goals of this program,
+mainly in the early stages of development,
+and Steven Archer for testing the program and poolishing this manual in
+version 1.0.
+
+Further development of @value{NAME} in version 1.2 has been supported in parts
+by reserach grants VEGA 1/1002/04 in 2004, by GACR 201/05/050 from 2005 till 2007
+(TU Ostrava),
+and by the research intent MSM0021622419 (FI MU Brno) since 2005.
+See @uref{@value{CURMWEB}}.
+
+An online web-based interface to a demonstration @value{NAME} instance
+has been developed by Marian Krucina (TU Ostrava) with partial support of the education
+grant FRVS 2270/2005.
+See at @uref{@value{CURMON}}.
+
+@vskip 20ex
+{\it
+Please cite @value{NAME} properly (via web page) in all your work where you use it.
+}
+
+@end tex
+@end titlepage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Top,       Overview, ,         (dir)
+@c *************************************************
+
+@menu
+M A C E K  :  ``MAtroids Computed Efficiently'' Kit
+
+What chapters are in this @value{NAME} @value{VER} manual@dots{}
+
+* Overview::         Overview of the @value{NAME} Project.
+* Quickstart::       First few @code{@value{EXE}} examples to show.
+
+* Program::          How to run the @value{NAME} program.
+* Frames::           Frames (matrices) -- basic data entity in the program.
+* Options::          Description of available frame-options.
+* Commands::         Description of available frame-commands.
+
+* Practical::        Practical matroid computations with @value{NAME}.
+* Remark::           Final remarks (reliability, troubleshooting, etc)
+* Index::            Index.
+@end menu
+
+@ifinfo
+@example
+
+@end example
+ This is a Texinfo manual version @value{MANVER} from @value{MANDATE}
+ for the @strong{@value{NAME} Project} by Petr Hlineny.
+
+                  M A C E K  @value{VER}
+ 
+ Copyright @copyright{} 2001--@value{COPYYEAR}  Petr Hlineny.
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+@end ifinfo
+
+@c Contents only for the printed manual...
+
+@contents
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Overview,      Quickstart, Top,      Top
+@c *************************************************
+
+@chapter  Overview of @value{NAME}
+@cindex overview
+
+@c What is the whole program about......
+
+
+The @emph{@value{NAME} Project} has been
+@c (and is, still, being@dots{})
+developed primarily for math researchers in matroid theory.
+(If you do not know what matroid theory is, then the package is likely not for you.)
+This project is intended both to help with usual tiresome matroid routines,
+and to allow for long exhaustive computations over matroid classes.
+We suggest potential users to read the book
+[J.G. Oxley, Matroid Theory, Oxford University Press 1992].
+The project main web page with recent updates
+can be found at @uref{@value{MWEB}},
+or a current page @uref{@value{CURMWEB}}.
+
+The @value{NAME} package deals mainly with matroids represented
+by reduced matrices over finite fields and partial fields.
+(I.e. matrix representations in @value{NAME} are always stripped of the leading
+identity submatrix! @xref{Represmatr}.)
+Many common matroids are distributed with the program, and new ones may
+be easily entered.
+There are various tools for handling matroids, their matrices,
+and sets of matroids.
+One may pivot matrices, delete or contract matroid elements,
+and generate 3-connected extensions for matroid representations.
+Structural tests for minors, equivalence, connectivity, branch-width, girth, etc,
+are also provided in the package.
+From 1.1.9, limited capabilities for computation with ``abstract''
+matroid properties, like isomorphism, flats, aut group, and representability
+over other fields, are added.
+
+You may read about the theoretical background of the @emph{@value{NAME}
+Project}, and about its use in [@value{USINGMTH}].
+Other papers dealing with @value{NAME} are, for example,
+[@value{MATGENER}], [@value{BWIDTHGEN}], or [@value{GENERTP}].
+
+@tex
+\medskip
+@end tex
+However, there are certain limitations to computing power
+of some @value{NAME} functions ---
+following from the fact that @emph{represented matroids} are handled
+in the program.
+For example, one matroid may have many inequivalent representations
+over larger fields, and they behave differently with respect to extensions.
+So be careful and read the documentation thoroughly.
+
+@tex
+{\bf Citations! }
+@end tex
+Please cite the @value{NAME} project in all your papers in which you use
+results and/or examples obtained with @value{NAME}.
+In the bibliography reference please provide the author's and program names
+and exact @value{NAME} version,
+and the web address @value{MWEB}.
+Keep in mind that versions with odd minor number (the number after the first
+dot, like 1.1.x -- a usual GNU convention)
+are unstable development releases intended for
+testing purposes, not for serious computations.
+Please let me know by email if you have successfully used @value{NAME}
+in your scientific research.
+Thank you.
+
+More functions are (still) planned for the future@dots{}
+
+
+@c @node   UsingXXX,          , , Overview
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@section  Using @value{NAME}
+
+@cindex platforms
+
+The @value{NAME} package can be used on (almost) any computer platform
+with the GNU C compiler, relevant C libraries
+and development environment, and the basic set of GNU utilities.
+All these required programs are free for anybody --
+see @uref{http://www.gnu.org}.
+@c In particular, Linux and other unix-clones, with GNU development
+@c and programs installed, would work fine.
+@c The list of current ``officially'' supported platforms
+@c can be found in the file @file{doc/SUPPORTED} of the @value{NAME} package.
+More about supported platforms is in @ref{Installing}.
+(No official support for M$ Windows is provided; however,
+there are no major design reasons why the program would not compile
+and work there after few adjustments.
+The program has been reported to work under Cygwin.)
+
+When considering the @value{NAME} program, do not expect
+anything like a graphical user-interface.
+The program provides only a rich command-line (non-interactive) interface,
+with some basic internal scripting capabilities.
+(Given the nature of the program, and also that of matroids,
+a graphical interface would not be of much use, anyway.)
+So forget your mouse and use the keyboard!
+For more complicated batch-computations,
+you should call the @value{NAME} program within a suitable external scripting
+language, like a unix shell.
+
+Many of the computations in @value{NAME} are exponential, even in their nature,
+and so they may take quite long time.
+(And some other computations take long time simply because the author was
+too lazy to implement them efficiently.)
+However, usually matroids on up to about 20 elements can be handled
+in reasonable computing time on a usual modern PC computer.
+The memory requirements of the program also grow exponentially
+for certain computations, but this should not cause serious problems
+on modern computers with 128MB or more.
+
+
+
+@c @node   UsingXXX,          , , Overview
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@section  About Version 1.2
+
+@cindex version1
+
+The @value{NAME} project started during 2001, and the first stable public release
+was with version 0.8 in March 2002.
+The minor version 0.8.2 is the last one in that branch.
+The following development branch 0.9.x have brought many updates and speed-ups
+to the program, and have resulted in a new stable branch 1.0 in August 2002.
+
+@noindent
+The main improvements in version 1.0 are these:
+@itemize
+@item
+More information about matroid properties, now also including connectivity.
+@ref{Printing}.
+@item
+Cleaner and faster algorithms are now used for various structural functions,
+mainly for minor and equivalence testing.
+@ref{Structural}.
+@item
+Better organized canonical check in extension generating, which makes
+extensions of large matrices much faster.
+@ref{Generating}.
+@item
+Some limited program-flow capabilities for internal scripting in @value{NAME}.
+@ref{Com-Flow}.
+@item
+Confusing atomic matrix-entry expressions like @math{a-1} in
+@samp{-a-1} are no longer scanned from the input.
+That means, @samp{-a-1} is read really as @math{-a-1=-(a+1)}.
+Unfortunately, this may cause some problems when reading matrices
+written by an earlier version of @value{NAME} over partial fields
+like @math{NREG} or @math{GMEAN}.
+@ref{Matrix-Entry}.
+@end itemize
+
+After having released the last minor version 1.0.2 in the beginning of 2003,
+work on a new development line 1.1.x had started.
+The 1.1.x development was frozen in July 2003 with version 1.1.9,
+and a turn into the stable version 1.2 happened in February 2005,
+after long testing and bug-fixing.
+
+@noindent
+The main changes in version 1.2 are these:
+@itemize
+@item
+Command-line options have been added to set file search paths, extensions, etc.
+Moreover, a switch for a ``safe-execution'' version has been added.
+@ref{Command-line}.
+@item
+There are two important new functions testing abstract matroid isomorphism
+(even between matroids represented over different fields),
+and generating matroid representations over other fields.
+These functions are still implemented quite inefficiently, but they are
+reasonably fast for practical use.
+@ref{Isomorphism}.
+@item
+More structural information can be printed out about a matroid
+(like the aut group), and also written to a matroid file.
+@ref{Printing}; @ref{FWriting}.
+@item
+Printed output of many commands has been adjusted to be more practical.
+In some situations, less is printed out, but one may obtain additional
+information by using @samp{!verbose}.
+@item
+Listings of all bases or all circuits in a matroid can be obtained now.
+@ref{Printing}.
+@item
+There are few minor changes in the commands generating matrix extensions.
+@ref{Generating}.
+In particular, one may now generate only those extensions starting with
+specified entries, for the case when there are too many extensions
+even in a single step.
+@end itemize
+
+Already since 2005 some new enhancements have been added, in subversions 
+1.2.09 till 1.2.11.
+The main addition is a possibility to handle lower-than-3-connected matroids
+in extension generation.
+The related options are @samp{@@ext-connected}, @samp{@@ext-cosimple}, 
+@samp{@@ext-simple}, @samp{@@ext-3connected},
+and new supplementary connectivity-testing commands are like
+@samp{!issimple}, @samp{!iscosimple}.
+These additions are not yet included in this documentation,
+but their use is fairly trivial.
+See, for instance, [@value{VYMOLA}] for use of these extensions,
+and @ref{Reliability} for nice consequences.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Quickstart,    Program, Overview,    Top,    
+@c *************************************************
+
+@chapter  Quick-Start
+@cindex quickstart
+
+@c Quickstart, first program examples....
+
+
+This chapter contains installation instructions for the @value{NAME} package,
+and a brief introduction to using the program.
+It is intended for those who want quickly see the program in action,
+without reading the long manual first.
+Consult also the file @file{doc/QUICKSTART} for up-to-date information.
+We provide examples demonstrating the basic parts and concepts of the program.
+However,
+if you want to understand these examples (and the program itself) in depth,
+then there is no other way than to read the whole manual@dots{}
+
+@menu
+So let's start:
+
+* Installing::          How to install the @value{NAME} package.
+* Running::             How to run the @value{NAME} program.
+* Shortcuts::           Simple introductory shortcuts for calling commands.
+* Matrices::            Input and manipulation with matrices / frames.
+* Represmatr::          Quick intro to matroid representations.
+* Examples::            Examples of matroid computations.
+@end menu
+
+
+
+
+@node   Installing,     Running, ,   Quickstart
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section   Installation of @value{NAME}
+@cindex installation
+
+We briefly describe how to install the @value{NAME} package on your computer.
+This description is prepared mainly for skilled computer users.
+If you have problems following these instructions or obtaining the
+required GNU programs, better ask your computer specialist.
+No knowledge of matroids is necessary to install the package.
+
+The @value{NAME} package can be used on almost any computer platform
+with the GNU C (@code{gcc}) compiler, relevant C libraries
+and development environment, and the basic set of GNU utilities
+(at least @code{gmake}, @code{flex}).
+All these required programs are free for anybody --
+get them from @uref{http://www.gnu.org} or other mirrors.
+No C++ compiler/development is necessary.
+In particular, Linux and other unix-clones, with GNU C development
+and GNU utils installed, would work fine.
+The list of the current ``officially'' supported platforms
+can be found in the file @file{doc/SUPPORTED} of the @value{NAME} package.
+
+First create a subdirectory @file{@value{EXE}}, copy the package archive to it,
+and unpack the archive with tar / gzip.
+To obtain a current documentation, read the files in the @file{doc}
+subdirectory, or type @samp{gmake info} in the top directory.
+Then compile the program with @samp{gmake compile} in the top directory.
+You may also run @samp{gmake all} and @samp{gmake xall} in the @file{src}
+subdirectory, with the same effect.
+Keep in mind that you @emph{really have} to use the GNU version of @code{make}
+-- @code{gmake}, not the ordinary version.
+
+If the compilation is successful,
+then the resulting two executables @file{@value{EXE}} and @file{@value{XEXE}}
+appear in the @file{src} subdirectory.
+You may also look at the file @file{src/Make.local} which contain local
+modifications to the project makefiles.
+Various useful things may be set/modified there,
+but these require detailed knowledge of your computing platform.
+When you get into troubles, @ref{Troubleshooting} may help@dots{}
+
+
+
+
+@node   Running,        Shortcuts, Installing,   Quickstart
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section   Run the Program
+@cindex program briefly
+
+Run the @code{@value{EXE}} executable from the @file{exe}
+subdirectory of the package, where it is symlinked from.
+We also suggest to run the program on a terminal with at least 100 columns,
+and better with 132 columns.
+Try first to call @samp{@value{EXE} -h} to see a simple online help.
+Follow the instructions to obtain more online help.
+
+The presented @value{NAME} examples are called from the @code{bash} shell.
+However, similar shells like @code{zsh}, @code{ksh} should work in the same
+way.
+If you want to use @code{csh} or others, you may need to modify or escape
+active characters in the commands.
+(In particular, it looks like @samp{!} is active in @code{tcsh}
+even when it is quoted.
+So if you do not find a way around such a syntactical problem,
+use @code{bash} as your shell.)
+Notice that you need to have the current directory in the shell search path,
+or you have to call the program as @w{@code{./@value{EXE} @dots{}}}.
+
+@tex
+\medskip
+@end tex
+
+The following call 
+@example
+bash$ @value{EXE} -g-2 -pGF3 '!print' U24
+@end example
+@noindent
+produces an output similar to this sample:
+
+@example
+@group
+567~        Printing output of the command "!print ((t))   ..[1]":
+567~  Printing matrix of the frame [U24]: "the matroid U_2,4 uniform"
+   ~   --------------------------------------------------------------
+   ~   matrix 0x80fcb48 [U24], r=2, c=2, tr=0, ref=(nil)
+   ~            '-1')   '-2')
+   ~    
+   ~    '1')       1       1   
+   ~    '2')       1       2   
+   ~   --------------------------------------------------------------
+@end group
+@end example
+
+@noindent
+The option @option{-g-2} suppresses usual debugging messages during program
+run.
+The option @option{-pGF3} selects the finite field @math{GF(3)} for the computation.
+Then there is the program command @code{!print} followed by the command
+parameter -- the matroid @code{U24}.
+(Note the quotas around the command since @code{!} is an active shell
+character.)
+The meaning of @code{!print} command is pretty obvious ---
+it prints the matrix representing the matroid @math{U24} over @math{GF(3)}.
+Numbers on the left of the output mean current time in seconds (modulo 1000),
+which may be useful to see in longer computations.
+
+Next, try to run
+@example
+bash$ @value{EXE} -g+1 -pGF3 '!print' U24
+@end example
+@noindent
+with the option @option{-g+1} (or even higher values) instead of @option{-g-2}.
+In this way, you get some debugging messages that show what the program does.
+For example, among other output lines, you may see:
+
+@example
+@group
+[emflexsu:frame_doinput_()89  ~926] Calling to scan a list of frames...
+[emflexsu:frame_doinput_()99  ~926] Input frame - scanning "!print":
+[emflexsu:frame_doinput_()99  ~926] Input frame - scanning "U24":
+[emflex.l:    frame_flex()520 ~926] Including from 'U24' (->'U24')
+@end group
+@end example
+@noindent   
+The prefix of each debugging line point to the source file, function and line that
+generated the message, and then follows the message itself.
+The debugging messages are mainly for those, who want to follow the program
+computation in the source files, and for catching possible bugs in
+further development.
+If you do not want the messages at all,
+you may run the @code{@value{XEXE}} executable instead.
+However, note that the latter version also skips all internal consistency
+checks in the program.
+
+
+
+
+@node   Shortcuts,        Matrices, Running,   Quickstart
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section   Command Shortcuts
+@cindex command shortcuts
+
+We have seen a simple example of the command @samp{!print} above.
+(Every command in @value{NAME} starts with the character @samp{!}.)
+Since  @value{NAME} commands are quite complex,
+we provide several simplified shortcuts for the most common tasks,
+@ref{Procedures}.
+Those are intended mainly as a fast introduction to the rich @value{NAME}
+capabilities.
+
+The following examples print basic and extended information about 
+some (distributed) matroids.
+@example
+@group
+bash$ @value{EXE} print R10
+bash$ @value{EXE} print grK33 grK5
+bash$ @value{EXE} prints grK5
+bash$ @value{EXE} prints R10
+@end group
+@end example
+The matrices to print may be simply given on a command line;
+with semicolon-separated lines.
+(Note the space starting each entry!)
+@example
+@group
+bash$ @value{EXE} print ' 1 1 0; 0 1 1; 1 1 1'
+bash$ @value{EXE} prints ' 1 1 0; 0 1 1; 1 1 1'
+@end group
+@end example
+
+By default, @value{NAME} considers matrices over @math{GF(2)},
+but that may be easily changed with the @samp{-p} option.
+@example
+@group
+bash$ @value{EXE} -pGF3 print U24
+bash$ @value{EXE} -pGF4 print U35
+bash$ @value{EXE} -pGF3 prints F7-
+@end group
+@end example
+Some more involved shortcuts are presented next.
+@example
+@group
+bash$ @value{EXE} connect R10 R12
+bash$ @value{EXE} minor R10 grK33
+bash$ @value{EXE} -pGF3 minor F7- U24
+bash$ @value{EXE} isomorph R10 'R10;!dual'
+bash$ @value{EXE} isomorph grK33 grK5 R10 grK5 R10
+bash$ @value{EXE} represent-gf5 R10
+bash$ @value{EXE} represent-gf5 F7
+@end group
+@end example
+
+
+
+
+
+@node   Matrices,        Represmatr, Shortcuts,   Quickstart
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section   Matrices and Frames
+@cindex matrices/frames briefly
+@cindex frames/matrices briefly
+
+In order to use the @value{NAME} program, one needs to input the
+@emph{matrices representing matroids}.
+The program works with matrices in the standard reduced form,
+i.e. without the leading identity matrix.
+(So to read off a representation of a matroid by vectors,
+prefix your matrix from @value{NAME} by an identity matrix,
+and then read the element vectors in columns.)
+Some common matroid representations are distributed
+with this package in the @file{exe/Matrices} subdirectory.
+You may easily create your own matroid files in a similar fashion,
+with space-separated entries, line by line.
+Each matrix line should start with a space.
+Comment the files by lines starting with @samp{# }.
+Any bracketed math expression may appear as a matrix entry.
+
+It is also possible to give a matrix directly on the command line like these:
+@example
+@group
+bash$ @value{EXE} -pGF5 '!print' ' 1 2; 3 2+2'
+bash$ @value{EXE} -pGF2 '!print' ' 1 1; 0 0 1; 0 1 0 1'
+bash$ @value{EXE} -pGF4 '!print' ' w w^2; w^3'
+bash$ @value{EXE} -pGF4 '!print' ' w w^2; (w^3+w)*(w+1)'
+@end group
+@end example
+@noindent   
+Here @samp{;} replaces line-ends.
+Notice that, for example, inputting an entry @samp{w} in @math{GF(3)}
+or @samp{2} in @math{GF(2)} cause an error.
+
+@tex
+\medskip
+@end tex
+
+In fact, the basic input entity in the program is called a @emph{frame};
+@xref{Frames}.
+One frame usually holds one matrix, but it may also hold frame-
+@emph{commands} and @emph{options};
+@xref{Commands}, @xref{Options}.
+All given command-line arguments that do not start with @samp{-} are read as
+frames.
+These result in a tree-structure of frames, with the first argument as the root.
+
+The tree structure can be printed with a command:
+@example
+@group
+bash$ @value{EXE} -pGF4 '!prtree' U24 '@{ U25 U35 F7 @}'
+...
+~820~   Printing the subtree of the frame 0x81552b8 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [U24] m2x2  "the matroid U_2,4 uniform"
+    ~       (2.2)fr  [noname-2]   ""
+    ~         (3.1)fr  [U25] m2x3  "the matroid U_2,5 uniform"
+    ~         (3.2)fr  [U35] m3x2  "the matroid U_3,5 uniform"
+    ~         (3.3)fr  [F7] m3x4  "the matroid F_7 Fano"
+~820~  ------------------------------------
+@end group
+@end example
+@noindent   
+The command @code{!prtree} (with no matrix) forms the root frame,
+the next two arguments form its descendant frames,
+and the included matroids @math{U25,U35,F7} form the descendants of the
+second son of the root.
+
+Another example is the command @code{!move} that manipulates the frames in
+the tree (moves, copies, or deletes them).
+To understand this command better, you need to learn about addressing command
+parameters @ref{Addressing}.
+(Nodes of the tree are addressed by bracketed expressions in the natural way;
+@samp{T} picks a node, @samp{S} picks all sons of a node,
+the lower-case letters @samp{t},@samp{s} also erase the selected nodes
+afterwards in some commands.)
+Run the next examples, and see the action:
+
+@example
+@group
+bash$ @value{EXE} '!prtree;!move ((t));!prtree' W3 '@{ W4 R10 R12 @}'
+bash$ @value{EXE} '!prtree;!move (()(t));!prtree' W3 '@{ W4 R10 R12 @}'
+bash$ @value{EXE} '!prtree;!move ((t)(()(t)));!prtree' W3 '@{ W4 R10 R12 @}'
+@end group
+
+@group
+bash$ @value{EXE} '!prtree;!move ((T)) >(()(t));!prtree' W3 '@{ W4 R10 R12 @}'
+bash$ @value{EXE} '!prtree;!move ((T)) >((2)(t));!prtree' W3 '@{ W4 R10 R12 @}'
+bash$ @value{EXE} '!prtree;!move ((t)) >(()(t));!prtree' W3 '@{ W4 R10 R12 @}'
+bash$ @value{EXE} '!prtree;!move ((T)) >(((t)));!prtree' W3 '@{ W4 R10 R12 @}'
+@end group
+
+@group
+bash$ @value{EXE} '!move (()(S)) >(((s)));!prtree' W3 '@{ W4 R10 R12 @}'
+bash$ @value{EXE} '!move (()(S)) >(((t(t(t)))));!prtree' W3 '@{ W4 R10 R12 @}'
+@end group
+@end example
+
+
+
+
+
+@node    Represmatr,     Examples, Matrices,   Quickstart
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Matroid Representations
+@cindex matroid representation
+
+Although we assume the reader of this manual is familiar with matroid theory,
+it may be helpful to include a brief overview of matroid representations
+over fields, so that the reader gets familiar also with our notation
+and @value{NAME}'s terms.
+
+A representation of a matroid @math{M} is a matrix @math{A} over a field @math{F}
+whose columns correspond to the elements of @math{M},
+and linearly independent subsets of columns form the independent sets of @math{M}.
+Clearly, the matroid of @math{A} is unchanged when columns are scaled
+by non-zero elements of @math{F}.
+So we may alternatively view the matrix @math{A} as a point configuration
+in a projective space over @math{F}.
+
+A matroid @math{M} is regular if @math{M} is representable by a 
+totally-unimodular matrix.
+A regular matroid is then representable over all fields.
+We remark that cycle matroids of graphs are regular.
+A matroid @math{M} is binary, or ternary, if @math{M} is representable
+over the fields @math{GF(2)}, or @math{GF(3)}, respectively.
+Not all matroids are representable over a field @math{F},
+some of them are even representable over no field at all.
+One also has to consider the problem that 
+representable matroids typically do not have ``unique'' representations.
+
+Another issue, which has to be particularly considered in the context
+of exhaustive matroid generation (@xref{Generating}.),
+is the one of labeled vs.~unlabeled objects:
+We are interested in generating unlabeled objects to avoid unnecessary
+duplicities, while the objects generated by a computer are (usually)
+implicitly labeled.
+
+
+In practice, it is much better to work only with the reduced
+matrix @math{A'} instead of the full one @math{A = [I | A']},
+i.e. to strip the matrix reprersentation of a matroid by the leading
+identity submatrix @math{I}.
+We say that such @math{A'} displays a basis @math{B} of @math{M}
+where @math{B} is formed by the labels of @math{I}.
+Then actually the rows of @math{A'} correspond to the elements of @math{B}.
+We note that the transpose of @math{A'} is a reduced matrix of the dual
+matroid @math{M*},
+and that removing a column / a row of @math{A'} means deleting / contracting
+the corresponding element in the matroid @math{M}.
+(Eventually, an element can be pivoted to get it as a row / column when needed.)
+
+That is, roughly, the way @value{NAME} works with matroid representations.
+So the rows of a reduced matrix @math{A'} in @value{NAME}
+label elements of a displayed basis of the matroid,
+and the columns label the remaining elements.
+The matroid rank equals the number of matrix rows.
+We, however, note that the element labels in @value{NAME} are there mainly for 
+information purposes, and most of @value{NAME} computations actually
+work with matroids as unlabeled combinatorial objects.
+
+
+
+
+
+@node    Examples,     , Represmatr,   Quickstart
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Examples of Use
+@cindex examples (few)
+
+In this section, we show several more examples demonstrating the use
+of some @value{NAME} commands.
+(Recall that you get an online overview of all commands with
+@samp{@value{EXE} -HHc}.)
+
+One may easily pivot matrices like in the next example:
+@example
+bash$ @value{EXE} -pReg '!print;!pivot 1 2;!print' R10
+@end example
+@noindent
+Matroid elements are deleted or contracted in the following way:
+@example
+@group
+bash$ @value{EXE} -pReg '!print;!delete -3;!print' R10
+bash$ @value{EXE} -pReg '!print;!delete 2;!print' R10
+bash$ @value{EXE} -pReg '!print;!contract 2;!print' R10
+bash$ @value{EXE} -pReg '!print;!contract -5;!print' R10
+@end group
+@end example
+@noindent
+Minor-testing (up to inequivalence of representations!)
+is demonstrated in the next commands:
+@example
+@group
+bash$ @value{EXE} -pReg '!minor' R12 R10
+bash$ @value{EXE} -pReg '!minor' R12 grK33
+@end group
+@end example
+@noindent
+Extensions or coextensions of represented matroids are generated as follows
+(all 3-connected, matrix-equivalence factored-out):
+@example
+@group
+bash$ @value{EXE} -pBinary '!extend c;!prtree' W3
+bash$ @value{EXE} -pReg '!extend c;!prtree' W4
+bash$ @value{EXE} -pReg '!extend r;!prtree' R12
+bash$ @value{EXE} -pReg '!extend b;!prtree' R10
+@end group
+@end example
+@noindent
+Representability and isomorphism over different fields are tested here:
+@example
+@group
+bash$ @value{EXE} -pBinary '!repres GF3;!repres GF4' F7
+bash$ @value{EXE} -pBinary '!isomorph' F7 '@@inputpf GF3;P7'
+@end group
+
+@end example
+
+Some more involved chains of commands are demonstrated in the following examples:
+@example
+@group
+bash$ @value{EXE} -pReg '!deleach;!prtree;!filt-minor;!prtree' R12 grK33
+bash$ @value{EXE} -pReg '!deleach;!prtree;!filx-minor;!prtree' R12 grK33
+bash$ @value{EXE} -pdyadic '!extend r;!prtree;!minor' F7- 'F7-;!dual'
+@end group
+@end example
+@noindent
+Finally, one may print out many interesting structural properties of a
+matroid using the following command:
+@example
+@group
+bash$ @value{EXE} -pGF3 '!verbose 2;!printmore' P7
+...
+~420~          Output of the command "!printmore ((t))   [1]":
+    ~   ------------------------------------------------------
+    ~   matrix 0x817eef0 [P7], r=3, c=4, tr=0, ref=(nil)
+    ~            '-1')   '-2')   '-3')   '-4')
+    ~    '1')       1       o       1       1
+    ~    '2')       1       1       o       1
+    ~    '3')       2       1       1       o
+    ~   ------------------------------------------------------
+~420~   Number of matroid [P7] bases:  30
+~420~   Aut group orbits of [P7] are (via first elem id):
+                (1, 1, 3,  1, 1, 1, 1)
+@end group
+@group
+
+~420~   There are -NO- (nontrivial) flats in [P7] of rank 0.
+~420~   There are -NO- (nontrivial) flats in [P7] of rank 1.
+~420~   Listing all (nontrivial) flats in [P7] of rank 2:
+    ~    - rank-2 flat (1)      @{  -1, -2, -3 @}
+    ~    - rank-2 flat (2)      @{ 3,  -1, -4 @}
+    ~    - rank-2 flat (3)      @{ 1, 3,  -3 @}
+    ~    - rank-2 flat (4)      @{ 1, 2,  -4 @}
+    ~    - rank-2 flat (5)      @{ 2, 3,  -2 @}
+@end group
+@group
+
+~420~   There are -NO- exact separations in [P7] of lambda 1.
+~420~   There are -NO- exact separations in [P7] of lambda 2.
+~420~   Listing all exact separations in [P7] of lambda 3:
+    ~    - 3-separation (1)     (  -1, -2, -3, )
+    ~    - 3-separation (2)     ( 1, 2,  -4, )
+    ~    - 3-separation (3)     ( 1, 3,  -3, )
+    ~    - 3-separation (4)     ( 2, 3,  -2, )
+    ~    - 3-separation (5)     ( 3,  -1, -4, )
+@end group
+@group
+
+~420~   Matroid [P7] connectivity is 3.
+~420~   Matroid [P7] girth (shortest cycle) is 3.
+~420~   Matroid [P7] representability: -GF(2)- +GF(3)+
+                 +GF(4)+ +GF(5)+ +GF(7)+ +GF(8)+ +GF(9)+
+    ~   ------------------------------------------------------
+@end group
+@end example
+
+@example
+
+@group
+bash$ @value{EXE} -pGF3 '!prbases' P7
+...
+~966~   Number of matroid [P7] bases:  30
+    ~    - base (1)     @{ 1, 2, 3 @}
+    ~    - base (2)     @{ -1, 2, 3 @}
+    ~    - base (3)     @{ -3, 2, 3 @}
+    ~    - base (4)     @{ -4, 2, 3 @}
+...
+    ~    - base (26)    @{ 1, -4, -2 @}
+    ~    - base (27)    @{ 1, -4, -3 @}
+    ~    - base (28)    @{ 1, 2, -1 @}
+    ~    - base (29)    @{ 1, 2, -2 @}
+    ~    - base (30)    @{ 1, 2, -3 @}
+@end group
+
+@group
+bash$ @value{EXE} -pGF3 '!prcircuits' P7
+...
+~053~   Number of matroid [P7] bases:  30
+    ~    - circuit (1)  @{ 1, 2, 3, -1 @}         len 4,
+    ~    - circuit (2)  @{ 2, 3, -2 @}            len 3,
+    ~    - circuit (3)  @{ 1, 3, -3 @}            len 3,
+    ~    - circuit (4)  @{ 1, 2, -4 @}            len 3,
+    ~    - circuit (5)  @{ -1, 2, 3, -3 @}        len 4,
+...
+    ~    - circuit (18) @{ -1, 2, -2, 1 @}        len 4,
+    ~    - circuit (19) @{ -1, 2, -3, 1 @}        len 4,
+    ~    - circuit (20) @{ -2, 2, -3, 1 @}        len 4,
+@end group
+@end example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Program,       Frames, Quickstart,    Top,    
+@c *************************************************
+
+@chapter  The @value{NAME} Program
+
+@c Description of the executable, and of command-line options and parameters...
+@cindex @value{NAME} program
+@cindex program
+
+
+First, read the installation instructions in @xref{Installing}.
+After installing the @value{NAME} program successfully,
+you find the executable(s) in the @file{src} subdirectory of the package.
+However, we suggest to run the executable from the @file{exe}
+subdirectory of the package, where it is symlinked from.
+
+Since the @value{NAME} program has only command-line interface,
+we suggest to run it within a suitable (comfortable) command-shell,
+like unix shells @code{bash}, @code{zsh}, new @code{ksh} or similar.
+If you want to use @code{csh}-clones, you would probably have to adjust
+the provided examples.
+(In particular, it looks like @samp{!} is active in @code{tcsh}
+even when it is quoted.
+So if you do not find a way around such a syntactical problem,
+use @code{bash} as your shell.)
+Moreover, to get the program output neatly organized,
+we suggest to use a terminal of 100 or more (up to 132) characters wide.
+
+The program has two executables --- @code{@value{EXE}} and @code{@value{XEXE}}.
+Usually you would run the first one.
+The second executable, @code{@value{XEXE}}, is, however, faster since it skips
+most of the internal consistency checks and all debugging messages.
+So it is suitable for long computations when you are already sure
+that your script computes the right results correctly.
+
+
+@menu
+* Command-line::        What command-line arguments are accepted in the program.
+* Frame-arg::           About non-option program arguments -- the input frames.
+* Messages::            Program output and messages.
+* Errors::              Error reporting in the program.
+* Environment::         Program environment, files, paths, etc.
+* P-Fields::            Introduction to partial fields and their use.
+@end menu
+
+
+
+
+@node    Command-line, Frame-arg, ,   Program
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Command-line Arguments
+@cindex command-line
+@cindex arguments
+
+
+We list all command-line options of the @value{NAME} program
+(i.e. all recognized arguments starting with @samp{-}):
+
+@menu
+* -g::        Adjust the debugging level.
+* -h::        Simple help.
+* -H::        More help on topics.
+* -p::        Select a (p)field.
+* -r::        Append to read path.
+* -R::        Insert to read path.
+* -w::        Output directory.
+* -t::        Temp directory.
+* -s::        Running in a safe mode
+* -S::        Running in a very safe mode
+* -T::        Printing time in output.
+* -v::        Version information.
+* -x::        Change file extension.
+@end menu
+
+@node   -g, -h, ,    Command-line
+@cindex -g
+@noindent * @code{-gN} (or @code{--debug=N})
+Adjust the debugging level in the program by @math{N} ---
+how much is printed during program run
+@xref{Messages}.
+(Not applicable to @code{@value{XEXE}}.)
+
+@node   -h, -H, -g,    Command-line
+@cindex -h
+@noindent * @code{-h} (or @code{--help})
+Print a simple program help.
+
+@node   -H, -p, -h,    Command-line
+@cindex -H
+@noindent * @code{-H[H][pfco]}
+Print more help on specified topics
+(@code{p}artial fields, @code{f}rames, @code{c}ommands, @code{o}ptions),
+and even more with @code{-HH}.
+@xref{Frames}.
+
+@node   -p, -r, -H,    Command-line
+@cindex -p
+@noindent * @code{-pF} (or @code{--pfield==F})
+Set the default partial field in the program to @math{F}.
+@xref{P-Fields}.
+
+@node   -r, -R, -p,    Command-line
+@cindex -r
+@noindent * @code{-r dir} (or @code{--readpathapp=dir})
+Append given @file{dir} at the end of the file search path for reading.
+@xref{Environment}.
+
+@node   -R, -w, -r,    Command-line
+@cindex -R
+@noindent * @code{-R dir} (or @code{--readpathins=dir})
+Insert given @file{dir} as the first one in the file search path for reading.
+@xref{Environment}.
+
+@node   -w, -t, -R,    Command-line
+@cindex -w
+@noindent * @code{-w dir} (or @code{--writedir=dir})
+Insert given @file{dir} as the first one in the file search path for writing,
+i.e. to use @file{dir} for writing all data files if possible.
+@xref{Environment}.
+
+@node   -t, -s, -w,    Command-line
+@cindex -t
+@noindent * @code{-t pref} (or @code{--temps=pref})
+Change the prefix (@file{/tmp/.macek/}) added to all temporarily
+and automatically writen data files in the program.
+(Use @code{-t-} to disable all autosaving.)
+
+@node   -s, -S, -t,    Command-line
+@cindex -s
+@noindent * @code{-s} (or @code{--safe})
+Run the @value{NAME} program in a safe mode -- not allowing shell execution.
+@xref{Com-Flow}.
+
+@node   -S, -T, -s,    Command-line
+@cindex -S
+@noindent * @code{-S} (or @code{--safest})
+Run the @value{NAME} program in a very safe mode -- not allowing shell
+execution, no further changes to file paths,
+and restricting file names only inside the current writing subdirectory
+(forbidding @code{/fname} and @code{x/../fname}).
+@xref{Environment},
+@ref{FWriting}.
+
+@node   -T, -v, -S,    Command-line
+@cindex -T
+@noindent * @code{-T[smhq]} (or @code{--time=[smhq]})
+Print (system) time in each output line in seconds, minutes, or hours
+(default in seconds).
+Use @code{-Tq} to disable printing time in output lines.
+
+@node   -v, -x, -T,    Command-line
+@cindex -v
+@noindent * @code{-v} (or @code{--version})
+Print the program version.
+
+@node   -x, ,  -v,   Command-line
+@cindex -x
+@noindent * @code{-x ext} (or @code{--extension=ext})
+Use @file{.ext} as the usual extension for frame files.
+(The extension is prefered over a plain file name when writing to disk.)
+@xref{Environment}.
+
+
+
+@node    Frame-arg, Messages, Command-line,   Program
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Frame Input
+@cindex frame input
+@c @cindex frame-arg
+
+
+All other command-line arguments of the @value{NAME} program
+(that do not start with @samp{-})
+are read as @emph{frames};
+they form the program input.
+A frame is the basic data-entity in the program.
+@xref{Frames}.
+
+As explained later in details,
+the frames form a tree-structure in the program.
+The first frame-arguments forms the root of the tree,
+and all others are its sons.
+Moreover, some frames may include other subframes
+that are then stored as their sons, and so on@dots{}
+
+When giving frames as arguments to the program, do not forget
+to quote them, as they may contain spaces and active shell characters
+inside.
+
+
+
+
+@node    Messages, Errors, Frame-arg,   Program
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Program Output
+@cindex output
+@cindex messages
+@cindex program output
+
+There are two categories of messages printed from the @value{NAME} program ---
+the regular @emph{output}, and the @emph{debugging messages}.
+(Debugging messages are used to trace the program execution,
+and to provide additional profiling information.)
+
+Typical command output in the program looks like the following:
+@example
+@group
+705~  Printing the subtree of the frame 0x80e9a38 [noname]:
+   ~   (1.1)fr  [noname] ""
+   ~     (2.1)fr  [U25] "the matroid U_2,5 uniform"
+   ~       (3.1)fr  [U25_r1] "mat #1 row co-exten to 'U25'"
+@end group
+@end example
+@noindent
+For profiling purposes, each output line starts with the current time
+@code{~nnn~} in seconds modulo 1000.
+Then the output itself follows.
+
+Typical debugging message in the program looks like the following:
+@example
+[gener.c:gener_extensions()368 ~520] >>extension #1 of [U25]: 1,w+1,w
+@end example
+@noindent
+The starting bracketed information contain the source file name,
+the function, and the line of the message, and the current time
+in seconds modulo 1000.
+These information allow to easily track the program computation
+in the program source.
+The next text message then tells you what the program currently does.
+You may control the amount of printed debugging messages with
+@ref{Command-line}.
+No debugging messages are printed from the @code{@value{XEXE}} executable.
+
+
+
+
+@node    Errors, Environment, Messages,   Program
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Error Reporting
+@cindex errors
+@cindex messages/errors
+@cindex program error
+
+If anything unusual or problematic happens in the @value{NAME} program,
+then an @emph{error message} is issued.
+Similarly as in debugging messages @ref{Messages},
+an error message first tells you what function in what source file generated this
+message, and then the text description follows.
+Fatal errors immediately terminate the program,
+while the program run continues for other errors.
+(However, this may cause subsequent induced errors.)
+Additionally, the programs prints a warning at the end
+when an error happened during the computation.
+
+A usual error message looks like the next example
+@example
+@group
+*** ERROR (by emflexsup.c, in yyincl() 412) in "NOxxx" l.1: ***
+  Cannot open include file 'NOxxx'!
+@end group
+@end example
+@noindent
+or
+@example
+@group
+*** ERROR: (by frameop.c, in frame_getparamfr_r() l.706) ***
+  Missing requested subframe of 0x80ea5f8 in '(t|', depth 1.
+@end group
+@end example
+@noindent
+Such messages usually tell you that there was something wrong with
+the program input or commands.
+You have to correct the input to get your computation right@dots{}
+
+Moreover, there is another more serious type of error messages,
+called @emph{program errors},
+which start with @w{@samp{Program ERROR [bad:-(]: }}.
+These indicate that something very wrong happened inside the program.
+Such a program error may happen after a usual error.
+If a program error is issued for a correct program input,
+then it indicates a bug in the program.
+Please report such incidents to the author at
+@value{MWEB} or @value{MEMAIL}.
+
+@tex
+\medskip
+@end tex
+@cindex internal checking
+
+To make the @value{NAME} program more reliable,
+there is number of internal checks implemented at various places
+in @code{@value{EXE}}.
+(These checks usually watch consistency of data structures, or provide
+alternative ways of computing the same results.)
+Uncovered inconsistencies result in program errors.
+Learn more about them in the program sources.
+However, such internal checks take time,
+and so they are often only randomized to make things faster.
+The provided alternative fast executable @code{@value{XEXE}}
+skips all these internal checks.
+
+
+
+
+@node    Environment, P-Fields, Errors,   Program
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Program Environment and Files
+@cindex environment
+
+This section describes how the @value{NAME} program interacts
+with its computing environment;
+including reading / writing files,
+search paths, using environment variables, etc@dots{}
+
+The program input is taken from one input stream
+that starts with the command-line argument,
+but then it may include input from arbitrary files.
+File names follow unix conventions,
+and they are case-sensitive (of course, if supported by the system).
+A file name may contain spaces and other strange characters,
+but then it must be quoted.
+Be reasonable, and use ``normal'' file names, though.
+
+If a file name starts with the slash @samp{/},
+then it is taken as an absolute path from the filesystem root.
+Similarly file names starting with @samp{./} or @samp{../}
+are searched from within the current directory.
+Otherwise, the files is searched on the input search path,
+which may be listed by calling @samp{@value{EXE} -Hf},
+and changed using @samp{-r dir} or @samp{-R dir} on the command line.
+@xref{Command-line}.
+The output search path (which is different!) is used when writing files,
+and the prefered output directory may be set using @samp{-w dir} on the
+command line.
+
+A special file name handling applies in the safest running mode @samp{-S},
+@ref{Command-line}.
+Then no names starting with @samp{/} or containing @samp{../} are allowed,
+and all such dangerous characters are replaced with underscores.
+This applies both to reading and writing files.
+Moreover, the write path is restricted to the first entry
+(which is supposed to be set by the user with @samp{-wdir}),
+and no other dirctories allow for overwriting files.
+
+When reading, the given file name is first tried without additional extension,
+and then the default extension is appended.
+When writing to a file,
+the default extension is automatically appended unless the file
+already has an extension.
+The program implements also an output dir path for writing files ---
+a default entry of the path is used only when the directory already exists.
+However, when a user inserts a new directory to the path with @samp{-w dir},
+then this directory is created before writing.
+By default, @value{NAME} tries to write output files to subdirectories
+@file{out} or @file{temp} if they exist, or to the current directory.
+
+To avoid an accidental loss of computing data, the @value{NAME} program in some
+situations automatically saves the whole frame tree
+to the @file{@value{TEMP}} directory.
+If the program computation is long (in about minutes), then the frame is saved
+to the file @file{@value{TEMP}macek-out-NN@value{FEXT}}.
+Similarly, if an error happens, then the current frame tree
+is saved to @file{@value{TEMP}macek-err-NN@value{FEXT}}.
+A message is printed out after such automatic save.
+To avoid automatic saving of such files completly, give
+@samp{-t-} on the command line.
+@xref{Command-line}.
+
+@tex
+\medskip
+@end tex
+Handling environment variables may be added later......
+
+
+
+
+@node    P-Fields, , Environment,   Program
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section    Partial Fields
+@cindex field
+@cindex partial field
+
+The @value{NAME} program can work with matrices over
+so called @emph{partial fields}.
+A partial field is an extension of a usual field which allows
+the sum to be a partial operation
+(i.e. not all results are defined).
+A typical example are regular (also known as totally-unimodular)
+matrices in which only the numbers @math{-1,0,1} are used,
+and the sums @math{1+1} or @math{-1-1} are undefined.
+You do not need to know about partial fields to use this program,
+just consider usual finite fields instead.
+
+The program works only with finite partial fields,
+which means those in which the equation @math{x=y+1} has finitely
+many solutions.
+This includes all finite fields.
+To obtain the list of all partial fields currently implemented
+in the @value{NAME} program, run @samp{@value{EXE} -HHp}.
+You set the partial field for the program as with
+@code{-pPF} in @ref{Command-line}.
+If you want to add more partial fields to the program,
+you have to update the program source and recompile it.
+(See the file @file{src/pfield/pfdef-more.inc}.)
+
+Each partial field in the program is represented by the generators
+of the multiplicative subgroup.
+Specifically, each number is given by a sign (with values 0,-1,1),
+and a list of integral exponents corresponding to the generators.
+Multiplication is implemented in the obvious way.
+Addition is implemented via multiplication
+and a table of @emph{fundamental elements}
+--- those @math{x} for which @math{x-1} is defined.
+If some input expression (sum) is not defined in the partial field,
+then an error is reported.
+Division by zero results in a zero value, but no error is reported.
+
+A matrix over a partial field is @emph{proper}
+if all of its subdeterminants are defined.
+Then also all subsequent matrix operations in the program will be defined.
+When reading input, proper matrices are checked by a randomized test
+(unless this feature is switched off),
+and possible errors are reported.
+One may also thoroughly test proper matrices with an explicit command
+(which is quite slow), @ref{Structural}.
+If it still happens that an improper matrix gets into the program,
+then lots of arithmetic-error messages may be reported
+during program execution.
+
+@tex
+\medskip
+@end tex
+
+One may also change between partial fields during program execution,
+and to translate matrices from one partial field to another.
+The list of all supported partial field translations, run
+@samp{@value{EXE} -HHp}.
+Read more in @ref{Diff-fields}@dots{}
+
+
+@tex
+\medskip
+@emph{Remark. }
+Partial fields naturally (and often implicitly)
+appear in matroid-representation theory,
+like for totally-unimodular or dyadic matrices.
+They were formalized by Charles Semple and Geoff Whittle in
+[Partial Fields and Matroid Representation,
+Advances in Applied Mathematics 17 (1996), 184-208].
+We follow their formalization here.
+@end tex
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Frames,        Options, Program,    Top,    
+@c *************************************************
+
+@chapter  Frames -- Data Handling
+
+@c Describe frames, tree-structure, addressing, etc...
+
+@cindex frame
+
+
+As noted above,
+the basic data entity in the @value{NAME} program is called a @emph{frame}.
+One frame usually holds a matrix representation (only one),
+but it may also hold an arbitrary number of
+frame- @emph{commands} and @emph{options};
+@ref{Commands}, @ref{Options}.
+Each frame can be identified by its name @ref{Naming}.
+
+One frame may also refer to several subframes, called its @emph{sons}.
+In this way, frames in the program form a rooted tree-structure;
+the frames are the nodes of the tree.
+(In general, the structure of frames could form an arbitrary directed
+graph, but the program allows only one rooted tree as the frame structure.)
+
+
+@menu
+* Frame-syntax::    Input syntax for reading frames.
+* Matrix-Entry::    Matrices and their entries given in frames.
+* Representations:: Matroid representations by matrices and related theory.
+* Subframes::       How to give subframes in a frame.
+* Addressing::      Addressing parameters in the frame-tree.
+* Substitutions::   Macro substitutions used in frame input.
+@end menu
+
+
+
+
+@node   Frame-syntax, Matrix-Entry, ,    Frames
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     General Input Syntax
+@cindex frame syntax
+@cindex input syntax
+@cindex syntax/frame
+
+
+Frames are given to the @value{NAME} program in a text format.
+The frame input is organized by lines which
+may have several different meanings.
+A line starting with @samp{#} or @samp{%} is a @emph{comment line},
+and it is ignored.
+A line starting with space(s) or @samp{=} is a @emph{matrix line}
+--- its expressions define the entries of the matrix in this frame.
+For example, let the following be the file @file{U24x}:
+@example
+@group
+# The uniform matroid U_2,4 represented over GF(3) or GF(5).
+  1     1
+  1     2
+@end group
+@end example
+
+A line starting with @samp{<} or the keyword @samp{include}
+is an @emph{include line}.
+Each subsequent word on such a line gives a file-name to be included
+into the input stream.
+If the file-names contain special characters, like a space,
+enclose them into quotas like
+@w{@samp{< "long file name@value{FEXT}"}}.
+Note that include lines have nothing to do with subframes.
+We continue the previous example with the file @file{U35x}, using an include:
+@example
+@group
+# The uniform matroid U_3,5 represented over GF(5).
+< U24x
+  1     3
+@end group
+@end example
+
+Lines starting options, commands, or subframes are described in details later.
+For now, we just give a simple introduction.
+A @emph{command} is given on a line starting with @samp{!} or the keyword @samp{command}.
+The next call shows the command for printing a matrix.
+@example
+bash$ @value{EXE} -pGF5 '!print' U25
+@end example
+@noindent
+An @emph{option} is given on a line starting with @samp{@@} or the keyword @samp{option}.
+One useful basic option tells the program to consider
+the previous entered matrix entries in the matrix-transposed way.
+This example shows an easy way to obtain a file for the matroid @math{U25}
+from @math{U35} (cf. the previous paragraph).
+@example
+@group
+# The uniform matroid U_2,5 represented over GF(5),
+#  obtained by transposing U_3,5.
+< U35x
+@@transpose
+@end group
+@end example
+
+@tex
+\medskip
+@end tex
+@anchor{line-shortcuts}
+
+As already noted, input frames are given to the program
+as command-line arguments
+@ref{Frame-arg}.
+To make the life easier, there are several shortcuts used for an
+input text taken from the command-line:
+Before reading the frame, all occurrences of the character @samp{;}
+on the command-line are replaced by newlines,
+and all occurrences of @samp{,} are replaced by spaces.
+This does not apply to quoted strings inside the input.
+Moreover, any resulting input line that starts with a digit is taken
+for a matrix line,
+and any line starting with a letter or one of @samp{./~}
+is taken for an include line.
+In particular, an input @samp{U24} given as an argument to the program
+means to read the file @file{U24}
+(the same as the ``full syntax'' @samp{< U24}).
+
+Using these shortcuts, one may give the whole input matrix on a line.
+Moreover, one may combine the matrix input with commands or options,
+and even with include lines
+(the matrix is then a concatenation of all input matrix lines):
+@example
+@group
+bash$ @value{EXE} -pGF5 '!print; 1 2; 3 4'
+bash$ @value{EXE} -pGF5 '1,2;!print;3,4'
+bash$ @value{EXE} -pGF5 'U24; 0 2; 3 4 ;!print'
+@end group
+@end example
+
+@noindent
+In this context we remark that one cannot input a list of matroids
+like @samp{ U24; U25; U35} since this would result in concatenation
+of all three matrices.
+On the other hand, another shortcut described later allows
+to simply input a list of matroids as subframes.
+@ref{Subframes}.
+@example
+@group
+bash$ @value{EXE} -pGF5 '!prtree;!print ((S))' '@{U24 U25 U35@}'
+@end group
+@end example
+
+
+
+
+@node   Matrix-Entry, Representations, Frame-syntax,    Frames
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Matrices and their Entries
+@cindex matrix entry
+@cindex frame/matrix
+@cindex expression
+
+The program works with matrices representing matroids
+in the standard reduced form, i.e. without the leading unit submatrix.
+In this way the rows of the matrix correspond to the elements of
+a selected basis, and the columns to the remaining matroid elements.
+Before reading on here, it is good to understand (partial) fields;
+@xref{P-Fields}.
+We provide a more theoretical overview of matrix representations
+and their (in)equivalence in the next section.
+
+This part provides a detailed description of matrix entries in frames.
+In general, the expressions on the @math{n}-th matrix line
+of the frame input give the entries of the @math{n}-th row of
+the matrix.
+(Modulo possible use of the @samp{@@transpose} option.)
+On one matrix line, the @math{k}-th expression gives
+the entry in the @math{k}-th column.
+The total number of rows of the resulting matrix is equal to
+the number of input matrix lines,
+and the total number of columns is equal to the maximal number
+of expressions over all matrix lines.
+Entries that are not directly given
+(like the rest of a short matrix line) are filled with zeros.
+
+@example
+@group
+bash$ @value{EXE} '!print' ' 1 0 1; 0 0 0 0 1'
+bash$ @value{EXE} ' 0;!print; 1 0 1; 1 0 0 0 1'
+bash$ @value{EXE} '!print; 0; 1 0 1; 1 0 0 0 1;@@transpose'
+bash$ @value{EXE} '!print' ' 1 0 1 1;@@transpose; 0 0 1 0 1'
+@end group
+@end example
+
+An @emph{expression} on the matrix line is a sequence of characters
+with no spaces.
+Spaces separate one expression from another.
+The @emph{atomic expressions} describe generators of the partial field,
+and depend on its selection @ref{P-Fields}.
+Moreover, one may use a special symbol @samp{o} for zero.
+An expression is then built up from atomic expressions
+using parentheses @samp{()} and symbols @samp{+-}, @samp{*/},
+and @samp{^} for arithmetic operations in the natural way.
+
+It is best to illustrate matrix expressions by several examples.
+Keep in mind that not all expressions are defined in partial fields,
+so they may result in an error message.
+@example
+@group
+bash$ @value{EXE} -pGF4  '!print' ' 1+w^2  w*(w+w^3)  1+w+w*w'
+bash$ @value{EXE} -pGF5  '!print' ' 1+1+1  2^2+3^3+4^4'
+bash$ @value{EXE} -pNREG '!print' ' (a^4-a^3)^2  ((a-1)^2+a-1)*(a^3-a^2)'
+@end group
+@end example
+@noindent
+Notice that some atomic expressions may look similarly like arithmetic operations.
+A good example is the generator @math{a-1} of the near-regular partial field.
+In such a case we use brackets @samp{[a-1]} for the generator.
+(This is an important change from the pre-1.0 versions of @value{NAME}
+which scanned @samp{a-1} as an atom,
+creating confusion in expressions like @math{-a-1}.)
+However, an input like @samp{(a-1)^2} is still correct -- this is evaluated
+as arithmetic subtraction and power.
+If you are still confused, then use more parentheses.
+
+@tex
+\medskip
+@end tex
+
+Since we want to use one input file to represent the same matroid
+over different partial fields,
+we need a way to replace ``transcendental elements'' in the
+general representation matrix by specific field elements.
+We also need to ensure that the current partial field has necessary
+algebraic properties to represent the matroid.
+@xref{Substitution}.
+
+There is an option @samp{@@replace} that accomplishes the first task.
+It is used as @w{@samp{@@replace X (a-1)}} to replace all further occurrences
+of the symbol @samp{X} on the matrix input with the expression @samp{(a-1)}.
+(We suggest to use upper-case letters for transcendentals,
+and parentheses around replaced expressions to avoid confusion after the replacement.)
+Analogously,
+an option like @w{@samp{@@repl-PF X (a^2)}} replaces the symbol @samp{X} only
+in one specific partial field @code{PF}.
+This pfield-specific replacement has priority.
+The symbol replacement is fully recursive, and it may be used only in matrices.
+One may prevent a symbol from a recursive replacement by prefixing
+it with the underscore @samp{_}, which is otherwise silently ignored
+on matrix lines.
+
+Another option @samp{@@require} checks necessary algebraic properties
+of the current partial field.
+Use it as @w{@samp{@@require a+1 [.01]}},
+where the version with one expression followed by a dot
+checks whether the expression is defined over the current partial field,
+and the version with the second parameter as @samp{0} or @samp{1}
+check whether the expression value is zero or nonzero.
+
+As an example we show the Fano matroid with a requirement
+of characteristic 2.
+@example
+@group
+@@comment "the matroid F_7 Fano"
+@@require 1+1 0
+        1       1       1       0
+        1       1       0       1
+        1       0       1       1
+@end group
+@end example
+@noindent
+Another example shows use of the symbolic replacement
+to give a representation of the matroid @math{U24} in various finite fields.
+(Notice that if @math{-1} was substituted for @math{X} over @math{GF(4)},
+then the second requirement would fail.)
+@example
+@group
+@comment "the matroid U_2,4 in various fields"
+@@replace    X    -1
+@@repl-GF(4) X     w
+@@require    (X)   1
+@@require    (X)-1 1
+        1       1
+        1       (X)
+@end group
+@end example
+@noindent
+The next calls show the use of @samp{_} in preventing recursive replacements.
+(The first call obviously results in an error.)
+@example
+@group  
+bash$ @value{EXE} -pGF4 '@@replace w w+1;!print' U24
+bash$ @value{EXE} -pGF4 '@@replace w _w+1;!print' U24
+@end group
+@end example
+
+@tex
+\medskip  
+@end tex
+
+Some common matroid representations are distributed
+with this package in the @file{exe/Matrices} subdirectory.
+We do not list them here since more matroids are added frequently.
+Look at the file listing of @file{exe/Matrices/ *} to see all of them.
+Each distributed matroid file is commented.
+You may easily create your own matroid files in a similar fashion.
+We suggest to enter new matroid representations (if possible) as 
+highly symmetric matrices -- see the command @samp{!selfmap}.
+A symmetric matrix may help some algorithms to run faster.
+
+If you create new matroid files that may be interesting and useful to others,
+please send them to the author.
+
+
+
+
+@node   Representations, Subframes, Matrix-Entry,   Frames
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section      Matroid Representations
+@cindex matroid representation
+@cindex matrix/matroid
+@cindex matrix equivalence
+@cindex standard-form matrix
+
+In general, a matroid representation is a matrix whose columns
+represent the matroid elements,
+and usual linear dependency determines the dependent sets.
+However, it is better to work with a representation
+in the so called @emph{standard reduced form}, obtained as follows:
+Choose a basis of the matroid and display it as a (maximal)
+unit submatrix.
+Then forget possible remaining zero rows and the columns
+of the unit submatrix.
+Finally, the rows of this standard-form matrix correspond to the
+elements of the selected basis,
+and the columns correspond to the remaining matroid elements.
+In this manual, we simply say a @emph{matrix}
+instead of a ``standard-form matrix''.
+
+There is no way to give names to the matroid elements -- matrix lines,
+but the lines initially receive number labels as follows:
+The rows (elements of the selected basis) are numbered from
+@math{1} to @math{R},
+and the columns (remaining elements) are numbered from  
+@math{-1} to @math{-C}.
+If a command later changes the matrix in a way that the lines
+move elsewhere, the labels are moved along with them.
+(See, for example, in the commands @code{!dual} or @code{!pivot}.)
+
+When giving a matrix over a partial field, it is important
+to ensure that the matrix is proper --- that means all subdeterminants
+are defined over this partial field @ref{P-Fields}.
+Only then it is guaranteed that no arithmetic error occurs
+during program execution, and that the results are correct.
+@xref{Structural}.
+
+Moreover, some commands in the program require
+connectivity of the given matroid to compute the result correctly.
+Some commands even need the input matroid to be 3-connected.
+In such cases you should enter only sufficiently connected matroids to
+avoid error messages or, even worse, incorrect results.
+So read carefully the description of commands below.
+
+@tex
+\medskip
+@end tex
+
+Another major problem with using the @value{NAME} program
+is caused by an existence of inequivalent representations
+of matroids.
+Two matrices (with lines labeled by the matroid elements)
+are called @emph{strongly equivalent} if one can be
+transformed to the other one using elementary matrix operations.
+Two matrices are, on the other hand, called
+@emph{unlabeled equivalent} if they are strongly equivalent
+up to an isomorphism of the underlying matroid.
+(In other words, if they are strongly equivalent after forgetting
+the line labels.)
+
+For example, the following two quaternary representations of
+the matroid @math{U24} are not strongly equivalent,
+but they are unlabeled equivalent:
+@example
+	1   1           1   1
+	1   w           1  w+1
+@end example
+
+You have to thoroughly consider the @strong{problems with inequivalence}
+of representations when dealing with matroid minors, equivalence,
+or when generating matrix extensions.
+The @value{NAME} program has, so far,
+no way to find out that two inequivalent matrices actually
+represent the same matroid.
+(There are, however, no such problems at all when working
+with binary or regular matroids only.)
+Read the next chapters for specific information.
+@xref{Structural}, @xref{Generating}.
+
+
+
+
+@node   Subframes, Addressing, Representations,    Frames
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Subframes
+@cindex subframe
+
+A @emph{subframe} starts with the keyword @samp{SUBFRAME} on a separate line,
+and ends with the keyword @samp{EOFRAME}.
+All input between these keywords is read into a new son of the current frame.
+There may be arbitrarily many subframes given, and arbitrarily nested,
+forming thus a @emph{rooted-tree structure}.
+One may also use shortcuts
+@samp{@{} and @samp{@}} for start and an end of a subframe.
+@c (Subframes are a different concept than includes.)
+
+If the shortcuts @samp{@{} and @samp{@}} are used, 
+then more than one (or even all of them) may be written on the same line.
+Moreover, all other words on such a line are taken as a separate subframe
+each.
+For example, the following shortcut produces the next tree of frames.
+@example
+@group
+bash$ @value{EXE} -pGF4 '!prtree;@{ U24 @{@{U24 U25@} @{U35@}@} @}'
+~944~   Printing the subtree of the frame 0x81551f8 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [U24] m2x2  "the matroid U_2,4 uniform"
+    ~         (3.1)fr  [U24-1]   ""
+    ~           (4.1)fr  [U24] m2x2  "the matroid U_2,4 uniform"
+    ~           (4.2)fr  [U25] m2x3  "the matroid U_2,5 uniform"
+    ~           (4.3)fr  [U35] m3x2  "the matroid U_3,5 uniform"
+@end group
+@end example
+
+
+When reading the program input, the first frame argument on the command line
+forms the root of the frame tree,
+and all possible other frame arguments are then arranged as its sons
+(in addition to its subframes).
+One may combine the concept of subframes and multiple frame arguments
+like in the following example.
+@example
+@group
+bash$ @value{EXE} -pGF4 '!prtree' '@{ U24 U25 @}' U35
+~998~   Printing the subtree of the frame 0x8155b28 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [noname-1]   ""
+    ~         (3.1)fr  [U24] m2x2  "the matroid U_2,4 uniform"
+    ~         (3.2)fr  [U25] m2x3  "the matroid U_2,5 uniform"
+    ~       (2.2)fr  [U35] m3x2  "the matroid U_3,5 uniform"
+@end group
+@end example
+
+
+
+
+@node   Addressing, Substitutions, Subframes,    Frames
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Addressing the Frame-tree
+@cindex addressing
+@cindex frame addressing
+
+So far, we have shown only default parameter addressing
+in frame commands.
+However, one often needs to address arbitrary frames in the subtree,
+not only the pre-defined ones.
+Notice that some commands require precisely one frame in the parameter,
+while most of them accept an arbitrarily long list of input frames.
+This section shows the syntax of the @emph{parameter addressing}.
+It is possible to skip this section until you get to the
+chapter @ref{Commands}.
+
+In general, nodes in the frame tree are addressed using
+natural correspondence between rooted trees and @emph{balanced bracketings}.
+In this interpretation, @samp{()} means the current (root) frame ---
+that one holding the command,
+and @samp{(())} means the first son of the current one.
+You can see that the frame addressing is relatively rooted at the current frame.
+There is no way to address frames out of the current subtree.
+To actually point to a node in the tree,
+one must give a letter @samp{t} or @samp{T} in the bracketing.
+Alternatively, a letter @samp{s} or @samp{S} picks all sons
+of the pointed node instead.
+The difference between the letters @samp{t,s} and @samp{T,S}
+is that the lower-case letters request to erase (destroy) the selected
+nodes after processing certain commands,
+while the upper-case letters do not.
+The current frame is never destroyed.
+
+We now provide several sample addresses to illustrate the concept.
+The address @samp{(T(T))} picks both the root and its first son.
+The address @samp{(()()((T)))} picks the son of the son
+of the third son of the root.
+To save repetitions in the address, one may use numbers;
+@samp{((2)((T)))} is equivalent to the previous example.
+The address @samp{((3)(5T))} picks five sons of the root
+starting with the fourth one (the first three are skipped).
+Moreover, you may use, instead of the repetition number,
+a text @samp{/name/} which skips sons up to the one named @code{name}.
+If the frame tree does not contain the requested nodes,
+an error message is printed.
+
+Special rules concern non-positive repetition numbers.
+If @samp{(N...)} is used, and @math{N<=0},
+then the repetition number actually used in @math{N+D},
+where @math{D} is the number of remaining sons of the parent
+of the current node (inclusive).
+For example, @samp{((0T))} has the same effect as @samp{(S)},
+while @samp{(()(-1T))} picks all sons of the root except the
+first and the last one.
+
+@tex
+\medskip
+@end tex
+@cindex remembered result
+
+In addition to the previous,
+you may concatenate more than one address to one with @samp{+},
+like @samp{((t))+((t))} picks the same first son twice.
+To save typing of closing brackets,
+you may end the address expression simply with @samp{|},
+like @samp{((()(T(s|}.
+As a special concept, you may write the (whole) address as @samp{~1}
+to pick all resulting frames of the previous command,
+or @samp{~N}, @math{N=1,2,...,9} to pick the resulting frames of the
+@math{N}-th previous command.
+Similarly @samp{^N} picks the previous results and
+allows them for further erasing, depending on the command.
+(The same thing as @samp{T,S} versus @samp{t,s}.)
+@xref{Filtering}.
+Be careful not to destroy these frames before using them again
+--- in most cases such erased frames would be silently skipped,
+but an unexpected behavior may occur if another frame was created
+since with the same memory address.
+
+Some commands also have output an parameter address
+which tells them where to store the resulting frames.
+The output address starts with @samp{>} and continues
+with the same bracketed expression as described above.
+However, this time all nonexistent nodes from the address
+are automatically created (no error is reported).
+In particular, the @code{S} specification always creates a new
+tree node, and stores frames to its sons.
+(Hence the address @samp{>(S)} is not valid since it refers
+to the current node which cannot be created again.)
+If one wants to store frames to (new) sons of an existing node,
+he has to use an address like @samp{>(((0T)))}.
+Another exception concerns non-positive repetition numbers;
+if they are followed by a @code{t,T,s,S} letter,
+then they refer to the number of remaining output frames
+instead to the remaining sons in the tree.
+For example,
+@samp{((-1t))} stores all but the last output frames
+as (new) sons of the root.
+
+To learn the concept of parameter addressing well,
+it is best to play with the command @samp{!move}
+which moves (copies, deletes) nodes across the frame tree.
+We provide several examples next.
+Make more examples yourself.
+
+@tex
+\vfill
+@end tex
+@example
+
+@group
+bash$ @value{EXE} '!prtree;!move ((T)) >(()(t));!prtree' 'W3;@{@}@{@}'
+
+~052~   Printing the subtree of the frame 0x8155048 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spok"
+    ~         (3.1)fr  [W3-1]   ""
+    ~         (3.2)fr  [W3-2]   ""
+~052~   ------------------------------------
+~052~   Printing the subtree of the frame 0x8155048 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spok"
+    ~         (3.1)fr  [W3-1]   ""
+    ~         (3.2)fr  [W3-2]   ""
+    ~       (2.2)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spok"
+~052~   ------------------------------------
+@end group
+@end example
+@c @tex\vfill@end tex
+
+@example
+
+@group
+bash$ @value{EXE} '!prtree;!move ((S)) >(()(s));!prtree' 'W3;@{@}@{@}'
+
+~153~   Printing the subtree of the frame 0x81553b8 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spokes"
+    ~         (3.1)fr  [W3-1]   ""
+    ~         (3.2)fr  [W3-2]   ""
+~153~   ------------------------------------
+~153~   Printing the subtree of the frame 0x81553b8 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spokes"
+    ~         (3.1)fr  [W3-1]   ""
+    ~         (3.2)fr  [W3-2]   ""
+    ~       (2.2)fr  [W3-0]   ""
+    ~         (3.1)fr  [W3-1]   "fr #1 got by '!move ((S))', to '(()"
+    ~         (3.2)fr  [W3-2]   "fr #2 got by '!move ((S))', to '(()"
+~153~   ------------------------------------
+@end group
+@end example
+
+@example
+
+@group
+bash$ @value{EXE} '!prtree;!move ((t));!prtree' 'W3;@{@}@{@}'
+
+~298~   Printing the subtree of the frame 0x8155128 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spokes"
+    ~         (3.1)fr  [W3-1]   ""
+    ~         (3.2)fr  [W3-2]   ""
+~298~   ------------------------------------
+~298~   Printing the subtree of the frame 0x8155128 [noname]:
+    ~     (1.1)fr  [noname]   ""
+~298~   ------------------------------------
+@end group
+@end example
+
+@example
+
+@group
+bash$ @value{EXE} '!prtree;!move (T) >((()(t)));!prtree'
+
+~379~   Printing the subtree of the frame 0x8155050 [noname]:
+    ~     (1.1)fr  [noname]   ""
+~379~   ------------------------------------
+~379~   Printing the subtree of the frame 0x8155050 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [noname-0]   ""
+    ~         (3.1)fr  [noname-0]   ""
+    ~         (3.2)fr  [noname]   "fr #1 got by '!move (T)', to '(("
+~379~   ------------------------------------
+@end group
+@end example
+
+@example
+
+@group
+bash$ @value{EXE} '!prtree;!move ((T|+((T| >(()((0t|;!prtree' 'W3' ''
+
+~164~   Printing the subtree of the frame 0x8155208 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spokes"
+    ~       (2.2)fr  [noname-2]   ""
+~164~   ------------------------------------
+~164~   Printing the subtree of the frame 0x8155208 [noname]:
+    ~     (1.1)fr  [noname]   ""
+    ~       (2.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spokes"
+    ~       (2.2)fr  [noname-2]   ""
+    ~         (3.1)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spok"
+    ~         (3.2)fr  [W3] m3x3  "the matroid W_3, wheel of 3 spok"
+~164~   ------------------------------------
+@end group
+@end example
+
+
+
+
+@node   Substitutions, , Addressing,    Frames
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Macro Substitutions
+@cindex macro substitution
+@cindex substitution
+
+The @value{NAME} program provides also simple text-based macro processing.
+When you write @samp{$macro} or @samp{$@{macro@}},
+then this expression is replaced with the first word (use quotas for
+longer text with spaces) following the latest option @samp{@@sub-macro};
+@ref{Substitution}.
+If no such option is found, then the first word of @samp{@@subd-macro} is taken.
+If even this is not found, then the replacement text is empty.
+To input the character @samp{$} itself, use @samp{\$} or @samp{$$}.
+Under normal circumstances, the macro processing is not recursive.
+This is a different concept than @samp{~1,^1} shortcuts
+described in the previous section.
+
+This kind of macro-processing is provided only for command-, option-,
+and include-lines.
+For replacements in matrix entries use @samp{@@replace} described above
+@ref{Matrix-Entry}.
+
+Again, it is best to illustrate the use of macros in several examples.
+@example
+@group
+bash$ @value{EXE} '@@sub-mac ABCDefgh;!prtext $mac'
+395~    ABCDefgh
+@end group
+
+@group
+bash$ @value{EXE} '@@sub-mac "ABCD efgh .. WXYZ";!prtext $mac'
+457~    ABCD efgh .. WXYZ
+
+bash$ @value{EXE} '@@sub-mac TEXT;@@sub-mac "X-$mac-$mac-X";!prtext $mac'
+519~    X-TEXT-TEXT-X
+
+bash$ @value{EXE} '@@sub-mac TEXT;@@sub-mac "X-$mac-$$mac-$mac-X";!prtext $mac'
+519~    X-TEXT-$mac-TEXT-X
+@end group
+@end example
+
+More involved and nonstandard examples are provided here.
+Be careful when using text macros in this nonstandard way
+since strange things may happen@dots{}
+(Like an error in the last example.)
+
+@example  
+@group
+bash$ @value{EXE} -pGF4 '@@sub-line "U24;@{U35@}";$line;!prtree'
+273~	Printing the subtree of the frame 0x80f6f38 [U24]:
+   ~	  (1.1)fr 0x80f6f38 [U24] "the matroid U_2,4 uniform"
+   ~	    (2.1)fr 0x8116610 [U35] "the matroid U_3,5 uniform"
+
+bash$ @value{EXE} '@@sub-line "!prtree";$line' R10
+    ~	  (1.1)fr 0x80f8918 [noname] ""
+    ~	    (2.1)fr 0x8103090 [R10] "the matroid R_10"
+
+bash$ @value{EXE} '@@sub-a "$$b";@@sub-b "$$a";$a'
+	... error happens ...
+@end group
+@end example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Options,       Commands, Frames,    Top,    
+@c *************************************************
+
+@chapter  Frame Options
+
+@c List of all options with descriptions...
+
+@cindex frame-options
+@cindex options
+
+
+An @emph{option} starts with the keyword @samp{option}
+or the character @samp{@@} on a line.
+The next word is the option name,
+and option values continue after the name.
+Various options have various numbers of values,
+and an arbitrary number of option lines of the same name
+may appear.
+Quote the option values if they contain spaces or other special characters.
+
+In general, an option holds arbitrary information that we want
+to store in the input frame.
+This information affects the input frame immediately from the line
+containing the option.
+Moreover, depending on particular situation,
+option values may be inherited by all subframes of the frame
+holding this option.
+
+To learn more, read next about particular option groups
+recognized by the @value{NAME} program.
+The list of all recognized options is obtained by calling
+@samp{@value{EXE} -HHo}.
+(Not all of them may be described in this manual.)
+If an unknown option or the wrong number of values are given,
+then an error message is reported.
+
+
+@menu
+* Inheritance::    How option values are inherited in the tree, when
+                   writing files, or when generating extensions.
+* Naming::         Names and comments for the input frames.
+* Substitution::   Options used for input text substitutions @code{$macro}.
+* Erasing:: 	   Adding and erasing options.
+* Extensions::     What options apply when generating matrix extensions.
+* Other options::  About other options in the program.
+@end menu
+
+
+
+
+@node   Inheritance, Naming, ,    Options
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Inheritance of Option Values
+@cindex inheritance
+
+@findex finherit
+@findex finheritall
+@findex extinherit
+@findex extinheritall
+
+An option affects the frames it appears in,
+and, in most cases, it also affects all descendant frames.
+However, in some situations we want to explicitly request
+repeating an option in the descendants,
+like when writing a frame to a file,
+or when generating new subframes in the program.
+(This does not concern the @code{name} and @code{comment}
+options which are repeated automatically, see below.)
+
+For all options having names that are listed as the values
+of some @samp{@@finherit} option,
+the last one option instance is copied to every descendant
+frame when it is written to a file.
+The option @samp{@@finheritall} works similarly, but it
+copies all option instances to the written file.
+
+Learn more about inheritance from the following examples.
+(View the results in the output file @file{sample@value{FEXT}}.)
+@example
+@group
+bash$ @value{EXE} '@@replace X 1;!writeto sample' '@@replace Y 2'
+bash$ @value{EXE} '@@replace X 1;!writeto sample' '@@finherit replace'
+bash$ @value{EXE} '@@replace X 1;@@finheritall replace;\
+      !writeto sample' '@@replace Y 2'
+bash$ @value{EXE} '@@replace X 1;@@finheritall replace finheritall;\
+      !writeto sample' '@@replace Y 2'
+@end group
+@end example
+
+
+@tex
+\medskip
+@end tex
+
+The options @samp{@@extinherit} and @samp{@@extinheritall}
+achieve similar effects when new subframes are generated by
+extending a matrix;
+@xref{Generating}.
+
+
+
+
+@node   Naming, Substitution, Inheritance,    Options
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Naming the Frames
+@cindex naming
+@cindex option-name,comment
+
+@findex name
+@findex comment
+
+Each frame has its name, and optionally a text comment
+(about one line of a text).
+The name for a frame may be explicitly set by giving
+the option @samp{@@name "frame-name"}.
+Similarly,
+one may give a comment to the frame by @samp{@@comment "some comment..."}.
+
+The frame comments are there just for user information,
+while the names are used elsewhere in the program,
+such as when writing frames to files.
+@xref{FWriting}.
+
+
+
+
+@node   Substitution, Erasing, Naming,    Options
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Options for Substitutions
+@cindex substitution
+@cindex options-substitution
+@cindex replacement
+
+@findex sub-
+@findex subd-
+@findex replace
+@findex require
+
+The @value{NAME} program provides two ways of replacing
+text on the input.
+The first one, called @emph{substitution},
+is used for option/command values, include files, etc.
+The second one, called @emph{replacement},
+is used in matrix entries or in field expressions.
+
+When @samp{$macro} appears on the input,
+then it is substituted with the first value
+of the last instance of the option @samp{@@sub-macro}.
+(Based on the current input scanned so far.)
+When @samp{@@sub-macro} option is not found,
+then @samp{@@subd-macro} is tried instead.
+
+When an option @samp{@@replace X (expr)} is given
+in a frame, then all following appearances
+of the symbol @samp{X} in matrix-entry expressions
+is replaced with the text @samp{(expr)}.
+We suggest to use capital letters for such symbols.
+Similarly,
+an option @samp{@@repl-PF X (expr)} replaces the symbol @samp{X} only
+when in the specific partial field @code{PF}.
+This pfield-specific replacement has priority.
+
+You may prevent a symbol from a recursive replacement
+@samp{@@replace X (expr+_X)} by prefixing
+it with the underscore @samp{_}, which is otherwise silently ignored
+on matrix lines.
+To ensure that the replaced values satisfy your algebraic requirements,
+you may use the option @w{@samp{@@require (expr) [01.]}}.
+@xref{Matrix-Entry}.
+
+
+
+
+@node   Erasing, Extensions, Substitution,    Options
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Adding and Erasing Options
+@cindex adding options
+@cindex erasing options
+@cindex deleting options
+
+@findex erase
+@findex eraseall
+
+All frame options are read and interpreted before command processing
+starts, but it is still possible to add more options to selected frames
+during command execution using the command @w{@samp{!append "input" >dest}}.
+@xref{FReading}.
+The intention of this command is to append the additional input to the
+selected frame ---
+so the command @w{@samp{!append "@@option value" >(T)}} adds the given option
+to the current frame at the time when this command is executed.
+
+It is not possible to delete options that were already scanned
+to a frame, but special options @samp{@@erase optname} and @samp{@@eraseall optname}
+are provided to suppress the last or all previous occurrences
+of the selected option(s).
+This means that the suppressed option will not be interpreted further.
+(However, the option still remains in the option list of its frame.)
+You may also use a combination like @w{@samp{!append "@@eraseall optname" >(T)}}
+to erase the selected option values via a command.
+
+Try to play with the next examples to learn more:
+@example
+@group
+bash$ @value{EXE} '@@sub-x AB;@@sub-x $x-C' '!prtext $x'
+bash$ @value{EXE} '@@sub-x AB;@@sub-x $x-C;@@erase sub-x' '!prtext $x'
+bash$ @value{EXE} '@@sub-x AB;@@sub-x $x-C;@@eraseall sub-x' '!prtext $x'
+bash$ @value{EXE} '@@sub-x AB;@@sub-x $x-C' '@@erase sub-x;!prtext $x'
+@end group
+
+@group
+bash$ @value{EXE} '@@sub-x A;!append (T) "@@sub-x $x-B;!prtext $$x"'
+@c bash$ @value{EXE} -pGF4 -g-1 '!extend;!prtree' U24
+bash$ @value{EXE} -pGF4 '!extend b;!append (T) \
+      "@@ext-forbid U25";!extend b >(()(s));!prtree' U24
+@end group
+@end example
+
+
+
+
+@node   Extensions, Other options, Erasing,    Options
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Options for Generating Extensions
+@cindex extension options
+@cindex options-extension
+
+@findex ext-
+@findex ext-bsize
+@findex ext-signature
+@findex ext-forbid
+@findex ext-tight
+@findex ext-nofan
+@findex ext-entries
+
+The program provides commands for generating extensions of matrices,
+@xref{Generating}.
+These commands need to keep additional information about the
+matrices during the generation process,
+which is done using the various @code{ext-*} options described here.
+
+The option @samp{@@ext-bsize R C} tells that the base minor
+of generating process occupies the first @code{R} rows and @code{C}
+columns of the matrix.
+The option @samp{@@ext-signature} keeps the signature of
+the elimination sequence of generating process.
+(The signature tells, in a bit-representation,
+whether rows 0 or columns 1 were extended at each step of the process.)
+These options are set during the generating process,
+and they should never be altered by hand.
+
+Another option @w{@samp{@@ext-entries e1 e2 ...}} requests that only extensions
+which start with the prefix @samp{e1 e2 ...} are generated.
+(That means the first entry of the added line must be @math{e1},
+the second one @math{e2}, etc@dots{})
+Reader should understand that this option is not provided for altering the
+generation process in any way, it just filters out the other extensions.
+So, in particular, the prefix entries should start with @math{1} as the first
+nonzero entry, which is requested for all extensions.
+The option has been added to version 1.2, and it should be used with care.
+
+The option @w{@samp{@@ext-forbid min1 min2 ...}} lists matroids which
+are forbidden as minors when generating extensions.
+Each value of the option represents one forbidden minor,
+and these values are processed in the same way as the input frames
+in the program.
+Notice that this value-processing happens later, when
+the respective @samp{!extend} command is executed.
+For example,
+the option @w{@samp{@@ext-forbid F7 "F7;!dual"}} means
+that the matroid @math{F7} and its dual will be excluded
+in the next extension-generating command.
+
+The option @w{@samp{@@ext-tight min1 min2 ...}} lists matroids which
+form the set defining a ``tight-major'' for generated extensions.
+This option works similarly as @code{ext-forbid}.
+The option @samp{@@ext-nofan f} tells that no fan of length @math{f} or
+longer may appear along an elimination sequence when generating extensions.
+Notice also the options @samp{@@extinherit} and @samp{@@extinheritall}
+that control inheritance of other options in the generated extensions
+@ref{Inheritance}.
+
+
+
+
+@node   Other options, , Extensions,    Options
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Other Options
+@cindex options-other
+
+@findex transpose
+@findex nopfcheck
+@findex inputpf
+
+The option @samp{@@nopfcheck} causes the program to skip
+the partial field test.
+If the partial field currently used in the program is not total,
+then not all matrices are valid @ref{P-Fields}.
+So a randomized quick test is usually run to uncover
+most of undefined matrices.
+However, for a very long input you may want to skip
+even this quick test.
+
+The option @samp{@@transpose}
+immediately transposes the matrix scanned so far.
+If more matrix lines appear after this option,
+then they continue the transposed matrix.
+Usually you would use this option to obtain
+a dual matroid from an existing one.
+This option is never inherited or written to files.
+@example
+bash$ @value{EXE} '!print (S)' 'grK5' 'grK5;@@transpose'
+@end example
+
+The option @samp{@@inputpf PF}
+immediately switches the input partial fields to new @code{PF}.
+That means all subsequent matrices in the subtree of the current frame
+are read and stored in the new partial field.
+@xref{Diff-fields}.
+No other frames than the current one and its subframes are affected.
+The validity of a partial field change always ends at last with
+the end of the input string;
+that means it is not inherited from the first program argument to the next
+ones, even when they are logically subframes of the first argument.
+Do not mix different partial fields for one matrix.
+@example
+bash$ @value{EXE} -pGF2 '!print ((T));!pfield GF3;!print (()(T))' \
+       U23 '@@inputpf GF3;U24'
+@end example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+@node    Commands,      Practical, Options,    Top,    
+@c *************************************************
+
+@chapter  Frame Commands
+
+@c  List of all commands with descriptions and short examples...
+
+@cindex commands
+@cindex frame-commands
+
+
+A @emph{command} starts with the keyword @samp{command}
+or the character @samp{!} on a line.
+The next word is the command name,
+and command parameters continue after the name.
+For example, we write a frame to a file with
+@samp{!writeto filename ((T))}.
+It is possible to quote parameters with spaces
+@samp{"long parameter text"}.
+
+When reading the input, commands are scanned and immediately
+stored into their frames.
+However, they are executed (in order) later,
+after the whole input is scanned.
+If more than one frame of the input tree holds commands,
+then the frames are processed in the reversed depth-first order.
+In particular, descendants are processed before the root.
+Each command can access only the frame it is stored in, and
+its descendants.
+(Like if this frame was the root of the whole tree.)
+Usually, you should give all commands in the root frame.
+
+
+@menu
+* Com-Overview:: Command overview and usage.
+
+* Printing::    Commands used to print frames/matrices.
+* FWriting::    Commands for saving (writing) frames.
+* FReading::    Commands used to read or append input.
+* Manipulation:: Commands for modifications of matrices and frames.
+* Structural::  Some matroid-structural tests and functions.
+* Isomorphism::  Functions related to isomorphism and representability.
+* Generating::  Generating matrix (matroid) extensions.
+* Diff-fields:: Working in more than one partial fields.
+
+* Com-Flow::    Command flow control in @value{NAME}.
+* Filtering::   Changing command output to a filter or to remember.
+* Procedures::  Collecting more commands into procedures.
+@end menu
+
+
+
+
+@node   Com-Overview, Printing, ,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Command Overview
+@cindex overview/command
+@cindex command overview
+
+When using commands and options in the @value{NAME} program,
+it is important to fully understand the order in which
+options and commands are scanned and applied,
+as written above.
+The later execution of commands, in particular,
+means that all matrix entries and all options from the input
+are already known when the command is executed,
+even if they appear after this command.
+It does not matter how you mix between commands and options
+on the input.
+
+Yes, there is an exception to the previous rule --
+the @code{@@sub-*} options vs. command parameters.
+Keep in mind that the input macro substitution applies
+when reading the command, not when executing it.
+Therefore,
+all @code{@@sub-*} options must appear before the respective
+macros are used on the input.
+
+Also notice that some options, like @samp{@@transpose}
+or @samp{@@inputpf},
+behave more like commands, but they still remain as options
+with their immediate application during input scanning.
+(You may consider using the corresponding commands @samp{!dual}
+or @samp{!pfield}, respectively.)
+
+@tex
+\medskip
+@end tex
+
+Before proceeding further, be sure that you understand
+about frame-addressing in command parameters;
+@xref{Addressing}.
+
+A command has several or no parameters.
+(Among them, the possible output address @samp{>xxx}
+has special meaning and position.)
+If the required parameter is missing,
+then it is substituted by its default value.
+Determining the default value is a kind of a magic;
+it depends on a command context, current frame tree, etc.
+If you are not sure what the default value in the specific
+situation is, then read the program output where the parameters are printed,
+or add the command @samp{!verbose}.
+
+Run the program with @code{-g3} and see
+the substitution made in the debugging output.
+
+The purpose of this ``magic'' parameter substitution is to save
+you typing the parameters over and over.
+In most easy situations you may just use the commands
+with no parameters at all,
+and the default values will do what you expect.
+(Unless your expectations are very unrealistic.)
+
+Another note concerns frame names and comments.
+Some commands change the frame name to indicate their
+effect on the frame (matrix).
+They also may set the frame comment to a description
+of the command.
+
+@tex
+\medskip
+@end tex
+
+To learn more, read next about particular commands recognized by
+the @value{NAME} program.
+The list of all recognized commands is obtained by calling
+@samp{@value{EXE} -HHc}.
+(Not all of them may be described in this manual.)
+
+
+
+
+@node   Printing, FWriting, Com-Overview,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Printing Commands
+@cindex printing
+
+@findex pr
+@findex print
+@findex prtree
+@findex prtext
+@findex prmore
+@findex prbases
+@findex prcircuits
+@findex quiet
+@findex verbose
+
+We start with the printing commands in the program.
+The command @samp{!pr} prints a simple description of the given frame(s).
+The command @samp{!print} similarly
+prints the matrix(ces) of the given frame(s),
+and @samp{!prtext} prints the text given as a parameter.
+
+In general, one may control the amount of information
+printed out with the commands @samp{!verbose} and @samp{!quiet},
+that can be used with a number @code{+-N}.
+
+The command @samp{!prmore (mat-list)} prints various
+additional matroidal information about the given matroid(s).
+The printed information does not depend on particular representation
+or the partial field, only on abstract matroid properties.
+This may be used to better understand the structure,
+or to compare matroids over different pfields by hand
+(using a hash-value printed at the end).
+Currently, numbers of bases are printed out,
+and small flats and separations are listed;
+all depending on the current output verbosity by @samp{!verbose N}.
+
+From version 1.2, several other interesting matroid properties
+are printed out in @samp{!prmore}, like connectivity, girth, representability,
+and aut group orbits for elements.
+Be prepared for long computation when calling @samp{!prmore} on high
+@code{!verbose} levels --- parts of the computation are currently
+implemented inefficiently by brute force methods,
+and so they take long time even on matroids of moderate size.
+
+To display the whole subtree of the given frame(s),
+use the command @samp{!prtree}.
+Each descendant frame (up to certain depth) is printed on a separate line,
+in the depth-first order.
+From version 1.2, only short lists of descendants are printed all,
+while for long lists the middle part is skipped
+to keep the listing reasonably long.
+The full listing may be obtained by using @samp{!verbose 2}.
+
+Try the following examples:
+@example
+@group
+bash$ @value{EXE} -pGF4 '!pr (s)' U24 U25
+bash$ @value{EXE} -pGF4 '!quiet;!pr (s)' U24 U25
+bash$ @value{EXE} -pGF4 '!prtree' U24 '@{U25 U35@}'
+bash$ @value{EXE} -pGF4 '!prtree (s)' U24 '@{U25 U35@}'
+bash$ @value{EXE} -pGF4 '!print ((t)(s))' U24 '@{U25 U35@}'
+bash$ @value{EXE} -pGF4 '!verbose;!print' U24
+@end group
+@end example
+
+@example
+@group
+bash$ @value{EXE} -pREG '!prmore' R10
+bash$ @value{EXE} -pGF3 '!verbose 2;!prmore' F7-
+bash$ @value{EXE} -pGF2 '!verbose 3;!prmore' F7
+@end group
+
+@end example
+
+
+In addition to structural information printed out in @samp{!prmore} above,
+new commands @samp{!prcircuits (mat-list) [id [id..]]}
+and @samp{!prbases (mat-list) [id [id..]]} are provided from version 1.2.
+They list all circuits or bases, respectively,
+in the given matroids.
+Optionally, one may specify a matroid element (via its label, up to 3
+elements at once) that all printed circuits or bases must contain.
+Hence, in particular, one may easily print out all circuits
+using the specified element.
+
+@example
+@group
+bash$ @value{EXE} -pREG '!prbases' R10
+bash$ @value{EXE} -pREG '!prbases "" -1 5' R10
+bash$ @value{EXE} -pREG '!prcircuits' grQ3
+bash$ @value{EXE} -pREG '!prcircuits "" 1' grQ3
+@end group
+@end example
+
+
+
+
+@node   FWriting, FReading, Printing,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Writing to Files
+@cindex writing
+@cindex file-writing
+
+@findex write
+@findex writeto
+@findex writetree
+@findex writetreeto
+@findex writecom
+
+The commands described here are provided for saving (writing)
+frames to files.
+One may write either one frame (including its matrix),
+or the whole subtree of a frame.
+The format of the output file is a text described in the
+section @ref{Frame-syntax}.
+(The syntax is likely more formal than what you would give
+to the program on a command line, but the general rules
+are the same.)
+
+When writing (or reading) files,
+search paths are used, @xref{Environment}.
+Each file name is automatically appended with the extension
+@file{@value{FEXT}} (if it is not given otherwise).
+If no file name is specifically given to the command,
+then the name of the frame is used.
+
+The command @samp{!write (frame)} writes the frame
+addressed by @code{(frame)} to a file named by the frame.
+More than one frame may be given.
+The command @samp{!writetree (frame)} writes the whole subtree
+of the frame addressed by @code{(frame)} to a file named
+by the frame.
+The commands @w{@samp{!writeto fname (frame)}} and
+@w{@samp{!writetreeto fname (frame)}} do the same,
+but they use a name @file{fname} for the saved file.
+If @file{fname} ends with a slash @samp{/},
+then it is used as a directory prefix for writing,
+and the frame name is used for the file itself.
+
+Possible commands contained in a frame are never written to a file.
+On the other hand, all options except @code{@@transpose} are written,
+and even some options inherited from ancestors may be written if requested
+@ref{Inheritance}.
+The exception is the @code{@@name} option which is not written for
+the root frame, so that this frame later gets its name from the file name.
+
+Again, we provide few examples:
+@example
+@group
+bash$ @value{EXE} -pGF3 '!writeto sample1 ((T))' 'W3'
+bash$ @value{EXE} -pGF3 '!writetreeto sample2 (T)' '@{U24 W3@}'
+bash$ @value{EXE} -pREG '!extend c;!write ((S))' grK33
+@end group
+
+@end example
+
+There is also a separate command @samp{!writecom (frame)}
+that writes the given frame (not its subtree) to a file named by this frame
+with many interesting (human-readable) comments concerning structural
+properties of the matroid stored in this frame.
+An error is issued when there is no matrix in the frame.
+
+The properties printed out to the file in @samp{!writecom} include matrix
+size, number of bases, listing of small flats, connectivity and girth,
+orbits of the automorphism group, and representability of the matroid over
+several small fields.
+Since some of the above computations are very complex (orbits and
+representability), be prepared to wait quite @emph{long time} for this command
+on large matrices.
+The best way to learn this command is to look at the file created by the
+following example:
+
+@example
+bash$ @value{EXE} -pGF2 '!writecom' S8
+bash$ @value{EXE} -pGF7 '!writecom' '<Wh5;@@name Wh5-commented'
+@end example
+
+
+
+
+@node   FReading, Manipulation, FWriting,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Reading Frames
+@cindex reading
+@cindex file-reading
+
+@findex read
+@findex mread
+@findex append
+
+Under normal circumstances, you do not need any command
+to read frames, since the input frames are scanned
+with the input.
+However, in some cases extra commands are necessary;
+like if you want to read a frame in another partial field
+than the current one,
+or if you want to add more options to frames after
+scanning the input.
+
+The command @samp{!read input >(dest)} reads a frame (sub)tree from the
+string @code{input}, and stores the tree as rooted at
+the position @code{(dest)} in the current tree.
+The string @code{input} is considered similarly as a command-line
+argument to the program, including use of the line shortcuts as
+described in @ref{line-shortcuts}.
+The related command @w{@samp{!mread input >(dest)}} reads all matrices
+from given @code{input}, and stores them to the given destination as a list
+of new frames.
+
+The command @samp{!append (fram) input} reads the given text @code{input},
+and appends it to the given frame @code{(fram)}.
+The appending works as if the given text continued the original
+input stream of the frame,
+but you must understand that many other things may have already happened
+from the original input scanning,
+which may result in unexpected effects.
+In general, we suggest to use this command only in situations
+when you want to add more options to some frame during
+command executions, or if you want to add additional commands
+to the current root frame.
+(However, if you add commands to descendant frames, they never
+get executed again unless @code{!restart} is used.)
+
+
+
+
+@node   Manipulation, Structural, FReading,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Manipulating Frames and Matrices
+@cindex manipulating
+@cindex matrix/change
+@cindex tree/modify
+
+@findex move
+@findex mmove
+@findex flatten
+@findex setname
+@findex dual
+@findex pivot
+@findex delete
+@findex contract
+@findex deleach
+@findex coneach
+@findex remeach
+
+We provide two commands for rearranging the frame tree
+in the program.
+The command @w{@samp{!move (src) >(dest)}} moves (copies, or deletes)
+the given source frames addressed by @code{(src)}
+to the destination positions addressed by @code{(dest)}.
+In accordance with the addressing convention @ref{Addressing},
+the source frames are copied if they are selected with @code{T}
+or @code{S}, and they are moved if selected with @code{t} or @code{s}.
+If the destination parameter is not given, then the selected frames
+are deleted from the tree.
+When deleting a frame with descendants,
+the whole subtree is disposed of.
+The root frame (of this command) cannot be deleted.
+
+The command @samp{!flatten (src) >(dest)} collects all descendants
+of the frames in @code{(src)}, and stores them in the
+positions addressed by @code{(dest)}.
+The command @w{@samp{!mmove (src) >(dest)}} is similar to @code{!move},
+but it moves only the matrix, and no other frame attributes.
+The command @w{@samp{!setname name (frame)}} sets a new name to
+the given frame(s).
+In the case of multiple frames named with @samp{!setname},
+one may use @code{"%d"} format string inside the @code{name}
+to number the frames from 1.
+
+Many examples of the @samp{!move} command are presented in
+@ref{Addressing}.
+We provide a few more relevant samples here:
+@example
+@group
+bash$ @value{EXE} '!move ((T))+((T)) >(()(S));!prtree' grK33
+bash$ @value{EXE} '!mmove ((T))+((T)) >(()(S));!prtree' grK33
+bash$ @value{EXE} '!flatten (T) >(()(s));!prtree' '@{grK5 grK33@}'
+bash$ @value{EXE} '!flatten (s) >((s));!prtree' '@{grK5 grK33@}'
+
+bash$ @value{EXE} '!mmove (S)+(S)+(S) >((S));!setname "grK33-%d" \
+                ;!prtree' grK33
+bash$ @value{EXE} -pGF4 '!extend;!setname x-%d-x;!prtree' P7
+@end group
+
+@end example
+
+Besides the tree-manipulating commands described above,
+we provide a bunch of commands for manipulating matrices
+in the frames.
+
+In particular, we provide a command @samp{!msize} 
+for selecting matrices of required size(s).
+@xref{Filtering}.
+The syntax of @w{@samp{!msize (frames) R C "cmp" [S]}} is the following:
+@math{R,C} are the numbers of rows and columns of the (standard-form) matrix,
+and optional @math{S} is the number of elements (rows+columns).
+The string @code{"cmp"} contains up to three characters telling
+about how the actual matrix size @math{r,c,s} (@math{s=r+c})
+is compared to given @math{R,C,S}, respectively;
+where @code{<} means that it should be @math{r<R}, etc,
+@code{>} means @math{r>R},
+and @code{=} means @math{r=R}.
+A special character dot @code{.} is used for values which are @emph{not}
+compared.
+Notice that there is no character for ``less or equal'' or for ``greater or
+equal''.
+
+@example
+@group
+bash$ @value{EXE} '!prtree;!msize ((S)) 5 5 "=="' '@{R10 R12 grK5@}'
+bash$ @value{EXE} '!prtree;!msize ((S)) 5 5 "<>"' '@{R10 R12 grK5@}'
+bash$ @value{EXE} '!prtree;!msize ((S)) 5 5 "..=" 12' '@{R10 R12 grK5 grV8@}'
+bash$ @value{EXE} '!filt-msize ((S)) 5 5 "..=" 12;!prtree' '@{R10 R12 grV8@}'
+@end group
+@end example
+
+@tex
+\medskip
+@end tex
+
+The command @samp{!dual (mat)} transposes the matrix(ces)
+in the given frame(s) @code{(mat)}.
+Its effect is similar to the option @samp{@@transpose} applied after
+the matrix, but the important difference follows from the fact that
+options are applied immediately while commands are executed later,
+@ref{Other options}.
+
+The command @samp{!pivot row col (mat)} pivots the given matrix
+in @code{(mat)} on the entry at @code{row} times @code{col}.
+(Rows and columns are numbered in order from 1.)
+The pivoted entry must be nonzero.
+Pivoting switches the labels of the pivoted row and column.
+The resulting matrix replaces the previous one (in the same frame).
+
+The command @samp{!delete lab (mat)} deletes the element
+of the label @code{lab} from the matroid represented by
+the given matrix in @code{(mat)}.
+Note that, unlike when pivoting, the elements are identified by
+their @emph{labels}, not by their order!
+This allows to delete (as a matroid element) not only columns of the matrix,
+but also rows after (implicit) pivoting.
+The command @w{@samp{!contract lab (mat)}} similarly contracts the given element.
+Notice that deleting a coloop means contracting it,
+and contracting a loop means deleting it.
+(So such operations may change the matrix dimensions in an unexpected way!)
+
+The command @samp{!deleach (mat) >(dest)} creates a list of new frames
+with matrices obtained by deleting each one of the elements
+of the matroid represented by the given matrix in @code{(mat)}.
+The resulting new frames are stored according to the output
+address given in @code{(dest)}.
+The command @samp{!coneach (mat) >(dest)} works similarly for contractions.
+The command @samp{!remeach (mat) >(dest)} produces all one-element deletions and
+contractions of the matrix (as the previous two together).
+
+@tex
+\medskip
+@end tex
+@example
+@group
+bash$ @value{EXE} -pGF2 '!print (S)' grK5 'grK5;!dual'
+bash$ @value{EXE} -pGF5 '!print;!pivot 2 1;!print' P8
+bash$ @value{EXE} -pREG '!print;!delete 2;!print' grK5
+bash$ @value{EXE} -pGF2 '!coneach;!print ((S));!prtree' W3
+bash$ @value{EXE} -pGF4 '!remeach;!print ((S))' U24
+@end group
+@end example
+
+
+
+
+@node   Structural, Isomorphism, Manipulation,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Structural Matroid Functions
+@cindex structural
+@cindex connectivity
+@cindex minors
+@cindex matroid girth
+@cindex matroid-hash
+@cindex matroid-structural
+
+@findex minor
+@findex mhash
+@findex inpfield
+@findex tmajor
+@findex equiv
+@findex eqpair
+@c @findex unique - deprecated function...
+@findex bwidth3
+@findex fan
+@findex hasfan
+@findex girth
+@findex hasgirth
+@findex ispaving
+@findex connectivity
+@findex isconn
+@findex isconn3
+@findex isconni4
+@findex selfmap
+@c @findex autom - deprecated name for selfmap...
+
+We start with the command @samp{!inpfield (mat)}
+which checks whether the given matrix(ces) @code{(mat)}
+is proper over the current partial field
+@ref{P-Fields}.
+The result is printed out.
+This command has no meaning for normal fields.
+@example
+bash$ @value{EXE} -pREG '@@nopfcheck;!print (S);!inpfield (S)' \
+        ' 1 1; 1 0' ' 1 1; 1 -1'
+@end example
+
+Another command @samp{!mhash h-value (mat)}
+is used to find matroids in the list @code{(mat)} which have the
+given matroid hash-value @code{h-value}.
+This is the same hash-value as computed and printed in
+@samp{!prmore} @ref{Printing}.
+The value is matroid-invariant, and so it may be used to
+informally compare distinct matroid representations,
+even over different partial fields.
+Non-equality guarantees that the matroids are not isomorphic.
+The next example works when using matroids hash-value ver 1.0.
+If the program is upgraded to a higher hash version, you have to adjust
+these examples first.
+@example
+@group
+bash$ @value{EXE} -pRoot6 '!prmore;!pivot 1 4;!prmore' O7
+bash$ @value{EXE} -pGF3 '!mhash 13068150 (S)' O7 P7
+@end group
+@end example
+
+@tex
+\medskip
+@end tex
+
+Next we describe a collection of minor-structural commands.
+(You should first understand problems concerning inequivalent
+matroid representation from @ref{Representations}.)
+If you want to see more about the command result
+(like where the minor is displayed, etc.),
+use the command @code{!verbose} before
+@ref{Printing}.
+
+The command @w{@samp{!minor (mat) (min)}}
+finds out whether the given matroid(s) in @code{(mat)}
+has a ``minor'' in the given list @code{(min)}.
+Here by ``@math{M} having a @emph{minor} @math{N}'' we mean
+that some strongly equivalent matrix representation of @math{M}
+displays a submatrix which is unlabeled equivalent to @math{N}.
+So when asking for a minor @math{N} in the matroidal sense,
+one has to give @strong{all representations} of @math{N}
+up to unlabeled equivalence in the list @code{(min)}.
+The minor (if found) can be displayed when @samp{!verbose}
+printing was requested before.
+In such case a submatrix of an equivalent matrix of @code{(mat)}
+that is equal to @code{(min)} up to scale is printed out.
+With @samp{!verbose 2}, all displayed minors are printed out.
+
+The command @w{@samp{!minorusi (mat) (min) id}}
+similarly tests whether the given matroid(s) in @code{(mat)}
+has a ``minor'' equivalent to @code{(min)},
+such that the minor is using the element labeled @code{id} in @code{(mat)}.
+This is available from version 1.2,
+and the implementation is still very inefficient and slow.
+
+The command @w{@samp{!equiv (mat1) (mat2)}} looks for
+unlabeled equivalent pairs of matroids in the given lists.
+(In general, equivalence testing is much faster than minor testing.)
+The command @w{@samp{!eqpair (mat)}} is similar to the previous one --
+it looks for each matroid in the list, whether some other matroid farther in
+the list is equivalent to this one.
+
+The command @w{@samp{!tmajor (mat) (min)}}
+tests whether the matroid in @code{(mat)} is a ``tight major''
+of the given list @code{(min)} of matroids.
+In theory, a matroid @math{M} is a tight major of a family @math{F}
+if no element of @math{M} can be both contracted and deleted
+keeping a minor in @math{F}.
+For our implementation, the same notes as for @code{!minor} apply here.
+A warning is printed if @code{(mat)} itself has no minor in @code{(min)}.
+
+@example
+@group
+bash$ @value{EXE} -pREG '!minor' '@{W4 R10 R12@}' grK33
+bash$ @value{EXE} -pREG '!print;!verbose;!minor' R12 grK33
+bash$ @value{EXE} -pREG '!verbose 2;!minor' grK4 grK3
+@end group
+
+@group
+bash$ @value{EXE} -pREG '!deleach;!equiv' R10 grK33
+bash$ @value{EXE} -pREG '!eqpair' 'R12;!coneach (T) >((0t))'
+bash$ @value{EXE} -pREG '!verbose;!eqpair' 'R12;!remeach (T) >((0t))'
+@end group
+
+@group
+bash$ @value{EXE} -pGF2 '!tmajor' '@{S8 R12@}' '@{F7 F7#@}'
+bash$ @value{EXE} -pGF2 '!verbose 2;!tmajor' R12 grK33
+bash$ @value{EXE} -pGF2 '!extend bb;!tmajor ((TS))' F7 '@{F7 F7#@}'
+@end group
+
+@end example
+
+
+Finally, we are left with several other structural commands.
+Use @samp{!bwidth3 (mat)} to see whether the given 3-connected matroid(s)
+have branch-width at most 3, or higher.
+(It is yours responsibility to ensure that the tested matroid
+really is 3-connected!)
+Call @w{@samp{!fan (mat)}} to print the longest fan found in the
+given connected matroid(s),
+and @samp{!hasfan f (mat)} to see whether the matroid(s)
+has a fan of length at least @code{f},
+Again, you may request printing the fan with @samp{!verbose}.
+
+@example
+@group
+bash$ @value{EXE} -pREG '!remeach;!bwidth3 ((TS))' R10
+bash$ @value{EXE} -pREG '!extend r;!bwidth3 ((TS))' R12
+bash$ @value{EXE} -pREG '!verbose;!bwidth3 ((TS))' R12
+bash$ @value{EXE} -pGF2 '!fan' '@{F7 W3 W4 R10 R12@}'
+bash$ @value{EXE} -pGF2 '!verbose;!fan' '@{F7 W3 W4 R10 R12@}'
+@end group
+@end example
+
+@tex
+\medskip
+@end tex
+
+We provide next commands for determining matroid connectivity.
+The command @samp{!connectivity (mat)} prints the connectivity of
+given matroids (2,3,4,@dots{}).
+The commands @samp{!isconn (mat) c} and @samp{!isconn3 (mat)}
+check the required connectivity of given matroids.
+The command @samp{!isconni4 (mat)} checks whether given matroids are
+internally 4-connected.
+Notice that, unlike [Oxley], we do not consider the matroid @math{U23}
+to be 3-connected.
+We define a matroid @math{M} to be @math{n}-connected, @math{n>0},
+iff @math{M} has at least @math{2n-2} elements,
+and @math{M} has no proper @math{k}-separation for @math{k=1,...,n-1}.
+
+For example, @samp{!isconn (mat) 4} is passed by matroids that are at least
+4-connected.
+Another example uses the 3-connectivity filter (@xref{Filtering}.)
+to prepare correct input to @samp{!bwidth3} command.
+
+@example
+@group
+bash$ @value{EXE} -pREG '!remeach;!connectivity ((TS))' R10
+bash$ @value{EXE} -pREG '!remeach;!connectivity ((TS))' grK5
+bash$ @value{EXE} -pREG '!remeach;!filt-isconn3;!bwidth3 ((TS))' grV8
+@end group
+@end example
+
+The command @samp{!girth (mats)} prints out the girth (length of the shortest
+cycle) of each of the given matroids.
+Similarly @samp{!hasgirth g (mats)} tests which of the given matroids have
+girth at least @code{g}.
+A modified command @samp{!ispaving (mats)} tests which of the given matroids
+are ``paving'', i.e. which of them have girth at least equal to the rank.
+
+@example
+@group
+bash$ @value{EXE} '!girth (S)' R10 R12
+bash$ @value{EXE} '!hasgirth 4 (S)' R10 R12
+@end group
+@end example
+
+
+
+
+@node   Isomorphism, Generating, Structural,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Matroid Isomorphism and Representability
+@cindex isomorphism
+@cindex matroid isomorphism
+@cindex representability
+@cindex generating representation
+
+@findex repres
+@findex represgen
+@findex isomorph
+@findex isompair
+
+This section continues with other structural @value{NAME} functions
+which are related to ``abstract matroids'',
+like abstract matroid isomorphism (even over different pfields),
+or general matroid representability over supported fields.
+These functions here have been added in version 1.1.9
+(officially from version 1.2),
+and their implementation is not yet optimal.
+That means the functions are computed correctly, but they may take
+very long time to compute on large or regularly-structured matroids.
+
+@tex
+\medskip
+@end tex
+
+We provide the command @w{@samp{!isomorph (mats) (mats2)}} to test isomorphism
+of the matroids in the given list @code{(mat)} against matroids in the second
+list @code{(mat2)} (each first one against all in the second list).
+It is even possible to give the input matroids represented over different
+partial fields, @ref{Diff-fields}.
+As the result matroids from @code{(mat)} having isomorphic mates (anywhere)
+in @code{(mat2)} are accepted.
+
+The command @samp{!isompair (mats)} tests pairwise isomorphism in the given
+one matroid list @code{(mat)}.
+Specifically, the first matroid of each abstract isomorphism class in
+@code{(mat)} is accepted as unique up to isomorphism.
+So the command provides a quick way to find out how many non-isomorphic
+matroids are in the list, and to remove isomorphic pairs, @ref{Filtering}.
+Basic examples are presented next,
+and few more handling matroids with representations over different fields
+are in @ref{Diff-fields}.
+
+@example
+@group
+bash$ @value{EXE} -pREG '!isomorph' R12 'R12;!pivot 5 6'
+bash$ @value{EXE} -pNREG '!extend r;!isompair' R12
+bash$ @value{EXE} -pGF3 '!verbose;!isompair' \
+            '@{ "@@inputpf gf4;<U36" "@@inputpf gf5;<U36" "<W3" @}'
+
+@end group
+@end example
+
+The command @samp{!repres PF (mats)} tests which of the matroids in
+@code{(mats)} are representable over the partial field @code{PF}.
+(No representation is actually constructed.)
+The matroids in the list may be given represented over any other fields.
+On the other hand, the command
+@w{@samp{!represgen (mats) [all[q]]}} generates (one or all) representations
+of the given matroids in @code{(mats)} over the current partial field.
+Again, the matroids may be given represented over any other fields.
+The exact function depends on the second optional argument ---
+only (at most) one representation is generated per each matroid by default;
+all representations up to labelled strong equivalence are generated
+for the argument @code{all};
+and all representations up to unlabelled strong equivalence are generated
+for the argument @code{allq}.
+
+It follows from theory that binary matroids have only one representation over
+any field, and ternary matroids have only one ternary representation,
+up to labelled equivalence.
+For example, 3-connected quinternary matroids may have up to six inequivalent
+representations over @math{GF(5)}.
+Examples of the use of these commands follow.
+
+@example
+@group
+bash$ @value{EXE} -pGF4 '!repres GF5' '@{R10 S8 F7 U24 U25@}'
+bash$ @value{EXE} -pGF4 '!filt-repres GF5;!prtree' '@{R10 S8 F7 U24 U25@}'
+
+bash$ @value{EXE} -pGF5 '!represgen ((T)) all;!prtree' U25
+bash$ @value{EXE} -pGF5 '!represgen ((T)) allq;!prtree' U25
+bash$ @value{EXE} -pGF5 '!represgen ((T)) all;!prtree' F7-
+bash$ @value{EXE} -pGF7 '!represgen ((T)) all;!prtree' '@@inputpf GF3;AG23'
+@end group
+@end example
+
+
+
+
+@node   Generating, Diff-fields, Isomorphism,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Generating Extensions
+@cindex generating extension
+@cindex extension generating
+
+@findex extend
+@findex extendto
+@findex extendupto
+@findex extendtoc
+@findex extendtor
+@c @findex extendsize - deprecated name for extendto...
+
+An important function of the @value{NAME} program is to generate
+3-connected (co)extensions of a matroid over the partial field.
+All matroids we speak about here @strong{must be 3-connected}.
+We refer also to the description of options used in the
+extension generating process @ref{Extensions}.
+
+The command @w{@samp{!extend [rcb]+ (mat) >(dest)}} generates
+3-connected (co)extensions to the matrix given in @code{(mat)} according
+to the first text parameter,
+and stores them in the given destination position @code{(dest)}.
+A letter @code{r} in the first parameter means to do a row
+coextension, a letter @code{c} means to do a column extension,
+and a letter @code{b} means to do both of them.
+(You would mostly use @code{b} here unless you know really
+well what you are doing.)
+
+It is possible to combine multiple letters in the first parameter
+of @code{!extend}.
+For example, @w{@samp{!extend bbb (mat)}} generates three steps
+of one-element extensions,
+and all results of each of the steps are stored.
+It is also possible to give more than one matrix
+in the input list @code{(mat)}.
+Then the extensions are generated for each of the matrices.
+However, in such case it is @emph{not allowed} to do multiple extension
+steps, i.e. only one letter may be then given in the first argument.
+
+@noindent
+Try the following few examples:
+@example
+@group
+bash$ @value{EXE} -pGF4 '!extend b;!prtree' F7
+bash$ @value{EXE} -pGF4 '!extend c (S);!prtree' F7 F7#
+bash$ @value{EXE} -pGF2 '!extend bbb;!prtree' F7
+@end group
+@end example
+
+To extend the given one matroid to a specified size and rank,
+use the command @w{@samp{!extendto r c (mat)}}.
+This command repeats the extension steps until all extended
+matrices of size @code{r} times @code{c} are produced.
+(Unlike for @code{!extend},
+the intermediate constructed extensions are not stored here.)
+Similar commands @w{@samp{!extendtor r c (mat)}}, or
+@w{@samp{!extendtoc r c (mat)}}, generate all extension matrices
+with exactly @code{r} rows and at most @code{c} columns,
+or with exactly @code{c} columns and at most @code{r} rows.
+Finally, the command @w{@samp{!extendupto r c (mat)}}
+generates all extension matrices of sizes up to @code{r} times @code{c}
+including @code{(mat)} itself.
+
+@example
+@group
+bash$ @value{EXE} -pGF2 '!extendto 5 5;!prtree' F7
+bash$ @value{EXE} -pGF2 '!extendupto 5 5;!prtree' grK4
+bash$ @value{EXE} -pGF2 '!extendtoc 5 4;!prtree' grK4
+bash$ @value{EXE} -pGF2 '!extendtor 5 6;!extend cc >((S));!prtree' grK33
+@end group
+
+@end example
+
+Another set of examples shows the effects of additional generating
+attributes given by the @code{ext-} options @ref{Extensions}.
+@example
+@group
+bash$ @value{EXE} -pGF5 '!extend;!prtree' U25
+bash$ @value{EXE} -pGF5 '@@ext-forbid "U35";!extend;!prtree' U25
+bash$ @value{EXE} -pGF5 '!extend;@@ext-forbid "U25;!dual";!prtree' U25
+bash$ @value{EXE} -pdyadic '!extend;!prtree' F7-
+bash$ @value{EXE} -pdyadic '!extend;@@ext-nofan 4;!prtree' F7-
+@end group
+@end example
+
+When generating extensions with @samp{@@ext-forbid M},
+only those extensions not containing an @math{M}-minor are created.
+This construction is equivalent to generating all extensions,
+and then filtering out those with an @math{M}-minor,
+but the above example is faster.
+On the other hand, the option @samp{@@ext-nofan f} is a
+@emph{sequential} option --
+it restricts the appearance of the whole generating sequence,
+not only the resulting matroid.
+For example, a matroid @math{N} having no fan would not be generated
+with @samp{@@ext-nofan 4} if all sequences leading to @math{N}
+contain a 4-fan.
+
+
+@tex
+\medskip
+@end tex
+
+@strong{Warning!! }
+The above described commands @code{!extend*} are very complex in their nature,
+and one may easily produce ``false'' results when (s)he does
+not fully understand all the hidden details of the computation.
+That is why we provide here the following detailed
+explanation of the extension-generating algorithm in @value{NAME}.
+The theory behind our extension-generating algorithm is written in the paper
+[@value{MATGENER}].
+However, you do not have to worry about most of the details
+if you are working only within ``nice'' partial fields
+with unique matroid representability like binary, regular, or ternary.
+
+We assume that the reader is familiar with matroid representations
+and their (in)equivalence @ref{Representations}.
+A matroid @math{S} is called a @emph{stabilizer} for a given
+partial field if, for any 3-connected (or stable)
+matroid @math{M} with an @math{S}-minor,
+any two representations of @math{M} displaying the same
+subrepresentation of @math{S} are strongly equivalent.
+Moreover, @math{S} is called a @emph{strong stabilizer}
+if every subrepresentation of @math{S} extends to whole @math{M}.
+
+Consider that we want to generate all matroids having the given matroid
+(called further the @emph{base minor}) @math{S} as a minor,
+subject to representability over the pfield and to other conditions
+(attributes).
+Then, by Seymour's splitter theorem, there is a sequence of single steps
+(extensions / co-extensions) building a matroid @math{M} from the
+base minor @math{S} keeping 3-connectivity;
+except the case when the base minor is a wheel or a whirl(!).
+Such a sequence of single steps,
+when viewed in the reverse order (i.e. as deletions / contractions),
+is called the @emph{elimination sequence}
+for the (resulting) matroid @math{M} over the base minor @math{S}.
+
+Formally, an elimination sequence consists of the base minor @math{S}
+in the given matrix representation,
+of the resulting matrix for the matroid @math{M},
+of the order of lines of @math{M} as they are added to @math{S},
+and of the @emph{signature} of the sequence telling
+which lines of @math{M} are extended and which are coextended.
+(The sequence signature is taken separately from the order since
+the order naturally follows from the matrix representation of @math{M},
+while the signature does not.)
+The base minor @math{S} is always displayed in the matrix representation 
+of @math{M} in the upper-left corner.
+
+We call two elimination sequences @emph{equivalent}
+if their base minors are unlabeled identical,
+they have the same additional attributes,
+and their resulting matrices are unlabeled equivalent.
+To avoid generating equivalent sequences repeatedly,
+we require the generated elimination sequences to be minimal
+with respect to the following @emph{canonical order}:
+We compare two sequences lexicographically first by their signatures
+(preferring the signature bits corresponding to lines closer to the base minor),
+and then by their lines as they are added in the sequence
+(again preferring the lines closer to the base minor).
+
+One important note concerns the use of letters @code{r},@code{c}
+as modifiers of the @samp{!extend [rcb]} command:
+These letters allow you to choose which extensions (row/column) are done at
+each step of generating, but they do not modify in any way the canonical
+order of sequences.
+In particular, if you specify @samp{!extend cr}, then you get only(!) those
+canonical extensions that happen to add a column before adding a row,
+but not those that add a row before adding a column.
+Better use the @samp{!extendto*} variant of generating
+to obtain specific size of matrices.
+
+@tex
+\medskip
+@end tex
+
+After all,
+unless you are using ``nice'' partial fields with unique representability
+like binary, regular, or ternary;
+we suggest to generate extensions from strong stabilizers,
+to guarantee extendability and to limit inequivalent representations.
+Notice, however,
+that even when the base minor @math{S} is a strong stabilizer
+for the current partial field,
+two nonequivalent sequences may produce isomorphic matroids (to @math{M})
+--- this may happen if there are more (labeled) @math{S}-minors in @math{M}
+which display inequivalent representations of @math{S}.
+
+If you would like to get only non-isomorphic extensions out of the
+generation process, you may use the command @samp{!filt-isompair} afterwards,
+@ref{Isomorphism}.
+Keep in mind that isomorphism-filtering may be used only after
+the generation has completed, since not all nonequivalent isomorphic extensions
+extend further in the same way.
+Read more in examples @ref{Practical}.
+
+Since the options @code{@@ext-bsize} and @code{@@ext-signature}
+describing the elimination sequence are stored
+with the generated extension matrices,
+one may continue the generating process in multiple steps
+while still keeping uniqueness of the generated sequences
+over the whole universe generated from @math{S}.
+This allows to continue the computation in parallel on many computers
+-- make the first step(s), and then distribute each of the extensions
+to another computer.
+
+However, never touch the @code{@@ext-bsize} and @code{@@ext-signature}
+options by hand, or(!) you twist the canonical order and lose extensions.
+Moreover, never change the matrix between generating steps
+for the same reason,
+and do not mix matroids of elimination sequences created in different major
+versions of the program.
+Do not even switch between partial fields during generating.
+
+If you want to generate extensions of, say, two base minors @math{S1,S2},
+then you have to manually exclude repetition of those extensions
+that contain both @math{S1,S2}.
+One easy way to achieve this is to generate the extensions
+of @math{S2} with an additional option @w{@samp{@@ext-forbid S1}}.
+(Consider also the option @w{@samp{@@extinherit[all] ext-forbid}} to inherit
+the exclusion of @math{S1} for the generated extensions.)
+You may learn more in the practical examples below
+@ref{Practical}.
+
+
+
+
+@node   Diff-fields, Com-Flow, Generating,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Working in Different Partial Fields
+@cindex different pfield
+@cindex import pfield
+
+@findex pfield
+@findex import
+
+The @value{NAME} program allows to work in different
+partial fields than the given one by @code{-pPF}
+@ref{Command-line}.
+The command @samp{!pfield NPF} switches the
+program to temporarily use a new partial field @code{NPF}.
+The new partial field stays in effect until a new call
+to @code{!pfield}, or until the current frame execution is finished.
+Compare this command with the option @samp{@@inputpf PF},
+@ref{Other options}.
+
+However, calling @code{!pfield} only switches the program's
+internal arithmetic,
+but the matrices in the frame tree still remain represented
+over the original partial field.
+If you want to work with them over the new partial field,
+then you must first import them.
+(That concerns practically all commands working with the matrix
+or the matroid, except basic printing, abstract isomorphism test,
+and representability functions, @ref{Isomorphism}.)
+For that purpose the @w{@samp{!import transl (mat)}} command is provided.
+All entries of the matrices in the list @code{(mat)}
+are translated to the current partial field using the translation
+named @code{transl}.
+Read about partial-field translations in @ref{P-Fields}.
+
+After importing a matrix to a different partial field,
+this matrix may no longer be proper @ref{P-Fields}.
+So, unless you are sure that this matrix is indeed proper,
+you should call the command @code{!inpfield} to test it.
+
+@tex
+\medskip
+@end tex
+@example
+@group
+bash$ @value{EXE} -pGF4 '!print;!pfield GF2;!import Id0;!print' U24
+bash$ @value{EXE} -pNREG '!print;!pfield GF3;!import Nreg-tr;!print' P7
+bash$ @value{EXE} -pNreg '!extend r;!prtree;!pfield GF3;!import \
+       Nreg-tr ((S));!print;!eqpair' P7
+@end group
+@end example
+@tex
+\medskip
+@end tex
+
+An interesting example of the use of different pfields in @value{NAME}
+computation is presented in connection with isomorphism testing.
+We generate extensions of the given matroid over different fields,
+and then we look for isomorphic pairs in the generated lists:
+
+@example
+bash$ @value{EXE} -pGF5 '!extend r;!pfield GF4;!import Id0 ((T)) \
+       ;!extend r >((S));!prtree;!isomorph' grK33
+@end example
+
+
+
+
+@node   Com-Flow, Filtering, Diff-fields,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Command-Flow Control
+@cindex command-flow
+@cindex conditional
+@cindex calling shell
+@cindex exit/value
+
+@findex restart
+@findex iflist
+@findex ifshell
+@findex iffile
+@findex exit
+@findex skip
+
+The @value{NAME} program provides simple command-flow control
+described here.
+The command @samp{!restart} restarts command processing in the
+whole frame tree.
+(Commands already processed are deleted, so they are not executed again.)
+This command may be useful, for example,
+in connection with the command @code{!append} which adds new
+code to descendant frames.
+@xref{FReading}.
+
+The command @samp{!skip n} causes command processing to skip
+the next (up to) @code{n} commands in the current frame.
+Commands in other frames are not affected.
+The command @samp{!exit r} immediately stops command execution,
+and returns the value @code{r} to the calling shell.
+See below for an example.
+
+The command @samp{!iflist len [<=>!] (fram)}
+is used to test whether the given frame-list @code{(fram)}
+contains number of frames comparable to the value @code{len}.
+One may use relations @code{=}, @code{!=}, @code{>}, @code{>=},
+@code{<}, @code{<=}.
+If the relation is true, then the next command after @code{!iflist}
+is executed,
+otherwise the next command is skipped.
+If you want to skip more commands, use @code{!iflist} in combination
+with @code{!skip}.
+
+@tex
+\medskip
+@end tex
+
+Try the following simple examples.
+@example
+@group
+bash$ @value{EXE} '!iflist 0 < (S);!print (S)'
+bash$ @value{EXE} '!iflist 0 < (S);!print (S)' R10
+bash$ @value{EXE} '!iflist 0 = (S);!skip 3;!print;!extend;!prtree'
+bash$ @value{EXE} '!iflist 0 = (S);!skip 3;!print;!extend;!prtree' W3
+bash$ @value{EXE} '!iflist 0 = (S);!skip 2;!print;!extend;!prtree'
+@end group   
+@end example 
+
+The next example is more involved.
+See that the command @code{!extend} is copied to all descendant
+subframes, and then it is executed in each one of these subframes
+after @code{!restart}.
+@example
+@group
+bash$ @value{EXE} '!append (S) "!extend c (T) >((0t))"\
+       ;!restart;!prtree' W3 W4 R10
+@end group   
+@end example 
+
+Another involved example is the procedure @code{&splitlist} (@ref{Procedures})
+distributed with the package:
+@example
+@group
+#  - use in macek as  '@{<list@};&splitlist [length] [depth(]'
+@@subd-param1    10   
+@@subd-param2    "(("
+!move $@{param2@}($@{param1@}t)| >$@{param2@})(s)|
+!iflist $@{param1@} < ((S))
+!append (T) "&splitlist $param1 $param2"
+@end group
+@end example
+This procedure serves for breaking-up the given frame list into small pieces.
+Notice the command-flow in that procedure;
+first one small chunk of the list is moved to a new node,
+then the length of remaining list is tested,
+and, if longer than the given value,
+the whole procedure is appended again to the current frame.
+(The appended commands are automatically executed after @code{!append}.)
+An example of use is here:
+@example
+bash$ @value{EXE} '!prtree' '@{<bw3-tern-exc@};&splitlist 4'
+
+@end example
+
+
+Another useful command for ``high-level'' @value{NAME} programming
+is @samp{!ifshell "sh-com" [stat]}.
+This command executes the string @samp{sh-com} in the system shell
+(@file{/bin/sh}),
+and then it tests its return status against @code{stat}
+(or aginst @code{0 - Success} by default).
+If successful, then the next command is executed, and otherwise
+it is skipped.
+
+So @samp{!ifshell} is a general interface between @value{NAME} and the shell
+environment, allowing to execute @emph{any system command or action} and to
+test the resulting status.
+One may create directories, copy or erase files, and do many other things
+in this way.
+(Be careful not to do nasty things to your loved computer@dots{})
+One common use of this command would be testing existence of input files
+(to avoid error messages for missing input) using standard system utility
+@code{test},
+like in the following examples.
+The first line checks whether there is a subdirectory @code{temp/}
+present in the current directory.
+The example in the second line looks whether there is a readable
+input file named @file{infile},
+and if so, then the matrices from @file{infile} are read into @value{NAME}.
+
+@example
+bash$ @value{EXE} '!ifshell "test -d temp" 0;!prtext YES'
+bash$ @value{EXE} '!ifshell "test -r infile" 0;!mread infile >((S))'
+@end example 
+
+However, the above examples look for files in the current directory,
+ignoring internal @value{NAME} search paths.
+To find out whether there is a readable file @code{fname} somewhere
+on the input path, there is a specialized command @samp{!iffile fname}.
+So the previous example would better be written as:
+
+@example
+bash$ @value{EXE} '!iffile infile;!mread infile >((S))'
+@end example 
+
+Try also the next examples.
+Run the first one, and watch the result ---
+if the answer is YES, then you may get into big troubles.
+The next two lines of examples show you that it is really possible
+to run any program via the @samp{!ifshell} interface.
+(You may quit the vi editor by typing 'esc', ':', 'q', 'enter'.)
+
+@example
+bash$ @value{EXE} '!ifshell "test -w /etc/passwd" 0;!prtext YES'
+bash$ @value{EXE} '!ifshell "who"'
+bash$ @value{EXE} '!ifshell "vi i_love_macek.txt"'
+
+@end example 
+
+
+The @code{!exit} command returns an integer value back to the
+calling shell.
+This is a mechanism commonly used to indicate a success/failure of program
+operations on unix systems.
+In the @code{bash} shell, one may retrieve the returned value as follows:
+@example
+bash$ @value{EXE} -g-2 '!exit 123' ; echo $?
+123
+@end example 
+
+
+
+
+@node   Filtering, Procedures, Com-Flow,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Command-output Filtering
+@cindex filter/command
+@cindex filter/output
+@cindex remember/output
+
+@findex filt-
+@findex filx-
+@findex rem-
+@findex rex-
+@findex mark
+
+Some of the above described commands
+that usually print a ``yes/no''-type answer,
+may be modified by a prefix to filter the input list of frames.
+The prefix @samp{filt-*} causes the command @samp{*}
+to keep those frames for which the answer is ``yes'',
+and to delete the others.
+(Address the frames with @code{s} or @code{t}.)
+The prefix @samp{filx-*} has the exactly opposite meaning.
+
+The prefixes @samp{rem-*} and @samp{rex-*} suppress both
+printing and filtering in the command.
+The only result of such a modified command is
+the resulting list to be remembered for subsequent
+@samp{~N,^N} parameter addressing,
+@ref{Addressing}.
+
+The commands that can be modified by these prefixes include
+@code{!minor}, @code{!tmajor}, @code{!inpfield}, @code{!isconn},
+@code{!equiv}, @code{!hasfan}, @code{!bwidth3}, @code{!mhash},
+@code{!msize}, @code{!hasgirth}, @code{!isomorph}, @code{!repres}.
+Find out the current list of all modifiable commands by calling
+@samp{macek -Hc}.
+
+Here are a few examples that illustrate these concepts:
+@example
+@group
+bash$ @value{EXE} -pREG '!deleach;!coneach;!minor' R12 grK33
+bash$ @value{EXE} -pREG '!deleach;!coneach;!filt-minor;!prtree' R12 grK33
+bash$ @value{EXE} -pREG '!deleach;!coneach;!rem-minor;!pr ~1' R12 grK33
+@end group
+@end example
+
+A simple command @samp{!mark (list)} is provided to mark all frames in the
+given list for subsequent @samp{~N,^N} parameter addressing.
+
+
+
+
+@node   Procedures, , Filtering,    Commands
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Procedures -- Collecting Commands
+@cindex procedures
+
+@findex procedure
+@cindex command shortcut
+
+Often, one needs to execute a whole sequence of commands
+repeatedly for different parameter values.
+For this purpose the program provides the concept of
+@emph{procedures}.
+
+A procedure line starts with the keyword @samp{procedure}
+or the character @samp{&}.
+The procedure is written as @samp{&proc p1 p2 ...}.
+When scanning input, such a procedure call is expanded into
+the following actions:
+Substitutions are created as @samp{@@sub-param1 p1},
+@samp{@@sub-param2 p2}, etc.
+Then the file @file{proc} is included into the place.
+It is assumed that this file contains a sequence of
+commands, using the parameter values as @code{$param1}, @code{$param2}, etc.
+The possible output parameter @samp{>out} is accessed as @code{$paramres}.
+To give default values to the procedure parameters,
+use @samp{@@subd-param1 p1-default}.
+
+See examples distributed with the program in @file{Procedures/*}@dots{}
+
+@tex
+\medskip
+@end tex
+
+To simplify single command-line calls to some mostly used @value{NAME}
+functions, we provide few shortcuts that are implemented as include files.
+You may use simple calls like the following ones:
+@example
+@group
+bash$ @value{EXE} print R10
+bash$ @value{EXE} -pGF4 print U35
+bash$ @value{EXE} print grK33 grK5
+bash$ @value{EXE} -pREG prints grK5
+bash$ @value{EXE} -pREG connect R10 R12
+bash$ @value{EXE} -pREG minor R10 grK33
+bash$ @value{EXE} -pREG equiv R10 grK33
+@end group
+@end example
+
+The above shortcuts use the feature of an automatic file-include
+for command line arguments to @value{NAME}.
+So @file{print} is actually a file containing the print command,
+and similarly with others.
+See @file{Procedures/shortcut/*}.
+User may easily prepare more such shortcuts.
+However, we suggest to use shortcuts only in those very simple
+situations like the above examples.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Practical,      Remark, Commands,    Top,    
+@c *************************************************
+
+@chapter  Practical @value{NAME} Computations
+
+@cindex practical
+@cindex examples-practical
+
+@c More complex examples of practical computations with @value{NAME}...
+
+
+In this chapter we bring several practical examples
+of computations with the @value{NAME} program.
+They are intended both to demonstrate the power of our program in practice, 
+and to indicate that the computation is correct and it can be verified here.
+
+
+@menu
+* Pr-simple::	Few simple examples from version 1.0 of @value{NAME}.
+* Pr-gener::	Notes on matroid extension generating.
+* Pr-excnreg::  Computing all ternary excluded minors for n-reg representability.
+
+* Pr-simple2::	Few new small examples from version 1.2 of @value{NAME}.
+* Pr-bwidth3::  Finding the Excluded Minors for Branch-width 3.
+* Pr-excrepr::  Generating the Excluded Minors for Representability.
+
+* Pr-testing::  Designing Reliable Self-tests for  @value{NAME}.
+@end menu
+
+
+
+
+@node   Pr-simple, Pr-gener, ,    Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Simple Examples, ver. 1.0
+
+We first present several rather simple examples showing computations
+in version 1.0 of @value{NAME}.
+Those computations are, of course, still correct in higher versions,
+but they can be made in different and more efficient ways now...
+
+
+@subsection     @math{R10} as a Splitter for Regular Matroids
+
+We start with a computer proof that the matroid @math{R10} is a splitter
+in the class of regular matroids
+(see Seymour's decomposition theorem).
+@example
+bash$ @value{EXE} -pREG '!extend b;!prtree' R10
+@end example
+@noindent
+This program call works over the regular partial field.
+A representation of the matroid @math{R10}
+(distributed with the program) is read from a file,
+Then the command @samp{!extend} is called to get all
+3-connected row- and column-extensions of the matrix of @math{R10}
+in regular numbers,
+using the default parameter address @code{((T))}.
+As you may immediately see, no extension is generated.
+(If there were some, they would be stored to @code{>(((0t)))}.)
+Thus, using Seymour's splitter theorem,
+@math{R10} is a splitter for the class of all 3-connected regular matroids.
+
+Similarly, we can show that @math{R10} is a splitter for 3-connected
+near-regular matroids.
+@example
+bash$ @value{EXE} -pNREG '!extend b;!prtree' R10
+@end example
+@noindent
+
+
+
+@subsection     Extending @math{F7} in the Binary Field
+
+In this case, we generate all binary extensions of the matrix
+of the Fano matroid @math{F7}.
+@example
+bash$ @value{EXE} -pGF2 '!extend b;!prtree;!minor' F7 F7#
+@end example
+@noindent
+Then we print the two generated extension in the tree (as sons of) @math{F7},
+and finally we show that both the extensions have
+the dual of @math{F7} as a minor.
+Hence @math{F7} is a splitter for binary matroids with no @math{F7*} minor.
+
+Alternatively, one may achieve the same result with another call
+that excludes the @math{F7*}-minor immediately in the generating process.
+(Notice that commands are executed even inside option parameters.)
+@example
+bash$ @value{EXE} -pGF2 '@@ext-forbid "F7;!dual";!extend b' F7
+
+@end example
+
+We continue in the direction of the previous example.
+@example
+bash$ @value{EXE} -pGF2 '!extend r;!print ((s))' F7
+@end example
+@noindent
+We compute the two binary row coextensions of the Fano matroid @math{F7},
+and print them.
+See that the first one of them is the affine plane @math{AG(3,2)},
+and the second one is known as @math{S8}.
+Both of these matroids are distributed with the program.
+
+@example
+bash$ @value{EXE} -pGF2 '!extend c;@@ext-forbid "AG32;!dual"' S8
+@end example
+@noindent
+The latter call shows that there is only one column extension
+to @math{S8} with no @math{AG(3,2)*}-minor.
+This extension is sometimes known as @math{P9}.
+
+
+
+@subsection     Extending @math{K5} in the Binary Field
+
+Here we generate all binary 3-connected extensions
+of the cycle matroid of the graph @math{K5},
+@example
+bash$ @value{EXE} -pGF2 '!extend b;!minor' grK5 '@{grK33,"grK33;!dual"@}'
+@end example
+@noindent
+and then check which of them have the matroid of the graph @math{K33}
+or the dual of it as a minor.
+We see that 5 out of 6 generated matroids have one of the minors.
+Can you verify why, by hand?
+
+@tex
+\medskip
+@end tex
+Now we compute the binary extensions to @math{K5} in three steps,
+adding one element at each step.
+We immediately exclude those extensions with @math{K33}
+or the dual as a minor.
+@example
+@group
+bash$ @value{EXE} -pGF2 \
+      '@@ext-forbid grK33 "grK33;!dual";!extend bbb;!prtree' grK5
+@end group
+@end example
+@noindent
+Notice that this command should be called from one (logical) line of the shell.
+Since no new extension is generated at the third step,
+this computation proves that there are altogether only two binary
+3-connected (row) extension to @math{K5} without @math{K33}
+or the dual as a minor.
+These two matroids are known as @math{T12} and @math{T12/e}.
+
+
+
+@subsection     Ternary vs. Regular Extensions
+
+In this example we show that generating regular extensions 
+of a matroid gives the same results as generating the same
+extensions over the ternary field with a forbidden @math{U24}-minor.
+(The idea behind this is that ternary matroids without @math{U24}-minor
+are binary, and hence also regular.)
+
+@example
+bash$ @value{EXE} -pREG \
+      '!extendsize 6 6;!prtree;!writetreeto ex-reg ((T))' grK33
+bash$ @value{EXE} -pGF3 '@@ext-forbid U24;\
+       !extendsize 6 6;!prtree;!writetreeto ex-tern ((T))' grK33
+@end example
+@noindent
+Again, these commands should be called from one (logical) line of the shell.
+The resulting lists of each of the extension commands are written
+to the files @file{ex-reg@value{FEXT}} and @file{ex-tern@value{FEXT}}.
+(Actually, the same list as @code{ex-tern} can be obtained
+by generating all ternary extensions, and then filtering out those
+with @math{U24}-minors.)
+Finally we look at the generated lists again,
+and show that they are the same with the following command.
+We do not need to switch between the regular and ternary partial fields
+here since the regular representations may be read anywhere.
+
+@example
+bash$ @value{EXE} -pGF3 '!equiv' ex-tern ex-reg
+@end example
+
+
+
+@subsection     Extending @math{F7} in the Quaternary Field
+
+In this example we show all the quaternary 3-connected extensions
+of the Fano matroid @math{F7} without @math{U25}-minors.
+@example
+bash$ @value{EXE} -pGF4 '!extend bb;@@ext-forbid U25;!minor' F7 U24
+@end example
+@noindent
+Notice that all such generated extension have no @math{U24}-minor either,
+and so they are all binary.
+Since this computation would continue forever, it cannot serve as a rigorous proof,
+but it suggests that all quaternary extensions of @math{F7}
+without @math{U25}-minor are binary.
+(Which is, indeed, known to be true.)
+
+Try the same example with more extension steps, that is like:
+@example
+bash$ @value{EXE} -pGF4 '!extend bb..b;@@ext-forbid U25;!minor' F7 U24
+@end example
+
+
+
+
+@node   Pr-gener,       Pr-excnreg, Pr-simple,    Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Notes on Extension Generation
+
+In this section we mention two simple practical issues which a user running
+extension generating commands in @value{NAME} should understand.
+(The examples come from version 1.0,
+and more can be obtained from them using current means of @value{NAME}.)
+
+
+@subsection Examining Near-Regular Extensions
+
+The near-regular partial field is a well-known structure
+(analogous to the reguar one),
+where all those matroids can be represented which have representations
+over every field except possibly @math{GF(2)}.
+
+We show how to generate near-regular extensions of the matroid @math{P7}, 
+and how to view the inequivalent ones (of the same matroid).
+Run the following two commands, and watch their output carefully.
+@example
+bash$ @value{EXE} -pNREG '!extend b;!quiet;!prmore' P7
+bash$ @value{EXE} -pGF3 '!extend b;!quiet;!prmore' P7
+@end example
+@noindent
+You see that a total of 8 extensions are generated in the near-regular case,
+but only 4 of them have distinct matroid hash-values.
+Distinct matroid hash-values always mean non-isomorphic matroids.
+This suggests that there are, in fact, only 4 non-isomorphic extensions.
+(Which can be verified by other means, try it@dots{}
+@xref{Isomorphism}, in version >1.1)
+On the other hand, there are 12 extensions generated in the ternary case,
+and you may find all those 4 near-regular hash-value classes as distinct
+matroids there (non-isomorphic since ternary representations are unique).
+
+This example is to show you that nonequivalent representations of
+the same matroid frequently occur when working over more complex
+(partial) fields, and present a possible way how to handle them.
+(@xref{Isomorphism}, for a better current way.)
+
+Another interesting point here is
+that two distinct matroids of the 12 ternary extensions have the same hash-value.
+(This is in version 1.0 hash-values which may change in the future!)
+To see that the matroids are really different,
+find out that one has two triangles while the other has only one.
+Run the same script without the suppressing command @code{!quiet}
+to see more about structure of these two (and others) matroids.
+Hence, even if two hash-values are the same, the matroids still may
+be non-isomorphic.
+
+@example
+bash$ @value{EXE} -pGF3 '!extend r;!prmore' P7
+bash$ @value{EXE} -pGF3 '!extend r;!verbose;!prmore' P7
+@end example
+
+
+
+@subsection     Extending Whirls
+
+Here we want to demonstrate the fact that matroid wheels and whirls
+are exceptions in Seymour's splitter theorem which is a base
+of our extension-generating algorithm,
+@ref{Generating}.
+This is another potential problem, in addition to non-equivalent representations,
+that must be closely watched when using the extension generating
+functions of @value{NAME}.
+
+@example
+bash$ @value{EXE} -pGF4 '!extendsize 4 4;!writetreeto xu24 ((T))' U24
+bash$ @value{EXE} -pGF4 '!extendsize 4 4;!writetreeto xwh3 ((T))' Wh3
+bash$ @value{EXE} -pGF4 '!equiv' xwh3 xu24
+@end example
+@noindent
+The first call generates 8-element rank-4 extensions of @math{U24} -- the 2-whirl.
+The second call generates 8-element rank-4 extensions of @math{Wh3} -- the 3-whirl.
+On the third line you may then see that not all matroids generated secondly
+appear in the first list,
+despite all of them having a @math{U24}-minor.
+
+
+
+
+
+@node   Pr-excnreg,     Pr-simple2, Pr-gener,     Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Ternary Excluded Minors for Near-Regular
+
+
+It is known that if @math{M} is an excluded minor for near-regular representability,
+then @math{M} has at most 8 elements [Geelen, unpublished].
+Moreover, it happens that all four excluded minors for GF(3) representability
+are also excluded minors for near-regular representability.
+Thus to find all excluded minors for near-regular representability,
+one just has to search through ternary non-binary matroids.
+Similarly as above, all such matroids must contain an extension of the 3-whirl.
+
+We show how to find all 6 such excluded minors using the @value{NAME} program.
+(They are @math{F7-}, @math{AG(2,3)-e}, their duals,
+@math{P8}, and @math{AG(2,3)-e} by @math{DeltaY}.)
+
+@tex
+\medskip
+@end tex
+
+The example comes from version 1.0, and it can be made much simpler
+with means of @value{NAME} 1.2.
+(Try to design a better procedure as an exercise, and compare the results.)
+
+The whole script, named @code{excnreg}, is prepared as a procedure.
+Each call executes one step of the whole computation.
+(There are, actually, only two meaningful steps, since we need
+to get from 6-element Wh3 to 8 element matroids.)
+The procedure takes one argument which is then used to construct
+the filenames of three input lists - starting near-reg and ternary lists,
+and previous excluded minor list.
+(Possible second argument should be always @samp{b}@dots{})
+The default value for the argument is @code{"nre6."}.
+@example
+@c
+# 
+# Call this script as  macek -pNREG '&excnreg nre6.' .
+@@subd-param1	"nre6"
+@@subd-param2	"b"
+@@sub-extdesc	$param2
+@@sub-nrein	$param1
+@@sub-nretin	$nrein-tern
+@@sub-nrexcl	$nrein-excl
+@end example  
+
+This part prepares the working subframes with their names and comments.
+(Not really necessary, but analogous to neat data declarations in usual programms.)
+@example
+@{
+@@comment "For extensions in Near-Reg :"
+@{
+@@comment "the starting list"
+<$nrein
+@}@{
+@@comment "the extensions"
+@}@}
+@{
+@@comment "For extensions in GF(3) :"
+@@ext-forbid $nrexcl
+@{
+@@comment "the starting list"
+# (must be read in ternary later!)
+@}@{
+@@comment "the extensions"
+@}@}
+@{
+@@comment "For filtering minors"
+@{@}@{@}
+@}
+@end example  
+
+Here we generate all next-step extensions in the near-regular partial field.
+Then we switch to the ternary field, and generate analogous ternary extensions.
+The forbidden list for ternary extensions --- excluded minors known so far,
+is given by an option above.
+Notice that we can read the input ternary list only after switching to
+the ternary field, otherwise an error would occur.
+(Other possibility is to consider the option @samp{@@inputpf GF3} above@dots{})
+We have to keep the ternary and near-regular lists separately
+(despite them containing the same matroids),
+because their extension signatures are different.
+@example
+!quiet
+!prtree
+!prtext "Now we generate all next-step extensions in Near-reg."
+!extend $extdesc (((S))) >((()((0t)|
+
+!pfield GF3
+!prtext "Now we generate extensions in GF3 with no known excl minors."
+!read $nretin >((3)(t))
+!move ((3)(s)) >(()(((0t)|
+!extend $extdesc (()((S))) >(()(()((0t)|
+@end example  
+
+Next we look at which of the ternary extensions have no minor among
+the near-regular extensions.
+These are the new excluded minors.
+Resulting lists are written to files for use in the next step.
+@example
+!move ((()(S)| >((2)(((0t)|
+!import nreg-tr ((2)((S)|
+!rex-minor (()(()(S)| ((2)((S)|
+!move ^1 >((2)(()((0t)|
+!read "@@comment \"For merging excluded minors :\";$nrexcl" >((3)(t)|
+!move ((2)(()(S)| >((3)((0t)|
+!prtree
+
+!writetreeto "$nrein$extdesc-exc" ((2)(()(T)|
+!writetreeto "$nrein$extdesc-excl" ((3)(T)|
+!writetreeto "$nrein$extdesc-tern" (()(()(T)|
+!pfield Nreg
+!writetreeto "$nrein$extdesc" ((()(T)|
+!prtext "One step of &excnreg finished. Call next with one more \"b\"."
+
+@end example
+
+
+Finally, we show how the above procedure is called to get the final result.
+The whole file defining the procedure should be included in the
+@value{NAME} distribution under the name @file{excnreg}.
+You first have to create the starting lists of matroids
+@file{nre6.} and @file{nre6.-tern} looking like
+@example
+@{ Wh3 @}
+@end example
+@noindent
+and an empty file @file{nre6.-excl} for collecting the excluded minors.
+Then you call:
+@example
+bash$ @value{EXE} -pNREG '&excnreg nre6.'
+bash$ @value{EXE} -pNREG '&excnreg nre6.b'
+@dots{}
+@end example
+
+
+
+
+@node   Pr-simple2,     Pr-bwidth3, Pr-excnreg,    Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     New Simple Examples, ver. 1.2
+
+Here we add few examples demonstrating the new powerful functions of
+@value{NAME} from version 1.2.
+
+
+@subsection Extended Matroid Information
+
+Run the following command to get many interesting informations about a matroid.
+(However, note that computing these informations may take quite long time.)
+@example
+bash$ @value{EXE} '!verbose 2;!prmore' R10
+@end example
+Among other, you can see the orbits of the automorphism group,
+listings of all small flats and separations,
+representability over other fields, etc.
+
+Moreover, you may list all bases or all circuits of a matroid in the
+following way.
+The last line shows an invocation which lists only those bases
+containing the two elements labeled by 2 and by -1.
+@example
+bash$ @value{EXE} '!prbases' R10
+bash$ @value{EXE} '!prcircuits' R10
+bash$ @value{EXE} '!prbases "" 2 -1' R10
+@end example
+
+
+@subsection Inequivalent Representations
+
+The issue of inequivalent representations of a matroid
+has already been discussed from the point of view of version 1.0.
+@xref{Pr-gener}.
+Now we show how new functions from version 1.2 can be used to get much more.
+
+Matroids have unique representations over the fields @math{GF(2)}
+and @math{GF(3)}.
+3-connected matroids have at most 2 inequivalent representations over
+@math{GF(4)}, and at most 6 over @math{GF(5)} [Whittle et al].
+We may sample-verify these facts using computations like:
+@example
+bash$ @value{EXE} -pGF4 '!extend rrr;!verbose;!represgen "" all' U25
+bash$ @value{EXE} -pGF5 '!extend rr;!verbose;!represgen "" all' U26
+@end example
+On the other hand, the numbers of possible (labeled) inequivalent representations
+of matroids over larger fields is unlimited, and we may see rapidly growing
+numbers of representations here:
+@example
+bash$ @value{EXE} -pGF7 '!extend r;!verbose;!represgen "" all' U27
+bash$ @value{EXE} -pGF9 '!extend r;!verbose;!represgen "" all' U27
+@end example
+
+
+@subsection Isomorphism and Exhaustive Generation
+
+@value{NAME} can be simply used to exhaustively generate
+all matroids over some fields.
+See details in
+[@value{MATGENER}]...........
+
+
+
+
+
+@node   Pr-bwidth3,     Pr-excrepr, Pr-simple2,    Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Matroids of Branch-Width 3
+
+
+@c *********************
+
+@subsection     Regular Excluded Minors for Branch-Width 3
+
+In this example we show that the regular matroid @math{R10}
+is an excluded minor for matroids of branch-width 3.
+@example
+bash$ @value{EXE} -pREG '!bwidth3 ((T));!deleach;!coneach;!bwidth3' R10
+@end example
+@noindent
+The first command @code{!bwidth3 ((T))} verifies that @math{R10} itself
+has branch-width bigger than 3.
+Then the next two commands construct all one-element deletions
+and contractions of @math{R10},
+which are all stored to the default address @code{>(((0t)))}.
+Finally, we see that all these deletions and contractions
+have branch-width 3 in @code{!bwidth3}
+(with the default frame address @code{((S)) }).
+
+One @emph{important remark} here is that you cannot perform
+the same computation with an arbitrary matroid, since the command
+@code{!bwidth3} requires a 3-connected matroid on the input.
+Since the matroid @math{R10} is 4-connected,
+all its one-element deletions and contractions are indeed
+3-connected, but this may not be true for other matroids!
+Then you have to use the command @samp{!filt-isconn3} to filter out
+the matroids which are not 3-connected.
+@example
+bash$ @value{EXE} -pREG '!remeach;!filt-isconn3;!bwidth3 ((TS))' grV8
+@end example
+@noindent
+(The graph @math{V8} is another such an excluded minor.)
+
+
+
+@subsection     Generating the Excluded Minors for Branch-Width 3
+
+It is known that if @math{M} is an excluded minor for branch-width 3,
+then @math{M} has at most 14 elements
+[Hall, Oxley, Semple, Whittle].
+Moreover, Dharmatilake conjectured that all binary excluded minor for branch-width 3
+belong to the following set:
+@math{@{grQ3, grO6, grK5, grK5*, grV8, grV8*, R10, ND11, ND14, ND23@}}.
+The first seven of them are regular matroids.
+We need to look only at remaining binary non-regular
+matroids on up to 14 elements.
+
+We have proved this conjecture 
+[@value{BWIDTHGEN}],
+using a @value{NAME} script @code{bw3bin}
+which has been described in the older versions of the manual.
+(The script is still included in the distribution.)
+However, since the script is outdated in the current version of @value{NAME},
+we describe here the new script usable for generating branch-width-three
+excluded minors over any given field.
+
+@tex
+\medskip
+@end tex
+
+New flexible script @code{bw3excg}...................
+
+@example
+# 
+# This script is used to compute all (small) excluded minors for branch-width 3
+# over a given field.
+# Call the procedure as	   ./macek '&bw3excg gfX filebase suffix [b]' .
+# (The correct pfield -pgfX is set automatically.)
+# 
+# Before starting the procedure, create the files "bw3-gfX-" with the starting
+# list of matroids to generate from, and "bw3-gfX+exc" containing (possible)
+# extra excluded minors for bwidth3 (over other fields, with '@@inputpf gfZ'
+# for each one).
+# Then run a sequence of commands like these:
+# 	./macek '&bw3excg gfX bw3 '
+# 	./macek '&bw3excg gfX bw3 b'
+# 	./macek '&bw3excg gfX bw3 bb'
+# 		...
+# 	./macek '&bw3excg gfX bw3 bbb...'
+# These will generate the excluded minors step-by-step (each step adding one
+# element to the matroids), storing the excluded minors to "bw3-gfX-b..b-exc.mck".
+# 
+# A table of computed results:
+# 	GF2:	6 on 10, 4 on 12  (7 out of them known regular,
+#					 only 3 binary ones are actually generated!),
+# 	GF3:	plus	18 on 9, 31 on 10, and no more!
+# 	GF4:	plus	5 on 8, 90 on 9, 32 on 10, ...	(nonisomorphic!)
+# 	GF5:	plus	38 on 8, 444 on 9, 29 on 10	(nonisomorphic!)
+# 	GF7:	plus	2 on 7, 119 on 8, 344 on 9	(nonisomorphic!)
+# 	GF8:	plus	0 on 7, 5 on 8
+# 	GF9:	plus	0 on 7, 0 on 8
+# 
+
+@@subd-param1 	"gf3"
+@@subd-param2 	"bw3"
+@@subd-param3 	""
+@@subd-param4 	"b"
+
+!pfield $param1
+#!verbose
+
+# the file names to use: usefilen the base, usefilenb the starting list,
+# and the excluded and generated lists...
+@@sub-usefilen 	$@{param2@}-$@{param1@}
+@@sub-usefilenb	$@{usefilen@}-$@{param3@}
+@@sub-excextra 	$@{usefilen@}+exc
+@@sub-treeall 	$@{usefilenb@}-all
+@@sub-listin 	$@{usefilenb@}
+@@sub-list3out 	$@{usefilenb@}$@{param4@}
+@@sub-list4out 	$@{usefilenb@}$@{param4@}-4
+@@sub-list4outn 	$@{list4out@}n
+@@sub-exclist 	$@{listin@}-exc
+@@sub-exclistout $@{list3out@}-exc
+
+@@sub-excluded 	 "((((S)(S)|"
+@@sub-excludedin  "((((1)("
+@@sub-excludedout "((((2)("
+@{
+@@name "bw3excg-w"
+@@comment "bw3excg (over $param1) working subframe:"
+@{
+@@name "exc-known"
+@@comment "known bw3 excl minors - extra, smaller, and new (generated)"
+@{ 
+@@name $excextra
+!quiet
+!iffile "$excextra"
+!skip 1
+!skip 4
+!read $excextra
+!filx-isompair ((s))
+!pfield $param1
+!represgen "((s))" allq >((0t))
+@}@{ 
+!quiet
+!pfield $param1
+!iffile "$exclist"
+!mread $exclist >((0t))
+@}@{ @}
+@}@{
+@@name extens1
+@@comment "all new $@{param4@}-extensions of input [$@{listin@}]..."
+@}@{
+@@name e-bwidth4
+@@comment "those generated with bwidth 4 get here:"
+@}@{
+@@name e-bwidth4n
+@@comment "those new excl-minors with bwidth 4 get here:"
+@}@{
+@@name e-bwidth3
+@@comment "those next with bwidth 3 get here:"
+@}@}
+@@sub-input "(()(S))"
+@{
+@@inputpf $param1
+<$listin
+@@comment "this is the starting set of matroids $listin:"
+@}
+
+@@sub-gener3  "(((4)("
+@@sub-generall  "(((1)("
+@@sub-gener4bw  "(((2)("
+@@sub-gener4n  "(((3)("
+@@extinherit ext-forbid
+
+!extend b $input  >$generall(0t)|
+!move $@{generall@}S|  >$@{gener3@}(0t)|
+!rex-bwidth3 $@{gener3@}S|
+!move ^1  >$@{gener4bw@}(0t)|
+
+!writetreeto $@{list3out@} $@{gener3@}T|
+!iflist 0 "<" $@{gener4bw@}S| 
+!writetreeto $@{list4out@} $@{gener4bw@}T|
+!move $@{gener4bw@}S|  >$gener4n(0t)|
+!filx-minor $@{gener4n@}s| $excluded
+!iflist 0 "<" $@{gener4n@}S| 
+!writetreeto $@{list4outn@} $@{gener4n@}T|
+
+!move $@{excludedin@}S| >$excludedout(0t)|
+!move $@{gener4n@}S| >$excludedout(0t)|
+!iflist 0 "<" $@{excludedout@}S| 
+!writetreeto $@{exclistout@} $@{excludedout@}T|
+!writetreeto $@{treeall@} (T)
+!prtree
+
+@end example
+
+
+We have used the above described script to find all 49 ternary
+(non-binary) excluded minors for branch-width 3,
+and to generate other more than 1100 such excluded minors over larger fields:
+[@value{USINGMTH}]
+(Some detail are also included in the script comments.)
+
+
+
+
+
+@node   Pr-excrepr,     Pr-testing, Pr-bwidth3,    Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     Excluded Minors for Representability
+
+
+The following complex script @code{reprXexc}
+can be used to generate excluded minors for representability over various
+fields.
+See the included comments...............
+
+@example
+# 
+# This MACEK script generates the small excluded minors for PFXX-representable
+# matroids over any partial field, starting in steps from a user-defined
+# given matroid list (@{U25@} suggested for bigger field than ternary).
+# All inequivalent representations are produced, so it may be desirable
+# to call the '!isompair' command afterward.
+# Beware of possible inequivalent representations of the starting matroids
+# (even for U25!) - all of them have to be considered.
+# 
+# Use: ./macek -pGFX '&reprXexc filebase PFYY [rcb] [suffix] [verbosity]'
+# 	Example as  ./macek -pGF7 '&reprXexc gf7_gf5excl_5_ GF5 b bb'
+# 
+# Before starting the procedure, create the files "gfX-gfYexcl-" with the starting
+# list of matroids to generate from over GF(X),
+# and "gfX-gfYexcl-eexc" containing (possible) extra excluded minors for
+# representability (over other fields, with correct '@@inputpf gfZ' for each one).
+# Then run a sequence of commands like these:
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b '
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b b'
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b bb'
+# 		...
+# 	./macek -pGF4 '&reprXexc gf4-gf5excl- GF5 b bbb..'
+# These will generate the excluded minors step-by-step (each step adding one
+# element to the matroids), storing the excluded minors to "gf4-gf5excl-b..b-exc.mck".
+# 
+# We briefly explain the starting list "gfX-gfYexcl-", for example for GF(X)
+# bigger than GF(3) - then all nonbinary nonternary representable matroids contain
+# a U_2,5 or U_3,5 minor, and hence we start from the file (list):
+# 	@{ U25 @}
+#	!represgen (s) allq >((0T))
+# This file actually includes the default representation of U_2,5, but it also
+# generates all nonequivalent representations for it (which exist over, say, GF(9)).
+# (Notice also that we miss all U_k,k+2 matroids in such a way!)
+# 
+# A table of computed results:
+# 	over GF2 for GF5:	known excluded F7, F7#
+# 	over GF3 for GF5:	4 on 8 elem, 1 on 10 elem, 1 on 12 elem, ...
+# 	over GF4 for GF5:	additional 5 on 8 elem, 29 on 9 elem, ...
+# 	over GF7 for GF5:	additional 9+1 on 7 elem, 65? on 8 elem, ...
+# 		...
+# 
+
+@@subd-param1 unknown
+@@subd-param2 unknown
+@@subd-param3 b
+#@@subd-param4
+@@subd-param5 1
+
+# the file names for the lists of previously generated exclusions, of the starting
+# exclusions (like those over different pfield), and of the new filename-base:
+@@sub-prevexcname "$@{param1@}$@{param4@}-exc"
+@@sub-basexcname "$@{param1@}eexc"
+@@sub-newfname "$@{param1@}$@{param4@}$@{param3@}"
+
+@@sub-givenm "((("
+@@sub-prevexc "((()("
+@@sub-otherexc "(((2)("
+@{
+@@name reprXexc-l
+@@comment "Given lists..."
+@{
+<$@{param1@}$@{param4@}
+@@comment "starting list of matroids"
+@}
+@{
+@@comment "previous excluded minors"
+@}
+@{
+@@comment "other excluded minors"
+@}
+@}
+@@sub-work "(()("
+@{
+@@name reprXexc-w
+@@comment "Working subframe..."
+@{
+@@comment "generated extensions"
+@}
+@{
+@@comment "new excluded minors"
+@}
+@{
+@@comment "new matroid list"
+@}
+@}
+@@sub-temp "((2)("
+@{
+@@name reprXexc-t
+@@comment "Temporary subframe..."
+@}
+
+# conditionally reading the list of previous excluded minors
+!quiet
+!prtext "Reading the previous (smaller) excluded minors for $@{param2@} representability..."
+!iffile "$@{prevexcname@}"
+!read "$@{prevexcname@}" >$@{temp@}(t)|
+!iflist 0 < $@{temp@}s)|
+!move $@{temp@}(s)| >$prevexc(0t)|
+# reading also a possible list of other basic excluded minors, which are represented
+#  in general over diff pfields, and so their current representations are generated here
+!iffile "$@{basexcname@}"
+!read "$@{basexcname@}" >$@{temp@}(t)|
+!iflist 0 < $@{temp@}s)|
+!represgen $@{temp@}(s)| allq >$otherexc(0t)|
+!verbose
+
+# generating the "param3"-extensions to the given list (one step!)
+!prtext "Extending the previous list of current- and $@{param2@}-representable matroids by $param3..."
+!extend $param3 $@{givenm@}S)| >$@{work@}((0t)|
+!move $@{work@}(S)| >$@{work@}()((0t)|
+
+# filtering representability over "param2" and testing previous excl minors
+!prtext "Testing $@{param2@}-representability of the generated extensions..."
+!verbose $param5
+!rem-repres $param2 $@{work@}()(s)|
+!move ^1 >$@{work@}(2)((0t)|
+!quiet -$param5
+!quiet
+# (skipping excl minor test if empty lists)
+!prtext "Testing possible previous (smaller) excluded minors in the nonrepresentable extensions..."
+!iflist 0 = $@{prevexc@}S)|+$@{otherexc@}S)|
+!skip 9
+!iflist 0 = $@{work@}()(s)|
+!skip 6
+!verbose +2
+!verbose $param5
+!filx-minor $@{work@}()(s)| $@{prevexc@}S)|
+!filx-minor $@{work@}()(s)| $@{otherexc@}S)|
+!quiet -$param5
+!quiet -2
+!move $@{prevexc@}S)| >$@{work@}()((0t)|
+!verbose
+
+!prtree
+!writetreeto "$@{newfname@}-exc" $@{work@}()(T)|
+!writetreeto "$@{newfname@}" $@{work@}(2)(T)|
+!prtext "All done in this step, start next from the list $@{newfname@} ..."
+
+@end example
+
+
+We have used the above described script to look for the excluded minors
+for (say) @math{GF(5)} representability.
+We have generated 4 such ternary excluded minors on 8 elements (already known),
+one new excluded minor on 10 elements,
+and one on 12 elements which is (somehow surprisingly) already known.
+Then we generated many more such excluded minors over larger fields,
+not attempting to find all of them.
+(Unfortunately, no explicit upper bound for their size is known,
+and there are huge numbers of generated matroids.)
+
+
+
+
+
+@node   Pr-testing,     , Pr-excrepr,    Practical
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section     How to Self-Test @value{NAME} Computation
+
+
+There is, unfortunately, no large-scale computation data about matroid
+generation available in the literature nowadays (2004),
+and so we have little chance to compare our computing results with other
+reliable sources.
+
+So, in this final section we present a simple way how @value{NAME}
+computation results can be self-tested in a nontrivial way.
+Imagine we generate all inequivalent representations of matroid extensions up
+to certain size over, say, @math{GF(5)}.
+Then we select those extensions which are also representable over, say,
+@math{GF(4)},
+and finally we find all those non-isomorphic ones.
+That is simply run as:
+@example
+macek -pgf5 '!extend bb;!filt-repres gf4;!isompair' grK33
+@end example
+@noindent
+In this specific case we get total 469 inequivalent matrices representing
+329 non-isomorphic matroids.
+
+In the second stage we run an analogous computation starting over
+@math{GF(4)} instead:
+@example
+macek.nodebug -pgf4 '!extend bb;!filt-repres gf5;!isompair' grK33
+@end example
+@noindent
+Since, in theoretic words, we generate in both cases
+all the matroids of certain size representable both over
+@math{GF(4)} and @math{GF(5)}, the resulting numbers must agree.
+Indeed, now we get total 544 inequivalent matrices representing
+329 non-isomorphic matroids.
+Good!
+
+The reader is invited to check that the above two computations run in
+@value{NAME} in really different ways,
+and there is almost nothing in common between them.
+Hence what else (than correctness) could make the result the same?
+One may run countless different variants of the described test@dots{}
+
+Moreover, in some specific cases like the above one,
+there is more to say and to test.
+It is known, for example,
+that the matroids representable over both @math{GF(4)} and @math{GF(5)}
+are the so called golden-mean matroids [Vertigan, unpublished?].
+Since the golden-mean partial field is included in @value{NAME},
+we may easily verify also that:
+@example
+macek -pgmean '!extend bb;!isompair' grK33
+@end example
+@noindent
+Now we get total 889 inequivalent matrices representing
+329 (again!) non-isomorphic matroids.
+
+See more in [@value{MATGENER}].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Remark,    Index, Practical,    Top,    
+@c *************************************************
+
+@chapter  Remarks
+
+@menu
+* Reliability::        About reliability of the @value{NAME} computations.
+* Troubleshooting::    Troubleshooting @value{NAME}.
+* Addmore::            Adding more functionality to @value{NAME}.
+@end menu
+
+
+
+
+
+
+@node    Reliability,     Troubleshooting, ,  Remark,
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section  Program Reliability
+
+@cindex reliability
+
+
+In this chapter we discuss correctness and reliability of the results
+of @value{NAME} computations.
+When developing this project, we made every possible effort to produce
+a stable and very reliable software tool.
+Such an effort is, indeed, necessary if we want to use @value{NAME}
+computation results in research papers.
+However,
+if your view of computer programs is distorted by bad experiences
+with products of one unnamed Redmond company,
+then there are many ways how you can test our program,
+and ensure that you are getting correct answers.
+
+@tex
+\medskip
+@end tex
+
+Almost every algorithm in our program contains thorough internal checks.
+These include watching data consistency at critical steps,
+repeating algorithms on modified input data
+(an equivalent input like a matrix with swapped or pivoted lines,
+or a dual matrix, etc.),
+and using alternative or brute-force algorithms for the same question.
+User may find much more information about the internal checks directly in
+@value{NAME} source files.
+
+To save time, time-consuming internal checks are randomized
+and executed only occasionally.
+Moreover, we provide an alternative executable @file{@value{XEXE}}
+which does not include the internal checks, and so it is significantly
+faster.
+We suggest to use @file{@value{XEXE}} carefully
+and only when you already know that your computation is (likely) correct.
+
+Extensive debugging messages generated by the program with @samp{-g3}
+show user exactly what the program does, and they may be easily followed
+in the program source files (which contain also detailed descriptions
+of the algorithms).
+Since randomized routines are used in the program,
+the course of program computation may vary from one run to another,
+but the final results should, of course, stay the same.
+
+User may also test correctness of @value{NAME} computations
+by comparing the output with known theoretical results.
+Several such examples are presented in @ref{Practical}.
+In particular, it is often the case that the computed results are closed
+under duality, which can be subsequently tested;
+or that one result may be obtained in different ways
+which are theoretically equivalent but require the program to do
+significantly different operations;
+etc.
+
+@tex
+\medskip
+@end tex
+
+Another way of checking the program output is to compare the results
+between different versions of the program.
+For example, from @value{NAME} version 0.8 many structural algorithms were
+replaced by new ones that are cleaner and faster.
+In particular, this means that comparing structural answers from version
+0.8.2 with the same answers from version 1.0
+provides a nontrivial proof of correctness.
+Of course, such testing is limited only to functions implemented already
+in earlier versions of @value{NAME}.
+Find out more about these by reading the corresponding source files
+and source documentation.
+
+Some new computations with version 1.2 compared @value{NAME} with
+(partial) independent enumeration results found in the literature.
+See [@value{GENERTP}] for a comparison with results obtained by [Kingan et al.],
+or [@value{VYMOLA}] for extensive enumerations compared with
+independent related results obtained in the theory of linear codes by [Wild].
+
+@tex
+\medskip
+@end tex
+
+Lastly, we want to note that we have designed our program to be an advanced
+tool for skilled users.
+(Here we mean mainly skilled in matroid theory.)
+The @value{NAME} program is not idiot-proof.
+So keep in mind that ``@emph{garbage in, garbage out}''.
+Watch out carefully whether the program is really computing the tasks you
+expect it to.
+And finally, (RTFM!) read this whole manual very carefully
+before starting with complicated computations.
+
+@c @tex
+@c \bigskip\bigskip\bigskip
+@c @end tex
+
+
+
+
+@node    Troubleshooting,      Addmore, Reliability,  Remark,    
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section  Troubleshooting
+
+@c Some troubleshooting tips later...
+
+@cindex troubleshooting
+
+
+The troubleshooting section is not written yet.
+If you have troubles with the @value{NAME} program,
+let me know so that I may include some solution tips here@dots{}
+
+@uref{@value{MWEB}}, @uref{@value{MEMAIL}}.
+
+Anyway, in case of computer troubles try to ask your system administrator
+first, (s)he may help even when (s)he knows nothing about matroids.
+
+
+
+
+@node    Addmore,	, Troubleshooting,   Remark,
+@c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@section  Adding Functions to Macek
+
+@c Description of how to add more functionality to the program...
+
+@cindex adding more
+@cindex more functions
+
+
+This chapter of the @value{NAME} manual is provided for those
+who are not satisfied with the current functionality of this program;
+who want more functions in it,
+and who are able to contribute to @value{NAME} development.
+There are lots more things you can do if you really want!
+
+According to the GPL license covering @value{NAME},
+you may obtain and modify any source file of the program.
+However, we suggest you follow the guidelines provided next,
+so that your additions to @value{NAME} will be compatible with
+the future development.
+And, if you write a nice piece of code for @value{NAME},
+let me know so that I can arrange it within the master distribution.
+@uref{@value{MWEB}}.
+
+@tex
+\medskip
+@end tex
+
+Before playing with new functions for  @value{NAME},
+read the relevant source files of the distribution
+since they contain a lot of technical description and comments.
+Then prepare you code separately in a separate directory.
+(You may use the provided subdirectory @file{src/addons}@dots{})
+
+There are three areas in which it is useful to add you code
+directly to the existing @value{NAME} code,
+and special (empty so far) files @file{*.inc} are provided there for you:
+additional partial field definitions and translations
+@file{pfield/pfdef-more.inc,pftran-more.inc},
+additional command handles and option descriptions
+@file{frame/frcoms-more.inc,fropts-more.inc},
+and extra control rules for extension generating
+@file{gener/gener-more.inc}.
+Read the comments in these files, and follow samples there.
+
+Good luck with development!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@node    Index, 	, Remark,     Top
+@c *************************************************
+
+@unnumbered Index
+
+
+Here we list the concept index for this manual.
+(Go to the next index if you look for program commands / options.)
+
+@printindex cp
+
+@page
+
+Here we list the index of all frame- commands and options
+described in this manual.
+
+@printindex fn
+
+
+
+@bye
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

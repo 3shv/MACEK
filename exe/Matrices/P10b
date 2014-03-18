@@ -1,0 +1,11 @@
+#
+# binary extension-coextension of W4
+@comment " bin extension-coextension of W4"
+
+	1	1	0	0	0
+	1	0	1	1	0
+	0	1	0	1	0
+	0	1	1	0	1
+	0	0	0	1	1
+
+@require 1+1 0

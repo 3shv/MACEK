@@ -1,0 +1,9 @@
+# a shortcut for printing all circuits of the given matroids...
+!quiet
+!iflist 0 = (S)
+!skip 4
+!verbose
+!prcircuits (S)
+!quiet
+!exit
+!prtext "Usage: ./macek -pGFq printcircuits matroid1 [matroid2 ... ]"

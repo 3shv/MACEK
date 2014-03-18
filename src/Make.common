@@ -1,0 +1,174 @@
+#
+# This Make.common file is included in all makefiles of the MACEK project.
+# (Put your local modifications into the file Make.local...)
+#
+
+# the preferred editor for 'make edit':
+#######################################
+
+#EDITOR = xjoe -geometry 100x40
+
+
+# the C compiler section and flags:
+###################################
+
+# the basic compiling programs
+CC = gcc
+AR = ar
+
+CFLAGS_I = -I$(TOPDIR)/include
+ifndef CFLAGS_D
+CFLAGS_D = 
+endif
+ifndef CFLAGS_W
+CFLAGS_W = -Wall -W -Winline -Wshadow -Wpointer-arith -Wbad-function-cast
+#CFLAGS_W = -std=c99 -Wall -W -Winline -Wshadow -Wpointer-arith -Wbad-function-cast
+#CFLAGS_W = -Wall -W -Winline -Wshadow -W -Wpointer-arith -Wsign-compare -Wbad-function-cast
+endif
+# possibly more optimization options (-O3?) can be added, but they can also break
+# some fragile parts of MACEK code!
+ifndef CFLAGS_O
+CFLAGS_O = -O1
+CFLAGS_XO = -O2 -Wdisabled-optimization -finline-functions -fstrength-reduce \
+		-funroll-loops -frerun-loop-opt -frerun-cse-after-loop -fregmove -fexpensive-optimizations
+endif
+
+# the architecture flags (now native) - if needed, set them manually in Make.local...
+ifndef CFLAGS_A
+ifeq ($(shell uname 2>/dev/null),)
+CFLAGS_A = -march=i386
+else
+CFLAGS_A = -march=$(shell uname -m | tr '_' '-')
+ifneq ($(patsubst 4.1.%,X,$(patsubst 4.0%,X,$(patsubst 3.%,X,$(patsubst 2.%,X,$(shell gcc -dumpversion))))),X)
+ifneq ($(shell uname -s),Darwin)
+CFLAGS_A += -mtune=native
+endif
+endif
+endif
+endif
+
+
+# the lexical analyzer section and flags:
+#########################################
+
+LEX = flex
+
+ifndef LFLAGS_0
+LFLAGS_0 = 
+endif
+
+
+# source files section - file listings:
+#######################################
+
+SOURCE_C = $(wildcard *.c)
+SOURCE_L = $(wildcard *.l)
+
+SOURCE_H = $(wildcard *.h)
+SOURCE_IH = $(wildcard $(TOPDIR)/include/*.h)
+
+DEPEND = $(wildcard Make*[a-z]) $(wildcard $(TOPDIR)/Make*[a-z])
+
+
+
+
+# here some local modifications are read:
+#########################################
+
+include $(TOPDIR)/Make.local
+
+
+
+
+# some common rules and flags put together:
+###########################################
+
+CFLAGS_COMMON = $(CFLAGS_W) $(CFLAGS_O) $(CFLAGS_A) $(CFLAGS_I) $(CFLAGS_D) \
+		$(CFLAGS_LOC) -DPROGDATE=\"$(shell date '+%d/%m/%y')\"
+LFLAGS_COMMON = $(LFLAGS_0) $(LFLAGS_LOC)
+
+SOURCE_IGN2 = $(SOURCE_IGNORE) test.c
+OBJS_XC = $(patsubst %.c,%.o, $(filter-out $(SOURCE_IGN2),$(SOURCE_C)))
+OBJS_XL = $(patsubst %.l,%.o, $(filter-out $(SOURCE_IGN2),$(SOURCE_L)))
+OBJS_COMMON = $(filter-out $(OBJS_IGNORE),$(OBJS_XC) $(OBJS_XL))
+XOBJS_COMMON = $(patsubst %.o,%.xo, $(OBJS_COMMON))
+
+HEADERS_COMMON = $(filter-out $(SOURCE_IGNORE),$(SOURCE_H) $(SOURCE_IH))
+
+ifndef OBJOUT
+OBJOUT = $(shell basename `pwd`)
+endif
+ifndef EXEOUT
+EXEOUT = macek
+endif
+ifndef EXEOUTND
+EXEOUTND = $(EXEOUT).nodebug
+endif
+
+
+# a description message as the first rule (overwrite in your makefile before including)
+about:	
+	@les=`which less`; \
+	if [ ! -x "$$les" ]; then  les=more;  fi; \
+	(cat $(TOPDIR)/../ABOUT; cat doc/version | awk '/PROGVER/{print "Version  " $$3 "."}'; \
+		echo; echo "Try 'make help' or 'make all' ..."; echo) | $$les
+
+help:
+	@les=`which less`; \
+	if [ ! -x "$$les" ]; then  les=more;  fi; \
+	(cat $(TOPDIR)/README.make; echo) | $$les
+
+
+# making the object files and .a archive:
+#########################################
+
+$(OBJS_COMMON) $(XOBJS_COMMON):		$(HEADERS_COMMON) $(DEPEND)
+
+$(OBJOUT).a:	$(OBJS_COMMON)
+	$(AR) rcs $@ $^
+
+obj:	$(OBJOUT).a
+
+$(OBJOUT).xa:	$(XOBJS_COMMON)
+	$(AR) rcsu $@ $^
+
+xobj:	$(OBJOUT).xa
+
+
+# implicite rules for no-debug compilation of fast $(XOBJS_COMMON):
+
+%.xo:	%.c
+	$(CC) -c -DFASTPROG $(filter-out -g, $(filter-out -DERROREXITCRASH,$(CFLAGS))) \
+		$(CFLAGS_XO)  $< $(OUTPUT_OPTION)
+
+
+# rules for making .a archives from other subdirectories:
+#########################################################
+
+SRC_SUBDIRS = $(subst  $(TOPDIR)/,, $(subst /Makefile,, $(wildcard $(TOPDIR)/*/Makefile)))
+
+$(SRC_SUBDIRS):	%:	
+	@$(MAKE) -C $(TOPDIR)/$@ obj
+$(wildcard $(TOPDIR)/*/Makefile):	%:	
+
+
+# making backup of all files:
+#############################
+
+bak:	backup
+backup:
+	@$(MAKE) -C $(TOPDIR)/../ backup
+
+
+LOC_SUBDIRS = $(subst /Makefile,, $(wildcard */Makefile))
+
+clean:	
+	@for i in $(LOC_SUBDIRS) ""; do \
+		if [ -d "$$i" ]; then  $(MAKE) -C $$i clean;  fi; \
+	done
+	rm -f *~ *.a *.xa *.o *.xo  test core $(EXEOUT) $(EXEOUTND)
+
+
+
+
+

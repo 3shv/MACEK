@@ -1,0 +1,10 @@
+#
+# the matroid P_8 from Oxley's book
+@comment "the matroid P_8 from Oxley's book"
+
+	0	1	1	2
+	1	0	1	1
+	1	1	0	1
+	2	1	1	0
+
+@require (1+1) 1

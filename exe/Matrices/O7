@@ -1,0 +1,9 @@
+#
+# the matroid O_7 in >=3 elements
+
+@replace	X 2
+@repl-near-reg	X a
+@repl-gmean	X a
+@repl-GF(4)	X w
+@repl-GF(8)	X w
+<O7-gen

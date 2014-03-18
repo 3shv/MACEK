@@ -1,0 +1,44 @@
+
+This directory contains sources for program data and I/O operations.
+Main features are summarized next...
+
+
+FRAME - geneal input entity - 
+	may hold a matrix or a set of frames,
+	contains arbitrary options,
+	may have associated commands,
+
+syntax:
+	- comment lines (# or %, include the newline),
+	- matrix lines (start with blank, or number 0,1),
+	- option lines (start with @ or 'option'),
+	- command lines (start with ! or 'command', or & for procedures),
+	- include lines (start with < or 'include'),
+	- sub-frame line (start with SUBFR, end with EOFR),
+	- include line with names in {} reads subframes (a shortcut).
+	
+  special - on the top level (given string);
+	all lines starting with a number are matrix lines,
+	all words starting with a letter are include names,
+	and all ',' are replaced by space, all ';' are replaced by newline
+	 - replacement in the string before calling lex
+
+options:
+	- affect the frame immediately (like @replace...)
+	- inherited from parent frames (up to some exceptions),
+	- possible to retrieve the last option value, or all values
+	  (both returned as a list, but "all values" do not handle numeric options...)
+	- 
+
+
+COMMAND HANDLES
+	see in frcoms.c
+
+
+FRAME WRITING
+	see in emfout.c,
+	also contains simple online help for commands, options, and frames...
+
+
+
+

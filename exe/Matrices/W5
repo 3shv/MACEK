@@ -1,0 +1,10 @@
+#
+# the matroid W_5, wheel of 5 spokes
+@comment "the matroid W_5, wheel of 5 spokes"
+
+	1	0	0	0	-1
+	-1	1	0	0	0
+	0	-1	1	0	0
+	0	0	-1	1	0
+	0	0	0	-1	1
+

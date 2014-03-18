@@ -1,0 +1,34 @@
+#
+# All 10 binary excluded minors for branchwidth 3
+# 	(already closed on duality).
+@comment "all 10 binary branch-width 3 excluded minors"
+@require 1+1 0
+
+{
+<grQ3
+}{
+<grO6
+}{
+<grK5
+}{
+<grK5
+@transpose
+@comment "the dual of K_5 the complete graph"
+@name grK5#
+}{
+<grV8
+}{
+<grV8
+@transpose
+@comment "the dual of the V_8 graph (mobius ladder on 8 vert.)"
+@name grV8#
+}{
+<ND11
+}{
+<ND14
+@comment "the matroid ND14 (dual ND11) - excluded for bw. 3 in binary"
+}{
+<ND23
+}{
+<R10
+}

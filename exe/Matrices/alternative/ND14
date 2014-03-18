@@ -1,0 +1,6 @@
+#
+# the matroid ND14 (dual of ND11) - excluded for bw. 3 in binary
+
+<ND11
+@transpose
+@comment "the matroid ND14 (ND11^*) - excluded for bw. 3 in binary"

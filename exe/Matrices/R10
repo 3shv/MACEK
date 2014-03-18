@@ -1,0 +1,10 @@
+#
+# the matroid R_10 by Bixby, in a regular representation
+@comment "the regular splitter matroid R_10"
+
+	-1	1	0	0	1
+	1	-1	1	0	0
+	0	1	-1	1	0
+	0	0	1	-1	1
+	1	0	0	1	-1
+

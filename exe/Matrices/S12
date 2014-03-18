@@ -1,0 +1,12 @@
+#
+# a splitter for the class of binary matroids with no K5- or K5*-minors
+@comment "S12 splitter for bin no K5-,K5*-minors"
+
+	1	1	1	1	0	0
+	1	1	0	0	0	1
+	1	0	1	0	1	1
+	1	0	0	1	1	0
+	0	0	1	1	1	0
+	0	1	1	0	0	1
+
+@require 1+1 0

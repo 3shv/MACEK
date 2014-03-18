@@ -1,0 +1,7 @@
+#
+# the matroid Fano F_7 dual
+
+<F7
+@transpose
+#@name "F7#"
+@comment "the matroid F_7^* Fano dual"

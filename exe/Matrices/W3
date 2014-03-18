@@ -1,0 +1,8 @@
+#
+# the matroid W_3, wheel of 3 spokes
+@comment "the matroid W_3, wheel of 3 spokes"
+
+	1	0	-1
+	-1	1	0
+	0	-1	1
+

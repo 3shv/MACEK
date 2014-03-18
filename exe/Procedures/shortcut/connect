@@ -1,0 +1,10 @@
+# a shortcut for computing connectivity of given matroids...
+!quiet
+!iflist 0 = (S)
+!skip 5
+!verbose 2
+!print (S)
+!connectivity (S)
+!quiet -2
+!exit
+!prtext "Usage: ./macek -pGFq connect matroid1 [matroid2 ... ]"

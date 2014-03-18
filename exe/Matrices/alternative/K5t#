@@ -1,0 +1,6 @@
+#
+# the matroid K5t dual
+
+<K5t
+@transpose
+@comment "K5~* uniq binary coext of M(K33)*"

@@ -1,0 +1,7 @@
+
+How the project sources are backed-up...
+ - We backup the whole dir tree except the files and subdirectories
+   listed in the file "Nobackup".
+   ("Plusbackup" is not used now...)
+
+(See in the Makefile.)

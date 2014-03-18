@@ -1,0 +1,13 @@
+#
+# the excluded minors for ternary matroids
+@comment "the excluded minors for ternary matroids"
+
+{
+<U25
+}{
+<U35
+}{
+<F7
+}{
+<"F7#"
+}

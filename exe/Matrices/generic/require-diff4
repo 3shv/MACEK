@@ -1,0 +1,14 @@
+@require (X)       1
+@require (Y)       1
+@require (Z)       1
+@require (T)       1
+@require ((X)-1)   1
+@require ((Y)-1)   1
+@require ((Z)-1)   1
+@require ((T)-1)   1
+@require ((X)-(Y)) 1
+@require ((X)-(Z)) 1
+@require ((Z)-(Y)) 1
+@require ((T)-(X)) 1
+@require ((T)-(Y)) 1
+@require ((T)-(Z)) 1

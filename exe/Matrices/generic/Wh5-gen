@@ -1,0 +1,12 @@
+#
+# the matroid W^5 whirl of 5 spokes, generic
+@comment "the matroid W^5 whirl of 5 spokes"
+
+	1	0	0	0	X
+	1	1	0	0	0
+	0	1	1	0	0
+	0	0	1	1	0
+	0	0	0	1	1
+
+@require (X)   1
+@require (X)+1 1

@@ -1,0 +1,31 @@
+#
+# These are local modifications to the MACEK project makefiles...
+# 
+
+# use the following to set machine code flag (see 'uname -m' and gcc documentation)
+# for optimization if needed, consult with the top of Make.common...
+#CFLAGS_A = -march=pentium4
+#CFLAGS_A = -march=athlon-mp
+#CFLAGS_A = -march=athlon64
+#CFLAGS_A = -march=x86_64 -mtune=x86_64
+
+# use the following to disable compiler code optimization
+#CFLAGS_O = 
+# and the following to add extra checking code for variable access
+#CFLAGS_O = -fstack-check
+# -fcheck-memory-usage
+
+# use the following for debugger symbols in the executable,
+# and for program crashing (with a core image) on fatal errors
+#CFLAGS_LOC = -g -DERROREXITCRASH
+
+# use the following define to build a faster program just for binary matroids
+#CFLAGS_LOC = -DBINARYONLY
+
+# use this to change the executable names
+#EXEOUT = macek
+#EXEOUTND = xmacek
+
+# set the preferred editor for 'make edit' - used as $(EDITOR)+x+y
+#EDITOR = xjoe -geometry 100x40
+

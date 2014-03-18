@@ -1,0 +1,95 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2011  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+			OVERVIEW
+
+This package is a set of tools and routines for reasonably efficient combinatorial
+computations with representable matroids, especially for matroid constructions
+and for some structural tests.
+(If you do not know what a matroid is, then this package is likely not for you.)
+The package is intended both to help with everyday routines that a matroid-researcher
+faces (almost) every day, and to allow for long exhausted computations of
+matroid classes and their properties.
+
+So far, the program deals with matroids represented by matrices over finite fields
+and partial fields.
+Many common matroids are distributed with the program, and new ones may be easily entered.
+An easy manipulation with sets of matroids is supported.
+One may pivot the matrices, delete or contract elements, generate (3-connected)
+extensions for matrices, and generate/test representations over other fields.
+Structural tests for minors, equivalence, isomorphism, etc, are also implemented.
+More functions are planned for the future...
+
+
+			COMPILING
+
+The package can be used on almost any computer platform with the GNU C (gcc)
+compiler, relevant C libraries and developement environment, and the basic
+set of GNU utilities (at least gmake, flex).
+All these required programs are free for anybody -- get them from http://www.gnu.org.
+In particular, Linux and other unix-clones, with GNU C developement and GNU
+utils installed, would work fine.
+
+First create a subdirectory macek, copy the package archive to it, and
+unpack the archive with tar / gzip.
+To obtain a current documentation, read the files in the doc subdirectory,
+or type 'gmake info' in the top directory.
+Then compile the program with 'gmake compile' in the top directory.
+You may also run 'gmake all' and/or 'gmake xall' in the src subdirectory,
+with the same effect.
+Keep in mind that you really have to use the GNU version of make -- gmake,
+not the ordinary version.
+The result are two executables -- macek and macek.nodebug.
+
+
+			RUNNING
+
+Run the macek or macek.nodebug executable from the exe subdirectory of the package,
+where it is symlinked from.
+We also suggest to run the program on a terminal with at least 100 columns,
+and better with 132 columns.
+Try first to call 'macek -h' to see a simple online help.
+
+Then follow the supplied examples to learn more...
+Enjoy!
+
+
+			DOCUMENTATION
+
+Check the project web-page below for updates to the program and documentation.
+
+If you want to know more about the use of this program, read the info documentation
+in the doc subdirectory (or 'make info' at the top).
+Read also the file SUPPORTED for the list of "officially" supported platforms,
+and the files CHANGELOG and TODO for description of the project history and future.
+Read the C-sources if you want to know about the algorithms and implementation of
+the Macek project -- start reading in the src/include subdirectory.
+
+The program itself contains a brief command-line help, intended mainly for a quick
+reference (option '-h', or '-H' for more help).
+
+
+Copyright (C) 2001--2011  Petr Hlineny,
+Hlineny!nosp@m!member.ams.org or Petr.Hlineny!nosp@m!seznam.cz ,
+project web page  http://www.mcs.vuw.ac.nz/research/macek/ .
+
+

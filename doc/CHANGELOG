@@ -1,0 +1,528 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2004  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+
+
+
+
+
+
+
+			CHANGELOG - HISTORY
+		       ~~~~~~~~~~~~~~~~~~~~~
+
+1.2.12 on  5.12. 2010
+	not making a new stable version yet...,
+	this is just a poolishing update for new systems,
+	changed "ulong" to "unsigned long" in frcoms.c (needed for MacOSX),
+	architecture compiler flags, namely "-mtune=native",
+
+1.2.11 on  26.5. 2007
+	this is just a small update in documentation,
+	and source poolishing for nicer compilation with gcc4 (see FRMAGIC
+	and include_stack_ptr).
+
+
+1.2.09 on  26.8. 2005
+	a turn toward a new stabilized version,
+	extending struct_connorder_ext() to handle new requests (if cor==NULL),
+	correcting frame_getoption_ext() to work with NULL value list,
+	changed gener_extframe_ext() to read the connectivity options,
+	extending struct_connorder_ext() to record component indices also for rows,
+	elimchm_3connsequence() changed to elimchm_xconnsequence() with
+	 variable connectivity requirement (0,1,2,3),
+	new macro elimchm_connline_ext(),
+	substantially changed elimchm_unitline_ext() to unit-scale also
+	 disconnected matrices (including referred matrices),
+	updated genstep_sequencecheck_ext() for the new connectivity tests
+	 (simple/cosimple, or just connected),
+	new commands !issimple, !iscosimple (using the implementation of
+	 connectivity tests, new struct_simplicity_ext() ),
+
+1.2.02 on  17.7. 2005
+		UNSTABLE trial version for non-connected extensions!!!!!!!
+	adding ESREQ* flags for controlling connectivity properties of the sequence,
+	also in alist.c - alist_setend() length check for long lists changed
+	 (which reported fatal error - broken list, for too long lists),
+
+1.2.01 on  12.5. 2005
+	slight updates in the manual (a note on matrix representations),
+	
+
+1.2 on  16.3. 2005
+	final source poolishing...
+	 two types of new warning messages from gcc 3.4 have been eliminated:
+	 - use of compound (,,) expressions as lvalues in some macros has been rearranged,
+	 - warning on "operation ... may be undefined" was caused by multiple-expansion
+	   of debug-checking code inside some macros, so that has been eliminated
+	   wherever possible,
+	 another warning "dereferencing type-punned pointer will break strict-aliasing rules"
+	  remains there (in the nodebug version), but does it mean anything important?
+	
+	adding an option -s/S for a safe execution mode - restricting !ifshell,
+	 and forbidding bad directory names, not allowing to overwrite files
+	 (depending on path?), changes in fopen_dir() and new fopen_safename(),
+	 all these changes are implemented in the starting code, in the file-openning
+	 functions (include the use of file paths), and in the handle for !ifshell,
+	enlarging the allocation bound for matrix recycling, other hard bounds,
+	
+	manual updates and poolishing, describing !minorusi, remarks on the new functions
+	 that they are from 1.2, and not quite efficient yet,
+	poolishing also the distributed examples - shortcuts now have better structure
+	 and simple built-in help, demonstration procedures are commented and prepared
+	 to handle unusual situations (&splitlist, &reprXexc, &bw3excg),
+
+
+	This is the end of the second stage of development.
+	We are releasing VERSION 1.2 !!!
+========
+
+1.1.99999 on  5.11. 2004
+	added !minorusi - testing for a minor using a specified element id,
+	a stupid little bug was found in struct_minorbyrem_() with deleting/contracting
+	 coloops/loops, resulted in occasional "Program ERROR: wrong removal submatrix size"
+	 messages which did not affect correctness of the computation,
+	 this bug exists already from 0.9 version(!!!), but it is harmless,
+
+1.1.9999 on  11.5. 2004
+	corrected frame_copy_ext() to copy also the matrix pfield index,
+	corrected frame_inputmatrix_ext() to report an error when an input matrix
+	 is over a different pfield,
+	added a command '!iffile' testing for readability of the given file within
+	 Macek search paths,
+	added commands !prbases and !prcircuits for printing all bases or
+	 all circuits of a matroid, one can request elements in them,
+	added an option -T for printing 4-digit time in output messages, or time
+	 in minutes or hours,
+	added command '!isconni4', updated manual to include the new commands,
+
+1.1.999 on  20.12. 2003
+	corrected a syntax problem with '/' on short subframe input lines,
+	explicitly forbidding input from non-regular files (does not apply to symlinks),
+	new clear handling of the option '@inputpf XX' -- the switched pfield applies
+	 ONLY to input scanning in the current frame and its subframes, but not at all
+	 to command processing (use '!pfield XX' for that),
+	changed name to "%sR%d" for generated representations of a matroid,
+	the feature of an "extension prefix" from 1.1.9 introduced an unfortunate error for
+	 extending certain matrices over partial fields - but all occurences of this error
+	 were reported by the internal self-test ("No induced connecting path found..."),
+	this error did not affect extensions over fields since the leading-unit test was
+	 still applied after, and the connecting paths were not used for fields,
+	this error is now repaired - when scaling to get the leading nonzero in the
+	 extended matrix line, one cannot determine the unit in advance, but the line must
+	 be scaled afterwards because of strange connected orders of rows...
+	some updates of internal checks in stcheck.c (disabling for binaryonly, etc.),
+	a new self-check for representations of F7 versus characteristic 2,
+	debug-printing update in pfield_arithmetic_ext(),
+	connectivity computation in struct_connectivity_ext() updated to handle an extension
+	 to internal connectivity, this is now used only in !prmore,
+	another bug in computing girth - actually caused by an incorrect handling of the
+	 mins parameter to ematrix_submatrices_ext(); in fact only affecting some calls to
+	 ematrix_submatrices_sub(e,k) for large k, that fortunately did not affect the
+	 important computation of strmag_flatlines() thanks to the condition k<=co there,
+	so only the large girth computation was sometimes affected (with an error message),
+	 and that is now fully corrected,
+	
+1.1.99 on  16.9. 2003
+	preparing a release-candidate for version 1.2...,
+	change @ext-entries which may now be given with more then one param on a line,
+	corrected the procedure producing unit-leading extension vectors so
+	 that the coordinates are taken in order by rows, not by connectivity
+	 (needed for correct function of @ext-entries),
+	few updates in documentation,
+
+1.1.9 on  25.7. 2003
+	now we freeze functionality development on the way to version 1.2,
+	updating file-related functions in misc.c, better code and docs,
+	proper handling of the search path for writing,
+	new command-line options ... -t, -r,-R, -w, -x, see in main/*,
+	using -t- to disable all autosave,
+	enhance !setname to handle multiple frames with numbering by "%d",
+	new command !msize for filtering frames with matrices with specified size,
+	basic updates in the Macek manual 1.1 with the new functions,
+	still one new function on request - an option @ext-entries "..."
+	 forces to generate only extension lines starting with "...",
+
+1.1.6 on  1.7. 2003
+	implementing !writecom - writing one frame with additional matroidal comments,
+	printing representability over small fields for !printmore and !writecom,
+	small changes in !printmore output format,
+	new command variants for extensions -- !extendto, !extendrow/col,
+	adding tests of new structural commands from 1.1 to stcheck.c,
+	implementing command '!mark',
+
+1.1.5 on  5.6. 2003
+	printed output enhancement - long frame trees are not printed in whole,
+	but middle repeated sons are skipped, also writing foot comment for frame file,
+	implemented shortest cycle (girth) brute-force computation in strconn.c,
+	new commands !girth, !hasgirth, printing girth also in !printmore,
+	special version !ispaving with modified printing,
+	implementing automorphism orbits for !printmore, using a modification
+	 of the isomorphism testing code with element "labels",
+	updates in !printmore, including printed aut orbits for matroids,
+	
+
+1.1.4 on  10.4. 2003
+	fixed a small bug in '@inputpf XX' implementation - must set FRPFINDEX,
+	enlarged GEN_MAXMATEXTENS internal bound, change adding shorter lines in
+	grepr_generate_ext() to restrict number of free extensions,
+	another bug in representability test - say no error for undefined subdeterminants,
+	and a new bug in isomorphism test for different pfields - must switch
+	pfields when computing flatlines,
+	changed to ematrix_copy_notr() before ematrix_resetid() in isomorphism
+	and tight-major tests,
+
+1.1.3 on  15.3. 2003
+	found an ERROR with generating "bbb"-steps from U25 in GF4,GF5 vs. in Gmean!
+	(looks like a problem with isomorphism testing - going to trace down),
+	plus some updates in printing results of command handles,
+	the error was caused by a typo in strmag_flatlines_ext() - wrong corank
+	 bound on k, which probably did not affect other stuff (equiv etc.),
+	 corrected now... (was NOT present in 1.0 line!)
+
+1.1.2 on  9.3. 2003
+	implemented the command handles for representability test and generating
+	 representations (!repres, !represgen), tested these,
+	implemented new commands !ifshell, !mread,
+
+1.1.1 on  25.2. 2003
+	implemented an easy representability test for matroids (using parts of
+	 the extension generating code, not much efficient),
+	all in gener/grepres.c,
+	debug-testing that code against theory results (like dyadic vs GF3,GF5)...
+	still needs to add a correct command handle(s) for representability,
+	 and a faster grepr_isrepresented() implementation,
+
+1.1.0 on  20.2. 2003
+	allowed handling different pfields in one list of frames - FCPAR_LISTFRMP0,
+	used now in printing and in an isomorphism test,
+	impemented structural test for abstract matroid isomorphism - in strmag.c,
+	this uses a new function comparing all subdeterminants in ematexp.c,
+	
+	implementing a command handle for isomorphism, updating the command handle
+	for equivalence to properly handle uniqueness in one matrix list,
+	minor updates in the equivalence testing code,
+	-> commands !isomorph, !isompair,
+	debug-testing these additions... (seem to work fine)
+
+	New development line is starting - more structural commands, and
+	some almost-abstract matroid handling...
+========
+
+
+1.0.2 on  10.2. 2003
+	corrected few minor bugs with '!append': appending more commands,
+	wrong matrix entries in append,
+	syntax error with the '>' character in '!iflist',
+
+1.0.1 on  29.1. 2003
+	added few more finite fields,
+	updated sources for GCC 3.2 (Linux RedHat 8.0), still need to remove some warnings,
+
+1.0 on  19.8. 2002
+	final source poolishing...
+
+	This is the end of the first stage of development.
+	We are releasing VERSION 1.0 !!!
+========
+
+
+0.99.3 on  7.8. 2002
+	corrected stupid bugs in ematrix_printmore_flats() (missing sizeof, wrong indexing),
+
+0.99.2 on  5.8. 2002
+	really close to the final release 1.0!
+	minor updates in ematrix_printmore_(), cleaning old sources and makefiles,
+	adding BINARYONLY version (faster for binary),
+
+0.99.1 on  31.7. 2002
+	approaching 1.0 ...
+	but still few bugs - wrong "Incorrectly printed number" error message removed,
+	an even power must give a positive result in pfield_arithmetic(),
+	corrected '-a' printing in near-regular, missing lists found in gcanon_dispseqtest(),
+
+0.9.8 on  27.7. 2002
+	enabled canonical check at level 2 -> faster,
+	added possibility of unordered addition of lines of the same type in
+	 cannonical check - see GEN_SUBSEQUNORD, now much faster for long sequences,
+	preferred successful minors in frcom_minorlist() for faster test,
+	fixed wrong parameter reading in frame_getparamfr_list(),
+	command !eqpair, transferred the tight-major code and added printing for !tmajor,
+	enabled self-maps recycling (but not for bases),
+	checked the fan code plus printing, corrected self-maps recycling - respect tr,
+	freed lost matrices in recycling icsave[],
+	corrected (left-bracket) error in the input arithmetic stack,
+	changed reading/printing pfield numbers - no more confusing atoms like "-a-1",
+
+0.9.7 on  15.7. 2002
+	moving towards next stable release...
+	corrected nasty error in the new equivalence code - magic values when transposing,
+	finished the new generating code, repaired minor bugs in it,
+	rewrote code choosing leading 1 in gmatext.c, adjusted output printing,
+	deprecated options/commands, some command updates and renaming,
+	corrected printing of matroid flats, updated debug tests for new functions,
+	stupid bug with rank in connectivity,
+
+0.9.6 on  9.7. 2002
+	starting work on extension generating code, first in gmatext.c,
+	additional connectivity code, two- and three-dim array allocation,
+	finished new gmatext.c code,
+	minor uodates elimseq.c, including 3-conn checks,
+	rewrite gener.c, respecting matrix id's when extending, ctrl parameter,
+	updates in genstep.c - mainly canonical check,
+
+0.9.5 on  31.5. 2002
+	updated ematrix_getbases_ext() to generate bases by given line codes,
+	generating "flatline" magic numbers for matroids (matroid invariant for equivalence),
+	faster equivalence implementation, more debug tests in line maps,
+	finished new strminor.c code, still lacks minor statistics...
+
+0.9.4 on  28.4. 2002
+	general function allowing recycling of arbitrary lists (in misc/),
+	generalizing matrix "automoprhisms" to injective line maps between two matrices,
+	line maps on fixed rows, update in struct_connorder() to finish even disconnected,
+	line maps with the same number of columns, all line maps by subsets of columns,
+	rewriting matroid minors using the above functions,
+	the new line-map and minor code seems to be correct now, tested well,
+	but something still needs to be finished for faster computing
+	 - strmap_allbyorder_ext(), struct_hasminorlist_ext() options, minor statistics...
+
+0.9.3 on  18.4. 2002
+	starting to work on a new shape of the struct/ subdirectory:
+	 - introducing connectivity testing, and "magic values" for matrices and matroids,
+	functions for connected order and connectivity, commands !isconn, !connectivity,
+	updating ematrix_union_ext(), checking disjoint submatrices,
+	new alist_ code, faster and more clear, checked OK,
+	new branch-width-3 implementation, now with printed output,
+	added "bounded" rank and separation computations,
+	new faster code for matrix closure,
+
+0.9.2 on  14.4. 2002
+	fixed few small errors from 0.9.1,
+	using new code to generate bases, and to list flats and separations in printmore(),
+	the overhaul of ematrix/* is almost completed now...
+
+0.9.1 on  3.4. 2002
+	some profiling in pfield (macros for work with exponents),
+	fixed stupid memleak in ematrix_copydual(),
+	some speed-ups in ematrix.c, new determinant code in ematrixop.c,
+	generating all submatrices in a separate function, using elsewhere...,
+	faster inpfield test, what about the new randomized version - good?,
+	
+
+	we are going to update some of the basic matrix handling routines
+	to allow for easy search through all submatrices and all separations
+	 (exponentially long computations concentrated in a new file ematexp.c),
+	that would then allow for faster equivalence and minor testing when
+	using magic values computed from small-rank flats (which is polynomial!),
+	...
+========
+
+
+0.8.2 on  1.4. 2002
+	added printing all displayed minors (ch==-2 in dispmin),
+
+0.8.1 on  25.3. 2002
+	resolve cycled symbol replacements on matrix lines,
+	add command '!unique', update documentation,
+
+0.8.0 on  22.3. 2002
+	stable release, already suitable for first publication,
+	corrected '= matrix line' recognition,
+	added golden mean partial field,
+	
+
+	we close the 0.7.x developement line, but several things are still missing
+	on the way to 1.0...
+========
+
+
+0.7.6 on  3.3. 2002
+	commands !mmove, !restart, !exit, !skip, !iflist (command-flow control),
+	option @inputpf,
+
+0.7.5 on  25.2. 2002
+	stupid - flex really does not close input files, must close by hand,
+	new options @erase, @eraseall,
+	implementing command !printmore for printing matroid-invariants like bases, flats,
+	 etc, this still needs correct implementation of the flats,
+	command !mhash for determining matroid-invariant hash-value for a frame,
+	writing frames to a common subdirectory prefix,
+
+0.7.4 on  18.2. 2002
+	changing $N old result addressing to ~N and ^N (keep and delete type),
+	enhancing naming scheme for commands with list-parameters,
+	fake use of debug variables in macek.nodebug to avoid warnings,
+	allow $macro processing on the beginning of a line (only if a syntax error otherwise),
+	
+0.7.3 on  10.2. 2002
+	some source structure changes,
+	allowing FCRET_REPLMXL for !dual (and other commands...),
+	finishing (almost) the info documentation,
+
+0.7.2 on  27.1. 2002
+	making frame_processcommands() re-entrant - problems with static variables,
+	command '!read', some code cleaning,
+	more work on the manual -- now almost complete for an initial release,
+
+0.7.1 on  22.1. 2002
+	new general tree-processing function for frames, new FCRET_REPLMXL return type,
+	new commands '!append', '!flatten', '!pfield', '!import', ...
+	work with multiple pfields, pfield translations for matrices,
+	deleting commands after execution,
+
+0.7.0 on  10.1. 2002
+	some updates of the "magic" test in the ematrix structure,
+	enhanced printing of frame commands (verbosity levels),
+	change naming of frames and extracted matrices in commands,
+	freeing the list qel with the structures in gener_extframe_ext(),
+	writing info documentation (user-level) for the whole program,
+	
+	starting a new developement line, but no important changes are planned...
+========
+
+
+0.6.4 on  2.12. 2001
+	fixing some bugs (inpfile in emflexsup.c, wrong condition in bw-3 testing,
+	 undefined 2x2 subdeterminants after using pfield endomorphism in strmin.c),
+	added "@extinherit??" for inheritance in extensions,
+	preventing selected options from being written (sub-par*, transpose),
+	added program-start consistency tests (including structural and generating),
+	added "@repl-PF X x" for replacing in specific pfields,
+
+0.6.3 on 28.11. 2001
+	implementing "$macro" substitutions for option and command values and include names
+	 (values given by "@sub-XXX xxx", default values "@subd-XXX xxx"),
+	this is also used to implement "&procedure param1 .." calls to include file
+	 "procedure" with additional commands, getting the parameters as macros,
+	changing the "<{ }"-incude shortcut to a subframe shortcut like "{ { } { } }"
+	 - a cleaner solution,
+	reducing some repeated error messages,
+	changing special-line replacements (",;"->" \n") to a new handling,
+
+0.6.2 on 22.11. 2001
+	final polishing of the converted code,
+	updates of command-line capabilities (short help for the program, and for
+	options, commands, pfields, frames),
+	not to print error message for empty input list, just warning,
+	some updates in command handling functions, protect from empty input,
+	no exit after input scanning error, return NULL frame instead, reduce subsequent errors,
+
+0.6.1 on 21.11. 2001
+	implemented testing branch-width 3 for 3-connected matroids, seems OK,
+	computing binary excluded minor for bw-3 (takes quite long - large minors),
+	command parameters - address by frame name,
+
+0.6.0 on 20.11. 2001
+	first successfull conversion of the whole generating code into the new framework,
+	no, the version should be 0.6.x, not 0.60.x....
+
+========
+
+
+0.59.9 on 18.11. 2001
+	converting the extension-generating code...,
+	creating an interface for third-party includes in the generating code,
+	conversion of a frame (with specific "ext-" options) to an elimination sequence,
+	tested for some known dyadic extensions... OK
+	
+0.59.8 on 17.11. 2001
+	analyzer fixes with empty comment lines, and expr replacement length,
+	the whole struct-part of the program is now converted to the new scheme,
+	so many structural tests are now available,
+	fan-testing now works even when not 3-connected,
+	described the problems with non-equivalent representations when looking
+	for matroid-minors (unlabeled strong equivalence),
+	first try to program testing for branchwidth 3, but not correct yet,
+
+0.59.7 on 15.11. 2001
+	progress on converting the old-program computation to the new command handling model,
+	some changes in the analyzer (like handling commands inside the subframe-include list,
+	 disposing double quotas from expressions),
+	to null the exponent for a standard form of 0, more checks in pfield arithmetic,
+	debug output with verbosity levels(???),
+
+0.59.6 on 10.11. 2001
+	command handling is now written (with general parameter and result descriptions),
+	this includes also file-reading and writing of frames,
+	minor fixes in the analyzer code and in the alist implementation,
+	
+0.59.5 on 4.11. 2001
+	reading frames (and subframes), matrices, options, commands now all OK,
+	also implemented options "replace" and "require" that change the way
+	matrix is read from the input,
+	cleaning the analyzer code, fixing minor problems with scanning,
+	going to implement general command (and parameter) handling...
+	
+0.59.4 on 31.10. 2001
+	first implementation of input frames (and subframes),
+	adapted the lexical scanner to handle subframes,
+	matrix reading OK, going to implement option handling,
+
+0.59.3 on 29.10. 2001
+	finished and tested input of an arbitrary pfield expression in the lexical scanner,
+	working on implementing options, commands, subframes and includes in the scanner,
+	
+0.59.2 on 27.10. 2001
+	completely new source structure, new makefiles,
+	continuing conversion to a general matroid-computation tool,
+	pfield implementation finished, first lexical scanner of input matrices,
+
+0.59.1 on 13.10. 2001
+	few updates of command-line capabilities + related functions...
+	also fixed a nasty error with the tt-cycle when looking for all fans (not-lastline version)
+
+0.5.9 on 29.7. 2001
+	starting to implement other pfields, using a fixed number of exponents
+	and a list of fundamental elements to perform computations...
+
+	(cut-off: no longer a special program for computing dyadic matroids...)
+========
+
+
+0.5.3 on 3.7. 2001
+	implement checking for 3-tails, just a small addition, also code for closures
+	and full closures needed there,
+
+0.5.2 on 24.6. 2001
+	mainly documentation updates, closing one section of developement...
+
+0.5.1 on 21.6. 2001
+	major speed-ups for the dispminor code (which was wasting most time so far),
+	much faster than the previous code, and still seems to be correct,
+
+0.5.0 on 17.6. 2001
+	first version properly computing dyadic (co)extensions,
+	with corrected fan-checking,
+	adapted also for solaris and osf,
+
+========
+
+pre-0.5 (20.4. - 16.6. 2001)
+	hard developement... (no records available now)
+
+
+
+
+
+
+

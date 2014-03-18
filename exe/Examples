@@ -1,0 +1,169 @@
+
+/********************************************************************************
+ *										*
+ *				 M A C E K					*
+ *		("Matroids Also Computed Efficiently" Kit)			*
+ *										*
+ * A set of tools and routines for computations with representable matroids.	*
+ * Copyright (C) 2001--2011  Petr Hlineny.					*
+ *										*
+ *   This program is free software; you can redistribute it and/or modify	*
+ *   it under the terms of the GNU General Public License as published by	*
+ *   the Free Software Foundation; either version 2 of the License, or		*
+ *   (at your option) any later version.					*
+ *   You should have received a copy of the GNU General Public License		*
+ *   along with this program; if not, write to the Free Software		*
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.	*
+ * 										*
+ * See the top-level "ABOUT" and "doc/ *" files for more information.		*
+ *										*
+ ********************************************************************************/
+
+
+Here you get some basic Macek examples taken from the info manual...
+
+Try first to call `./macek -h' to see a simple online help.
+Follow the instructions to obtain more online help, or read the info manual.
+
+The presented Macek examples are called from the `bash' shell. 
+However, similar shells like `zsh', `ksh' should work in the same way.
+We assume that the current directory contain the Macek executable,
+and also the distributed subdirectories Matrices/ and Procedures/.
+Either call "./macek", or include . in the path.
+If you want to use `csh' or other shells, you may need to modify or 
+escape some active characters in the commands.
+
+
+
+			 Simple shorcuts
+			~~~~~~~~~~~~~~~~~
+So called shortcuts are actually simple predefined files in Macek containing
+some frequently used commands as a demonstration for a first-time user...
+(See all the shortcuts in the dir "exe/Procedures/shortcut".)
+
+	bash$ ./macek print grK33
+	bash$ ./macek print R10
+	bash$ ./macek prints R10
+	bash$ ./macek prints grK5
+
+	bash$ ./macek minor R10 grK33
+	bash$ ./macek minor R12 R10
+
+	bash$ ./macek isomorph R10 grK5 R12 R10 grK5
+	bash$ ./macek -pGF7 isomorph U36 U26 U46
+	bash$ ./macek -pGF7 represent-gf5 U37
+
+(If we want to work over other field than GF(2), we have to specify it with -pXX.)
+
+
+
+			 Regular Macek commands
+			~~~~~~~~~~~~~~~~~~~~~~~~
+This is a brief Macek command overview, (RTFM!) read the Macek manual first.
+
+The following call
+     bash$ ./macek -g-2 -pGF3 '!print' U24
+produces an output similar to this sample:
+     567~        Printing output of the command "!print ((t))   ..[1]":
+     567~  Printing matrix of the frame [U24]: "the matroid U_2,4 uniform"
+        ~   --------------------------------------------------------------
+        ~   ematrix 0x80fcb48 [U24], r=2, c=2, tr=0, ref=(nil)
+        ~            '-1')   '-2')
+        ~
+	~    '1')	1	1
+        ~    '2')	1	2
+       	~   --------------------------------------------------------------
+Try it yourself with simple modifications.
+Next, try to run
+     bash$ ./macek -g+1 -pGF3 '!print' U24
+and see the debugging output.
+
+It is possible to give a matrix directly on the command line like these:
+     bash$ ./macek -pGF5 '!print' ' 1 2; 3 2+2'
+     bash$ ./macek -pGF2 '!print' ' 1 1; 0 0 1; 0 1 0 1'
+     bash$ ./macek -pGF4 '!print' ' w w^2; w^3'
+     bash$ ./macek -pGF4 '!print' ' w w^2; (w^3+w)*(w+1)'
+Here `;' replaces line-ends.  Notice that, for example, inputting an
+entry `w' in GF(3) or `2' in GF(2) cause an error.
+
+The frame-tree structure can be printed with a command:
+     bash$ ./macek -pGF4 '!prtree' U24 '{ U25 U35 F7 }'
+     968~  Printing the subtree of the frame 0x80f09b8 [noname]:
+        ~     (1.1)fr 0x80f09b8 [noname] ""
+        ~        (2.1)fr 0x80f6e50 [U24] "the matroid U_2,4 uniform"
+       	~        (2.2)fr 0x8108470 [noname-2] ""
+       	~           (3.1)fr 0x81084d0 [U25] "the matroid U_2,5 uniform"
+       	~           (3.2)fr 0x81153d0 [U35] "the matroid U_3,5 uniform"
+       	~           (3.3)fr 0x8122000 [F7] "the matroid F_7 Fanno"
+     968~  ------------------------------------
+
+Another example is the command `!move' that manipulates the frames in
+the tree (moves, copies, or deletes them).
+Nodes of the frame-tree are adressed by bracketed expressions
+in the natural way; `T' picks a node, `S' picks all sons of a node, the
+lower-case letters `t',`s' also erase the picked nodes in some commands.
+Run the next examples, and see the action:
+     bash$ ./macek -pGF4 '!prtree;!move ((t));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!prtree;!move (()(t));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!prtree;!move ((t)(()(t)));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!prtree;!move ((T)) >(()(t));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!prtree;!move ((T)) >((2)(t));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!prtree;!move ((t)) >(()(t));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!prtree;!move ((T)) >(((t)));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!move (()(S)) >(((s)));!prtree' U24 '{ U25 U35 F7 }'
+     bash$ ./macek -pGF4 '!move (()(S)) >(((t(t(t)))));!prtree' U24 '{ U25 U35 F7 }'
+
+
+One may easily pivot matrices like in the next example:
+     bash$ ./macek -pReg '!print;!pivot 1 2;!print' R10
+
+Matroid elements are deleted or contracted in the following way:
+     bash$ ./macek -pReg '!print;!delete -3;!print' R10
+     bash$ ./macek -pReg '!print;!delete 2;!print' R10
+     bash$ ./macek -pReg '!print;!contract 2;!print' R10
+     bash$ ./macek -pReg '!print;!contract -5;!print' R10
+
+Minor-testing (up to inequivalence of representations!)  is
+demonstrated in the next commands:
+     bash$ ./macek -pReg '!minor' R12 R10
+     bash$ ./macek -pReg '!minor' R12 grK33
+
+Extensions or coextensions of represented matroids are generated as
+follows (all 3-connected, matrix-equivalence factored-out):
+     bash$ ./macek -pBinary '!extend c;!prtree' W3
+     bash$ ./macek -pReg '!extend c;!prtree' W4
+     bash$ ./macek -pReg '!extend r;!prtree' R12
+     bash$ ./macek -pReg '!extend b;!prtree' R10
+
+Some more-involved chains of commands are demonstrated in the following
+examples:
+     bash$ ./macek -pReg '!deleach;!prtree;!filt-minor;!prtree' R12 grK33
+     bash$ ./macek -pReg '!deleach;!prtree;!filx-minor;!prtree' R12 grK33
+     bash$ ./macek -pdyadic '!extend r;!prtree;!minor' F7- 'F7-;!dual'
+
+
+
+Here is a (more involved) demonstration of new MACEK functions from version 1.2.
+
+Abstract isomorphism testing like the following:
+     bash$ ./macek '!isomorph' '@inputpf gf3;<Wh5' '@inputpf gf7;<Wh5'
+     bash$ ./macek '!isomorph' '@inputpf gf3;<Wh5' '@inputpf gf7;<W5'
+     bash$ ./macek '!verbose;!isompair' '{ "@inputpf gf4;<U36" "@inputpf gf5;<U36" "@inputpf gf7;<W3" }'
+
+Generating matroid representations over other pfields:
+     bash$ ./macek -pgf8 '!repres gf3;!repres gf5' '{ U26 S8 Wh5 }'
+     bash$ ./macek -pgf8 '!print;!represgen;!print' '@inputpf gf7;<U36'
+     bash$ ./macek -pgf8 '!print;!verbose;!represgen "" all;!prtree' '@inputpf gf7;<U36'
+     bash$ ./macek -pgf8 '!print;!verbose;!represgen "" allq;!prtree' '@inputpf gf7;<U36'
+
+And two other ways of generating dyadic extensions of a matroid:
+     bash$ ./macek -pgf3 -g-1 '!verbose;!extend cc;!filt-repres gf5' P8
+     bash$ ./macek -pgf5 -g-1 '!verbose;!extend cc;!filt-repres gf3;!isompair' P8
+
+More structural information on a matroid:
+     bash$ ./macek '!girth' R10
+     bash$ ./macek '!hasgirth 4 (S)' R10 R12
+     bash$ ./macek -pgf7 '!verbose 3;!prmore' P8
+     bash$ ./macek -pgf7 '!writecom' '<Wh5;@name Wh5-commented'
+
+

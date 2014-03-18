@@ -1,0 +1,11 @@
+#
+# the matroid O_7 from ???, an extension of W3
+#  - one of three minors that a 3-conn non-bin matroid must have if not whirl
+@comment "the matroid O_7 from ???"
+
+	1	0	1	1
+	1	1	0	X
+	0	1	-1	(X)-1
+
+@require  X       1
+@require  ((X)-1) 1

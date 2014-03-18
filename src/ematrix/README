@@ -1,0 +1,9 @@
+
+This directory contains sources for matrix operations.
+That includes basic data structure and manipulation,
+matrix computations like pivoting or determinants,
+and some (exponential) matrix searching like proper pfield representation,
+finding all bases, or printing various structural matrix information.
+
+(Read more in ../include/ematrix.h .)
+

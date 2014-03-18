@@ -1,0 +1,8 @@
+
+This directory holds the sources for computation in partial fields,
+including the pfield definitions...
+
+(Read also ../include/pfield.h .)
+
+Put additional pfield definitions into pfdef-more.inc .
+
